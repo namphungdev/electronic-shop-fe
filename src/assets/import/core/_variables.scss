@@ -1,0 +1,110 @@
+//======================================================BOXED LAYOUT=======================================================
+
+$container-max-width: 100%;
+$container-width: 1200px; // tùy thuộc vào container của bản thiết kế // $container-width = container (đo từ bản thiết kế) + 30px
+$container-fluid-width: 1410px;
+$gap-about-techstack: 248px;
+/*GRID - media queries breakpoints*/
+$xxs-min: 36em; //576px CÓ THỂ TÙY CHỈNH
+$xs-min: 48em; //768px KHÔNG THAY ĐỔI
+$sm-min: 62em; //992px KHÔNG THAY ĐỔI
+$md-min: 75em; //1200px KHÔNG THAY ĐỔI
+$lg-min: 100em; //1600px CÓ THỂ TÙY CHỈNH
+
+$xxs-max: ($xxs-min - calc(1 / 16)); // Small Mobile
+$xs-max: ($xs-min - calc(1 / 16)); // Mobile
+$sm-max: ($sm-min - calc(1 / 16)); // Tablet
+$md-max: ($md-min - calc(1 / 16)); // Desktop
+$lg-max: ($lg-min - calc(1 / 16)); // Large Desktop
+
+//=====================================CÁC BIẾN KHÔNG THAY ĐỔI GIÁ TRỊ KHI RESPONSIVE======================================
+// colors - tuỳ chỉnh
+$white-cl: #fff;
+$black-cl: #000;
+
+$mont: "Montserrat", sans-serif;
+$poppin: "Poppins", sans-serif;
+
+$primary: #1dc071;
+$secondary: #a4d96c;
+$border_active_cl: #00b4aa;
+$color_btn: #23bb86;
+$border_cl: #999;
+$border_search: #cfcfcf;
+$grayDark: #292d32;
+$grayLight: #e7ecf3;
+$tertiary: #3a1097;
+$accent: #00d1ed;
+$grayF3: #f3edff;
+$grayF8: #f8f9fa;
+$gray6B: #6b6b6b;
+$gray23: #232323;
+$gray4b: #4b5264;
+$grayf1: #f1f1f3;
+$gray80: #808191;
+$black: #171725;
+// timing transition - tuỳ chỉnh
+$t: 0.2s;
+$cubic: cubic-bezier(0.84, 0.13, 0.33, 0.97);
+
+// ========================================CÁC BIẾN CÓ THAY ĐỔI GIÁ TRỊ KHI RESPONSIVE=====================================
+
+:root {
+    //=========== VÍ DỤ ============//
+
+    // font-size & line-height heading
+
+    --h1-fs: 7.2rem;
+    --h1-lh: 8rem;
+
+    --h2-fs: 5.2rem;
+    --h2-lh: 6rem;
+
+    --h3-fs: 3.2rem;
+    --h3-lh: 4.2rem;
+
+    --h4-fs: 2.4rem;
+    --h4-lh: 3.2rem;
+
+    --h5-fs: 2rem;
+    --h5-lh: 3rem;
+
+    --body16-fs: 1.6rem;
+    --body16-lh: 2.6rem;
+
+    --body14-fs: 1.4rem;
+    --body14-lh: 2.2rem;
+
+    // Genaral Variable
+
+    --gap: 30px; // gap này sử dụng cho gap cột & padding của container, container-fluid
+
+    --height-header: 100px;
+    --height-button: 56px;
+    --ptop: 150px;
+    --pd-section: 120px;
+
+    @media (max-width: $sm-max) {
+        // Tablet
+    }
+    @media (max-width: $xs-max) {
+        // Mobile
+        --h1-fs: 3.6rem;
+        --h1-lh: 4.2rem;
+
+        --h2-fs: 2.8rem;
+        --h2-lh: 3.8rem;
+
+        --h3-fs: 2.2rem;
+        --h3-lh: 3rem;
+
+        --h4-fs: 2rem;
+        --h4-lh: 3.2rem;
+
+        --gap: 20px;
+
+        --height-header: 80px;
+        --pd-section: 50px;
+        --ptop: 120px;
+    }
+}
