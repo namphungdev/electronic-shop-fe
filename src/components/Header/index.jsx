@@ -14,7 +14,6 @@ import CartDrawer from '../CartDrawer';
 import { useCart } from '@/hooks/useCart';
 import { onSetOpenCart } from '@/stores/cart/cartReducer';
 import { toast } from 'react-toastify';
-import { useTranslate } from '../TranslateProvider';
 
 const HeaderNavs = [
   {
@@ -25,38 +24,21 @@ const HeaderNavs = [
     to: PATH.products,
     nav: 'Sản phẩm',
   },
-  // {
-  //   to: '/laptop-thiet-bi-it/1846',
-  //   nav: 'Laptop',
-  // },
-  // {
-  //   to: '/dien-thoai-may-tinh-bang/1789',
-  //   nav: 'Điện thoại',
-  // },
-  // {
-  //   to: `${PATH.products}?sort=discount_rate.desc`,
-  //   nav: 'Sản phẩm khuyến mãi',
-  // },
   {
     to: PATH.contact,
-    nav: 'Contact',
+    nav: 'Liên hệ',
   },
   {
     to: PATH.about,
-    nav: 'About',
+    nav: 'Thông tin',
   },
 ];
-const LANG = {
-  vi: 'Tiếng Việt',
-  eng: 'English',
-  chi: 'China',
-};
+
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { cart, open } = useCart();
-  const { t, setLang, lang } = useTranslate();
   return (
     <>
       <SearchDrawer />
@@ -98,7 +80,7 @@ const Header = () => {
                       }
                       to={e.to}
                     >
-                      {t(e.nav)}
+                      {(e.nav)}
                     </NavLink>
                   </li>
                 ))}
