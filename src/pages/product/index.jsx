@@ -4,7 +4,7 @@ import Skeleton from '@/components/Skeleton';
 import useQuery from '@/hooks/useQuery';
 import { productServiceHHB } from '@/services/product.service';
 import createArray from '@/utils/createArray';
-import React, {  useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { NavLink, useMatch } from 'react-router-dom';
 import useScrollTop from '@/hooks/useScrollTop';
 import { useCategoriesHHB } from '@/hooks/useCategories';
@@ -151,8 +151,6 @@ const ProductPage = () => {
                     </div>
                   </div>
                 </li>
-
-               
               </ul>
             </form>
           </div>
@@ -202,14 +200,32 @@ const ProductPage = () => {
               />
             )}
 
-             <div className="row">
+
+            {loadingCategoryHHB ? (
+              createArray(16).map((_, id) => (
+                <Skeleton key={id} height={24} />
+              ))
+            ) : (
+              <>
+                <div className="row">
+                  <ProductCard
+                    data={productsHHB?.data}
+                    loading={loadingHHB}
+                    loadingCount={9}
+                    emptyText="Rất tiếc không có sản phẩm bạn tìm kiếm"
+                  />
+                </div>
+              </>
+            )}
+
+            {/* <div className="row">
               <ProductCard
                 data={productsHHB?.data}
                 loading={loadingHHB}
                 loadingCount={9}
                 emptyText="Rất tiếc không có sản phẩm bạn tìm kiếm"
               />
-            </div> 
+            </div>  */}
 
             {/* Pagination */}
             {productsHHB.length > 0 && <Pagination totalPage={totalPageHHB} />}
