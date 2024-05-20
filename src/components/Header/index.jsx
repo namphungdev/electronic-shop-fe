@@ -71,7 +71,7 @@ const Header = () => {
             {/* Collapse */}
             <div className="navbar-collapse" id="navbarCollapse">
               {/* Nav */}
-              <ul className="navbar-nav mx-auto">
+              <ul className="navbar-nav mx-auto text-xl">
                 {HeaderNavs.map((e, id) => (
                   <li className="nav-item" key={id}>
                     <NavLink
@@ -216,7 +216,7 @@ const Header = () => {
             </div>
           </div>
         </nav>
-        <div className="mt-36"></div>
+        <div style={{marginTop: '125px'}}></div>
         
       </div>
     </>

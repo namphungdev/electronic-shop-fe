@@ -65,7 +65,7 @@ const ListProducts = ({ id }) => {
         <div className="col-12">
           <div className="mt-7 text-center">
             <Link className="link-underline" to={'/san-pham'}>
-              Discover more
+              Xem thêm
             </Link>
           </div>
         </div>

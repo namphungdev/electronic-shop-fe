@@ -84,6 +84,7 @@ const ProductPage = () => {
       productServiceHHB.getProductsHHB(productParams, signal),
   });
 
+
   const categoryTitleHHB = useMemo(() => {
     const { title } =
       categoryListHHB.find((e) => e.id === +match?.params.id) || {};
@@ -109,7 +110,7 @@ const ProductPage = () => {
                 <li className="nav-item">
                   {/* Toggle */}
                   <a
-                    className="nav-link font-size-lg text-reset border-bottom mb-6"
+                    className="nav-link font-size-lg text-4xl border-bottom mb-6"
                   >
                     Danh mục sản phẩm
                   </a>
@@ -193,7 +194,7 @@ const ProductPage = () => {
               ''
             )}
             {/* Products */}
-            {productsHHB.length > 0 && (
+            {productsHHB && productsHHB.length > 0 && (
               <Pagination
                 totalPage={totalPageHHB}
                 style={{ marginBottom: 30 }}
@@ -228,7 +229,7 @@ const ProductPage = () => {
             </div>  */}
 
             {/* Pagination */}
-            {productsHHB.length > 0 && <Pagination totalPage={totalPageHHB} />}
+            {productsHHB && productsHHB.length > 0 && <Pagination totalPage={totalPageHHB} />}
 
           </div>
         </div>
