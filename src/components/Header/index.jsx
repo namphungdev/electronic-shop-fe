@@ -69,7 +69,10 @@ const Header = () => {
           <div className="container">
             {/* Brand */}
             <Link className="navbar-brand" to={PATH.home}>
-              <img srcSet="/img/logo.png 2x" />
+              <img
+                style={{ width: '75px', height: 'auto' }}
+                srcSet="/img/logos.png 2x"
+              />
             </Link>
             {/* Toggler */}
             <button
