@@ -52,7 +52,7 @@ const ListProducts = ({ id }) => {
     <div className="row">
       <ProductCard
         data={productListHHB}
-        loading={loading}
+        loading={loadingHHB}
         loadingCount={12}
         empty={
           <EmptyText className="w-full">

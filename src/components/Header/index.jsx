@@ -47,7 +47,7 @@ const Header = () => {
         {/* NAVBAR */}
 
         {/* NAVBAR */}
-        <nav className="navbar navbar-expand-lg navbar-light bg-white">
+        <nav className="navbar navbar-expand-lg navbar-light fixed top-0 left-0 w-full z-10 bg-white">
           <div className="container">
             {/* Brand */}
             <Link className="navbar-brand" to={PATH.home}>
@@ -216,20 +216,8 @@ const Header = () => {
             </div>
           </div>
         </nav>
-        {/* PROMO */}
-        {/* <div className="py-3 bg-dark bg-pattern mb-4">
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <div className="text-center text-white">
-                  <span className="heading-xxs letter-spacing-xl">
-                    ⚡️ Happy Holiday Deals on Everything ⚡️
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
+        <div className="mt-36"></div>
+        
       </div>
     </>
   );

@@ -1,22 +1,18 @@
 import Pagination from '@/components/Pagination';
 import ProductCard from '@/components/ProductCard';
 import Skeleton from '@/components/Skeleton';
-import Slider from '@/components/Slider';
 import useQuery from '@/hooks/useQuery';
 import { productServiceHHB } from '@/services/product.service';
 import createArray from '@/utils/createArray';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useMatch, useSearchParams } from 'react-router-dom';
+import React, {  useMemo, useRef, useState } from 'react';
+import { NavLink, useMatch } from 'react-router-dom';
 import useScrollTop from '@/hooks/useScrollTop';
 import { useCategoriesHHB } from '@/hooks/useCategories';
-import queryString from 'query-string';
 import CategoryLink from '@/components/CategoryLink';
 import { cn } from '@/utils';
 import { PATH } from '@/config';
 import useQueryParams from '@/hooks/useQueryParams';
 import useEffectDidMount from '@/hooks/useEffectDidMount';
-import Radio from '@/components/Radio';
-import Rating from '@/components/Rating';
 import Breadcrumb from '@/components/Breadcrumb';
 
 const options = [
@@ -39,15 +35,19 @@ const ProductPage = () => {
     // sort: "newest",
   });
 
+  const [paramsFilter, setParamsFilter] = useState('newest')
+
   const topRef = useRef();
   const [minPrice, setMinPrice] = useState(queryParams.minPrice || '');
   const [maxPrice, setMaxPrice] = useState(queryParams.maxPrice || '');
   const match = useMatch(PATH.category);
+
   //Khống chế việc render lần 1 cho price
   useEffectDidMount(() => {
     setMinPrice('');
     setMaxPrice('');
   }, [match?.params.id]);
+
 
   useScrollTop(
     [
@@ -61,19 +61,16 @@ const ProductPage = () => {
   );
 
   const { categoryListHHB, loadingCategoryHHB } = useCategoriesHHB();
-  console.log('categoryListHHB 68', categoryListHHB);
 
   const productParams = useMemo(
     () => ({
       keyword: '',
       pageIndex: 1,
       pageSize: 10,
-      categoryCode: match?.params.slug.includes('san-pham')
-        ? null
-        : match?.params.slug,
-      orderType: 1,
+      categoryCode: !match ? null : match?.params.slug,
+      orderType: paramsFilter,
     }),
-    [match?.params.slug]
+    [match?.params.slug, paramsFilter]
   );
 
   const {
@@ -113,9 +110,8 @@ const ProductPage = () => {
                   {/* Toggle */}
                   <a
                     className="nav-link font-size-lg text-reset border-bottom mb-6"
-                    href="#categoryCollapse"
                   >
-                    Category
+                    Danh mục sản phẩm
                   </a>
                   {/* Collapse */}
                   <div>
@@ -156,48 +152,7 @@ const ProductPage = () => {
                   </div>
                 </li>
 
-                <li className="nav-item">
-                  {/* Toggle */}
-                  <span className="nav-link font-size-lg text-reset border-bottom mb-6">
-                    Price
-                  </span>
-                  {/* Collapse */}
-                  <div>
-                    {/* Range */}
-                    <div className="d-flex align-items-center">
-                      {/* Input */}
-                      <input
-                        type="number"
-                        min="0"
-                        className="form-control form-control-xs"
-                        placeholder="Thấp nhất"
-                        pattern="[1-9]*"
-                        value={minPrice}
-                        onChange={(e) =>
-                          +e.target.value > 0
-                            ? setMinPrice(e.target.value)
-                            : setMinPrice('')
-                        }
-                      />
-                      {/* Divider */}
-                      <div className="text-gray-350 mx-2">‒</div>
-                      {/* Input */}
-                      <input
-                        type="number"
-                        className="form-control form-control-xs"
-                        placeholder="Cao nhất"
-                        value={maxPrice}
-                        pattern="[1-9]*"
-                        onChange={(e) =>
-                          setMaxPrice(+e.target.value > 0 ? e.target.value : '')
-                        }
-                      />
-                    </div>
-                    <button className="btn btn-outline-dark btn-block mt-5">
-                      Apply
-                    </button>
-                  </div>
-                </li>
+               
               </ul>
             </form>
           </div>
@@ -221,12 +176,9 @@ const ProductPage = () => {
                 {/* Select */}
                 <select
                   className="custom-select custom-select-xs"
-                  value={queryParams.sort}
+                  value={paramsFilter}
                   onChange={(e) => {
-                    setQueryParams({
-                      sort: e.target.value,
-                      page: undefined,
-                    });
+                    setParamsFilter(e.target.value)
                   }}
                 >
                   {options.map((e) => (
@@ -250,17 +202,18 @@ const ProductPage = () => {
               />
             )}
 
-            <div className="row">
+             <div className="row">
               <ProductCard
                 data={productsHHB?.data}
                 loading={loadingHHB}
                 loadingCount={9}
                 emptyText="Rất tiếc không có sản phẩm bạn tìm kiếm"
               />
-            </div>
+            </div> 
 
             {/* Pagination */}
             {productsHHB.length > 0 && <Pagination totalPage={totalPageHHB} />}
+
           </div>
         </div>
       </div>
