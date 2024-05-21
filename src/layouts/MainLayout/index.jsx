@@ -28,7 +28,7 @@ export const MainLayout = () => {
           <img
             alt="Facebook"
             className="w-10 h-10 rounded-full shadow-lg hover:scale-110 transition-transform"
-            srcSet="/img/messenger.jpg"
+            srcSet="/img/2023_Facebook_icon.svg"
           />
         </a>
         <a href="https://zalo.me/0965117729" target="_blank" rel="noopener noreferrer">

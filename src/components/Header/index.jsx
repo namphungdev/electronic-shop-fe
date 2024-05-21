@@ -47,7 +47,7 @@ const Header = () => {
         {/* NAVBAR */}
 
         {/* NAVBAR */}
-        <nav className="navbar navbar-expand-lg navbar-light fixed top-0 left-0 w-full z-10 bg-white">
+        <nav className="navbar navbar-expand-lg navbar-light fixed top-0 left-0 w-full z-10 " style={{background: 'rgb(255, 176, 164)'}}>
           <div className="container">
             {/* Brand */}
             <Link className="navbar-brand" to={PATH.home}>
@@ -76,7 +76,7 @@ const Header = () => {
                   <li className="nav-item" key={id}>
                     <NavLink
                       className={({ isActive }) =>
-                        cn('nav-link', { '!text-[#ff6f61]': isActive })
+                        cn('nav-link', { '!text-[#ffffff]': isActive })
                       }
                       to={e.to}
                     >

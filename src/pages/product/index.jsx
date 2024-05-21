@@ -110,7 +110,7 @@ const ProductPage = () => {
                 <li className="nav-item">
                   {/* Toggle */}
                   <a
-                    className="nav-link font-size-lg text-4xl border-bottom mb-6"
+                    className="nav-link text-2xl border-bottom mb-6 font-semibold"
                   >
                     Danh mục sản phẩm
                   </a>
@@ -170,6 +170,28 @@ const ProductPage = () => {
                   <Breadcrumb.Item to={PATH.home}>Trang chủ</Breadcrumb.Item>
                   <Breadcrumb.Item>{categoryTitleHHB}</Breadcrumb.Item>
                 </Breadcrumb>
+              </div>
+              <div className="col-12 col-md-auto">
+              
+              </div>
+            </div>
+
+            <div className="row align-items-center mb-7">
+              <div className="col-12 col-md">
+                {/* Search */}
+                <div className="input-group input-group-merge">
+                <input
+                  className="form-control"
+                  type="search"
+                  placeholder="Tìm kiếm"
+                  onChange={(e) => setSearch(e.target.value.trim())}
+                />
+                <div className="input-group-append">
+                  <button className="btn btn-outline-border" type="submit">
+                    <i className="fe fe-search" />
+                  </button>
+                </div>
+              </div>
               </div>
               <div className="col-12 col-md-auto">
                 {/* Select */}

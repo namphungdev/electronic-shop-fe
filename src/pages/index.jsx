@@ -19,7 +19,7 @@ export const Home = () => {
           {/* Item */}
           <div
             className="col-12 col-md-6 col-lg-4 d-flex flex-column bg-cover"
-            style={{ backgroundImage: 'url(/img/covers/cover-1.jpg)' }}
+            style={{ backgroundImage: 'url(/img/covers/19c3703bf2f04fed861492d0e462e696-228x228.jpg)' }}
           >
             <div
               className="card bg-dark-5 bg-hover text-white text-center"
@@ -31,7 +31,7 @@ export const Home = () => {
               </div>
               <div className="card-body mt-auto py-8">
                 {/* Button */}
-                <a className="btn btn-white stretched-link" href="/san-pham">
+                <a className="btn btn-white stretched-link" href="/nguon-12v/5">
                   Shop Women <i className="fe fe-arrow-right ml-2" />
                 </a>
               </div>
