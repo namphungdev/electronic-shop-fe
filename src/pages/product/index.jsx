@@ -4,7 +4,7 @@ import Skeleton from '@/components/Skeleton';
 import useQuery from '@/hooks/useQuery';
 import { productServiceHHB } from '@/services/product.service';
 import createArray from '@/utils/createArray';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useMatch } from 'react-router-dom';
 import { useCategoriesHHB } from '@/hooks/useCategories';
 import CategoryLink from '@/components/CategoryLink';
@@ -36,6 +36,7 @@ const ProductPage = () => {
 
   const [paramsFilter, setParamsFilter] = useState('newest')
   const [currentPage, setCurrentPage] = useState(1)
+  const [search, setSearch] = useState("")
 
   const topRef = useRef();
   const [minPrice, setMinPrice] = useState(queryParams.minPrice || '');
@@ -52,13 +53,13 @@ const ProductPage = () => {
 
   const productParams = useMemo(
     () => ({
-      keyword: '',
+      keyword: search,
       pageIndex: currentPage,
-      pageSize: 10,
+      pageSize: 12,
       categoryCode: !match ? null : match?.params.slug,
       orderType: paramsFilter,
     }),
-    [match?.params.slug, paramsFilter, currentPage]
+    [match?.params.slug, paramsFilter, currentPage, search]
   );
 
   const {
@@ -86,6 +87,22 @@ const ProductPage = () => {
       maxPrice: maxPrice || undefined,
     });
   };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+  }
+
+  useEffect(() => {
+    setQueryParams((prev) => ({
+      ...prev,
+      search: search || undefined,
+    }));
+  }, [search]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  }
 
   return (
     <section className="py-11">
@@ -169,10 +186,10 @@ const ProductPage = () => {
                     className="form-control"
                     type="search"
                     placeholder="Tìm kiếm"
-                    onChange={(e) => setSearch(e.target.value.trim())}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                   <div className="input-group-append">
-                    <button className="btn btn-outline-border" type="submit">
+                    <button className="btn btn-outline-border" type="submit" onClick={handleSearch}>
                       <i className="fe fe-search" />
                     </button>
                   </div>
@@ -220,7 +237,11 @@ const ProductPage = () => {
             )}
 
             {/* Pagination */}
-            {productsHHB && productsHHB.totalPages > 1 && <Pagination totalPage={productsHHB?.totalPages} onPageChange={setCurrentPage} />}
+            {/* {productsHHB && productsHHB.totalPages > 1 && <Pagination totalPage={productsHHB?.totalPages} onPageChange={setCurrentPage} />} */}
+
+            {productsHHB && productsHHB.totalPages > 1 && (
+              <Pagination totalPage={productsHHB?.totalPages} onPageChange={handlePageChange} />
+            )}
 
           </div>
         </div>

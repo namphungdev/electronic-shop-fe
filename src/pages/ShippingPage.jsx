@@ -32,19 +32,26 @@ const ShippingPage = () => {
                 Thông tin
               </h3>
               <p>
-                CỬA HÀNG THIẾT BỊ ĐIỆN TỬ NHƯ MAI ĐÀO: chuyên lĩnh vực thương mại vật tư điện, cung cấp dây cáp điện, vật tư điện cho lưới điện, công trình xây dựng cao tầng, nhà dân dụng và các cửa hàng, đại lý bán sỉ và lẻ trên toàn quốc. Dây cáp điện, thiết bị điện, thiết bị chiếu sáng, quạt điện dân dụng và một số các thiết bị ngoại nhập khác.
+                <span className="font-bold">
+                CỬA HÀNG THIẾT BỊ ĐIỆN TỬ NHƯ MAI ĐÀO: 
+                </span>
+                {" "}chuyên lĩnh vực thương mại vật tư điện, cung cấp dây cáp điện, vật tư điện cho lưới điện, công trình xây dựng cao tầng, nhà dân dụng và các cửa hàng, đại lý bán sỉ và lẻ trên toàn quốc. Dây cáp điện, thiết bị điện, thiết bị chiếu sáng, quạt điện dân dụng và một số các thiết bị ngoại nhập khác.
               </p>
 
               <p>
                 Dịch vụ chuyên cung cấp
+                <br />
                 + Thiết bị điện - thiết bị văn phòng
+                <br />
                 + Camera an ninh
+                <br />
                 + Sửa chửa - cài đặt - cung cấp máy  cũ và máy mới
+                <br />
                 + Thi công lắp đặt hệ thống điện - camera an ninh
               </p>
 
               <p>
-                Khu vực: TPHCM và các khu lân cận
+                Khu vực: TPHCM và các khu vực lân cận
               </p>
               
               <img

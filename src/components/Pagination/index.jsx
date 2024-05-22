@@ -1,14 +1,24 @@
 import { cn } from "@/utils";
-import React from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const Pagination = ({ totalPage, page = "page", style = {}, onPageChange }) => {
   const [searchParam] = useSearchParams();
-  const currentPage = Number(searchParam.get(page) || 1);
+  const currentPageFromUrl = Number(searchParam.get(page) || 1);
+  const { pathname } = useLocation();
+  const _searchParam = new URLSearchParams(searchParam);
+  const [currentPage, setCurrentPage] = useState(currentPageFromUrl);
 
+  useEffect(() => {
+    setCurrentPage(currentPageFromUrl);
+  }, [currentPageFromUrl]);
 
   const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
     onPageChange(newPage);
+    _searchParam.set(page, newPage);
+    window.history.pushState({}, "", `${pathname}?${_searchParam.toString()}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const renderPaginate = () => {
@@ -41,7 +51,7 @@ const Pagination = ({ totalPage, page = "page", style = {}, onPageChange }) => {
   };
 
   return (
-    <nav
+<nav
       className="d-flex justify-content-center justify-content-md-end mb-5 select-none mx-auto w-max"
       style={style}
     >
@@ -79,6 +89,7 @@ const Pagination = ({ totalPage, page = "page", style = {}, onPageChange }) => {
         )}
       </ul>
     </nav>
+
   );
 };
 
