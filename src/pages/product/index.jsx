@@ -6,7 +6,6 @@ import { productServiceHHB } from '@/services/product.service';
 import createArray from '@/utils/createArray';
 import React, { useMemo, useRef, useState } from 'react';
 import { NavLink, useMatch } from 'react-router-dom';
-import useScrollTop from '@/hooks/useScrollTop';
 import { useCategoriesHHB } from '@/hooks/useCategories';
 import CategoryLink from '@/components/CategoryLink';
 import { cn } from '@/utils';
@@ -36,6 +35,7 @@ const ProductPage = () => {
   });
 
   const [paramsFilter, setParamsFilter] = useState('newest')
+  const [currentPage, setCurrentPage] = useState(1)
 
   const topRef = useRef();
   const [minPrice, setMinPrice] = useState(queryParams.minPrice || '');
@@ -48,29 +48,17 @@ const ProductPage = () => {
     setMaxPrice('');
   }, [match?.params.id]);
 
-
-  useScrollTop(
-    [
-      queryParams.page,
-      match?.params.id,
-      queryParams.minPrice,
-      queryParams.maxPrice,
-      queryParams.filterRating,
-    ],
-    topRef?.current?.getBoundingClientRect().top + window.scrollY
-  );
-
   const { categoryListHHB, loadingCategoryHHB } = useCategoriesHHB();
 
   const productParams = useMemo(
     () => ({
       keyword: '',
-      pageIndex: 1,
+      pageIndex: currentPage,
       pageSize: 10,
       categoryCode: !match ? null : match?.params.slug,
       orderType: paramsFilter,
     }),
-    [match?.params.slug, paramsFilter]
+    [match?.params.slug, paramsFilter, currentPage]
   );
 
   const {
@@ -83,7 +71,6 @@ const ProductPage = () => {
     queryFn: ({ signal }) =>
       productServiceHHB.getProductsHHB(productParams, signal),
   });
-
 
   const categoryTitleHHB = useMemo(() => {
     const { title } =
@@ -99,6 +86,7 @@ const ProductPage = () => {
       maxPrice: maxPrice || undefined,
     });
   };
+
   return (
     <section className="py-11">
       <div className="container">
@@ -156,9 +144,6 @@ const ProductPage = () => {
             </form>
           </div>
           <div className="col-12 col-md-8 col-lg-9">
-            {/* Slider */}
-            {/* Item */}
-            {/* Header */}
             <div className="row align-items-center mb-7">
               <div className="col-12 col-md">
                 {/* Heading */}
@@ -172,7 +157,7 @@ const ProductPage = () => {
                 </Breadcrumb>
               </div>
               <div className="col-12 col-md-auto">
-              
+
               </div>
             </div>
 
@@ -180,18 +165,18 @@ const ProductPage = () => {
               <div className="col-12 col-md">
                 {/* Search */}
                 <div className="input-group input-group-merge">
-                <input
-                  className="form-control"
-                  type="search"
-                  placeholder="Tìm kiếm"
-                  onChange={(e) => setSearch(e.target.value.trim())}
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-outline-border" type="submit">
-                    <i className="fe fe-search" />
-                  </button>
+                  <input
+                    className="form-control"
+                    type="search"
+                    placeholder="Tìm kiếm"
+                    onChange={(e) => setSearch(e.target.value.trim())}
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-outline-border" type="submit">
+                      <i className="fe fe-search" />
+                    </button>
+                  </div>
                 </div>
-              </div>
               </div>
               <div className="col-12 col-md-auto">
                 {/* Select */}
@@ -216,13 +201,6 @@ const ProductPage = () => {
               ''
             )}
             {/* Products */}
-            {productsHHB && productsHHB.length > 0 && (
-              <Pagination
-                totalPage={totalPageHHB}
-                style={{ marginBottom: 30 }}
-              />
-            )}
-
 
             {loadingCategoryHHB ? (
               createArray(16).map((_, id) => (
@@ -241,17 +219,8 @@ const ProductPage = () => {
               </>
             )}
 
-            {/* <div className="row">
-              <ProductCard
-                data={productsHHB?.data}
-                loading={loadingHHB}
-                loadingCount={9}
-                emptyText="Rất tiếc không có sản phẩm bạn tìm kiếm"
-              />
-            </div>  */}
-
             {/* Pagination */}
-            {productsHHB && productsHHB.length > 0 && <Pagination totalPage={totalPageHHB} />}
+            {productsHHB && productsHHB.totalPages > 1 && <Pagination totalPage={productsHHB?.totalPages} onPageChange={setCurrentPage} />}
 
           </div>
         </div>

@@ -15,7 +15,7 @@ const ProductDetailPage = lazy(() =>
 );
 const AuthPage = lazy(() => delayFallback(import("@/pages/AuthPage")));
 const ContactPage = lazy(() => delayFallback(import("@/pages/ContactPage")));
-const FaqPage = lazy(() => delayFallback(import("@/pages/FaqPage")));
+const FaqPage = lazy(() => delayFallback(import("@/pages/")));
 const ResetPasswordPage = lazy(() =>
   delayFallback(import("@/pages/ResetPasswordPage"))
 );
@@ -79,11 +79,11 @@ export const routers = [
       },
       {
         element: <ShippingPage />,
-        path: PATH.shipping,
+        path: PATH.about,
       },
       {
         element: <FaqPage />,
-        path: PATH.faq,
+        path: PATH.about,
       },
       {
         element: <ContactPage />,
