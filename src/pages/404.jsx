@@ -11,15 +11,15 @@ export const Page404 = () => {
             {/* Icon */}
             <div className="mb-7 font-size-h1">🙁</div>
             {/* Heading */}
-            <h2 className="mb-5">404. Page not found.</h2>
+            <h2 className="mb-5">404. Không tìm thấy trang</h2>
             {/* Text */}
             <p className="mb-7 text-gray-500">
-              Sorry, we couldn't find the page you where looking for. We suggest
-              that you return to home page.
+              Xin lỗi, chúng tôi không thể tìm thấy trang mà bạn đang tìm kiếm. Chúng tôi đề nghị
+              bạn trở lại trang chủ.
             </p>
             {/* Button */}
             <Link className="btn btn-dark" to={PATH.home}>
-              Go to Homepage
+              Quay lại trang chủ
             </Link>
           </div>
         </div>

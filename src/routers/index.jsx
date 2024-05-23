@@ -7,6 +7,7 @@ import { delayFallback } from "@/utils";
 
 import { lazy } from "react";
 import profile from "./profile";
+import { MainLayoutCMS } from "@/layouts/MainLayoutCMS";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -15,7 +16,7 @@ const ProductDetailPage = lazy(() =>
 );
 const AuthPage = lazy(() => delayFallback(import("@/pages/AuthPage")));
 const ContactPage = lazy(() => delayFallback(import("@/pages/ContactPage")));
-const FaqPage = lazy(() => delayFallback(import("@/pages/")));
+const Admin = lazy(() => delayFallback(import("@/pages/Admin")));
 const ResetPasswordPage = lazy(() =>
   delayFallback(import("@/pages/ResetPasswordPage"))
 );
@@ -82,12 +83,12 @@ export const routers = [
         path: PATH.about,
       },
       {
-        element: <FaqPage />,
-        path: PATH.about,
-      },
-      {
         element: <ContactPage />,
         path: PATH.contact,
+      },
+      {
+        element: <Page404 />,
+        path: PATH.error,
       },
       {
         element: <Page404 />,
@@ -95,4 +96,15 @@ export const routers = [
       },
     ],
   },
+
+  {
+    element: <MainLayoutCMS />,
+    children: [
+      {
+        element: <Admin />,
+        path: PATH.admin,
+      },
+    ]
+  },
 ];
+

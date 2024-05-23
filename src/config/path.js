@@ -2,6 +2,8 @@ const PROFILE = '/ca-nhan';
 
 export const PATH = {
   home: '/',
+  admin: '/admin',
+  error: '/404',
   products: '/san-pham',
   productDetail: '/:slug',
   category: '/:slug/:id',

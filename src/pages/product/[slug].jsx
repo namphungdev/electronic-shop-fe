@@ -72,6 +72,14 @@ const ProductDetailPage = () => {
       },
     });
 
+    useEffect(() => {
+      // không tìm thấy data -> 404 page
+      if(detailHHB?.data == null || detailHHB?.result == false) {
+        navigate(PATH.error)
+      }
+    }, [])
+    
+
   const [srcImgHHB, setSrcImgHHB] = useState(() => {
     if (!loadingGetProductDetailHHB)
       return detailHHB?.data?.images?.[0]?.base_url;
