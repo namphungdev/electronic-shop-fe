@@ -1,7 +1,8 @@
-import { USER_API } from "@/config";
+import { USER_API, USER_API_HHB } from "@/config";
 import { http } from "@/utils";
 export const userService = {
-  getProfile: () => http.get(`${USER_API}`),
+  // getProfile: () => http.get(`${USER_API}`),
+  getProfile: () => http.get(`${USER_API_HHB}`),
 
   register: (data) => http.post(`${USER_API}/register`, data),
 

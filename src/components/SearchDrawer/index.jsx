@@ -65,7 +65,7 @@ const SearchDrawer = () => {
   const searchDebounce = useDebounce(search, 500);
   const [heightBody, setHeightBody] = useState();
 
-  const { categoryList = [] } = useCategories([], open);
+  // const { categoryList = [] } = useCategories([], open);
   const category = useCategory(+idCategory, [], open);
 
   const topRef = useRef();
@@ -166,11 +166,11 @@ const SearchDrawer = () => {
                     All Categories
                   </option>
 
-                  {categoryList?.map((e) => (
+                  {/* {categoryList?.map((e) => (
                     <option key={e?.id} value={e.id}>
                       {e.title}
                     </option>
-                  ))}
+                  ))} */}
                 </select>
               </div>
               <div className="input-group input-group-merge">

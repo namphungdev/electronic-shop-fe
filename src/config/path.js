@@ -32,4 +32,5 @@ export const PATH = {
   about: 'gioi-thieu',
   auth: '/signin',
   resetPassword: '/reset-password',
+  authCMS: '/signin-cms'
 };

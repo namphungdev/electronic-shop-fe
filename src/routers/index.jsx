@@ -8,6 +8,8 @@ import { delayFallback } from "@/utils";
 import { lazy } from "react";
 import profile from "./profile";
 import { MainLayoutCMS } from "@/layouts/MainLayoutCMS";
+import SignInCMS from "@/components/SignInCMS";
+import { MainLayoutSignInCMS } from "@/layouts/MainLayoutSignInCMS";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -103,6 +105,16 @@ export const routers = [
       {
         element: <Admin />,
         path: PATH.admin,
+      },
+    ]
+  },
+
+  {
+    element: <GuestRoute redirect={PATH.admin} />,
+    children: [
+      {
+        element: <SignInCMS />,
+        path: PATH.authCMS,
       },
     ]
   },

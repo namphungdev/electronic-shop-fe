@@ -16,6 +16,7 @@ export function* loginWorker({ payload: { onSuccess, ...form } } = {}) {
   try {
     yield put(onSetLoadingAuth({ kind: "login", loading: true }));
     const res = yield call(authService.login, form);
+    localStorage.setItem('message_error', res.message);
     setToken(res?.data);
     const user = yield call(userService.getProfile);
     yield put(setUserAction(user?.data));

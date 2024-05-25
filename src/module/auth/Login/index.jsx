@@ -12,7 +12,7 @@ import {
 } from "@/utils";
 import React, { memo, useEffect, useState } from "react";
 import Button from "@/components/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useQueryParams from "@/hooks/useQueryParams";
 import { message } from "antd";
 import ResetPasswordModal from "@/components/ResetPasswordModal";
@@ -33,7 +33,7 @@ const Login = () => {
     {
       username: [
         required({ message: "Vui lòng nhập địa chỉ email" }),
-        regex("email", "Email chưa chính xác"),
+        // regex("email", "Email chưa chính xác"),
       ],
       password: [
         required({ message: "Vui lòng nhập mật khẩu" }),
@@ -48,25 +48,22 @@ const Login = () => {
     }
   );
 
-  const onLogin = (e) => {
+  const onLogin = async (e) => {
     e.preventDefault();
     if (validate()) {
-      dispatch(
+      await dispatch(
         loginAction({
           ...form,
-          onSuccess: (user) =>
-            toast.success(
-              <p>
-                Chúc mừng{" "}
-                <span className="text-[#34d399] font-bold">{user?.name}</span>{" "}
-                đã đăng nhập thành công!
-              </p>,
-              {
-                position: "top-center",
-              }
-            ),
         })
       );
+
+      setTimeout(() => {
+        // Show the toast message with the latest value stored in localStorage
+        toast.success(localStorage.getItem('message_error'));
+
+        // Remove the message from localStorage
+        localStorage.removeItem('message_error');
+      }, 1000);
 
       if (checkRemember) {
         setRemember({
@@ -187,7 +184,7 @@ const Login = () => {
                         title="email"
                         onClick={_copyToClipBoard}
                       >
-                        demo@spacedev.com
+                        admin
                       </span>{" "}
                       /{" "}
                       <span
@@ -195,7 +192,7 @@ const Login = () => {
                         title="password"
                         onClick={_copyToClipBoard}
                       >
-                        Spacedev@123
+                        Nhumaidao@123
                       </span>
                     </b>
                   </p>
