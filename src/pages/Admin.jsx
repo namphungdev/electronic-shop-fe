@@ -1,34 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
+import CategoryManagement from './cms/quan-ly-danh-muc';
 
 const { Content, Sider } = Layout;
-
-const items2 = [UserOutlined].map((icon, index) => {
-  const key = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
 
 const GlobalStyle = createGlobalStyle`
   html, body, #root {
     height: 100%;
     margin: 0;
-    // overflow: hidden; /* Prevent scrolling */
   }
 
   .ant-layout {
@@ -46,19 +30,58 @@ const Admin = () => {
   } = theme.useToken();
 
   const navigate = useNavigate();
-
   const { user } = useAuth();
-  console.log('user 47', user);
+  const [selectedKey, setSelectedKey] = useState('1');
 
   useEffect(() => {
-    if(user?.roleName == 'Admin') {
-      console.log('đây là admin - redirect qua admin');
-      
-    } else{
-      console.log('không phải admin - redirect qua đăng nhập');
-      navigate(PATH.authCMS)
+    if (user?.roleName === 'Admin') {
+      console.log('Admin user - access granted');
+      navigate(PATH.admin);
+    } else {
+      console.log('Non-admin user - redirecting to login');
+      navigate(PATH.authCMS);
     }
-  }, [])
+  }, [user, navigate]);
+
+  const handleMenuClick = ({ key }) => {
+    setSelectedKey(key);
+  };
+
+  const renderContent = () => {
+    switch (selectedKey) {
+      case '1-1':
+        return <CategoryManagement />;
+      case '1-2':
+        return <div>Content for Quản lý sản phẩm</div>;
+      case '2-1':
+        return <div>Content for Quản lý người dùng</div>;
+      case '2-2':
+        return <div>Content for Phân quyền người dùng</div>;
+      default:
+        return <CategoryManagement />;
+    }
+  };
+
+  const menuItems = [
+    {
+      key: 'sub1',
+      icon: <UserOutlined />,
+      label: 'Quản lý',
+      children: [
+        { key: '1-1', label: 'Quản lý danh mục' },
+        { key: '1-2', label: 'Quản lý sản phẩm' },
+      ],
+    },
+    {
+      key: 'sub2',
+      icon: <LaptopOutlined />,
+      label: 'Hệ thống',
+      children: [
+        { key: '2-1', label: 'Quản lý người dùng' },
+        { key: '2-2', label: 'Phân quyền người dùng' },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -80,12 +103,13 @@ const Admin = () => {
           >
             <Menu
               mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
+              defaultSelectedKeys={['1-1']}
+              defaultOpenKeys={['sub1', 'sub2']}
               style={{
                 height: '100%',
               }}
-              items={items2}
+              items={menuItems}
+              onClick={handleMenuClick}
             />
           </Sider>
           <Content
@@ -94,7 +118,7 @@ const Admin = () => {
               minHeight: 280,
             }}
           >
-            CMS ở đây
+            {renderContent()}
           </Content>
         </Layout>
       </StyledLayout>

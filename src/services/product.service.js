@@ -33,6 +33,16 @@ export const productServiceHHB = {
   getProductDetailHHB: (slug) =>
     http.post(`${PRODUCT_API_HHB}/web-get-product-detail/${slug}`),
 
+  // categories
+
   getCategoriesHHB: (signal) =>
     http.get(`${CATEGORY_API_HHB}/get-web-category-list`, { signal }),
+
+  getCategoriesList: (categoriesListParam, signal) =>
+    http.post(`${CATEGORY_API_HHB}/get-category-list`, categoriesListParam, {
+      signal,
+    }),
+
+  deleteCategories: (code) =>
+    http.delete(`${CATEGORY_API_HHB}/delete-category/${code}`),
 };

@@ -10,6 +10,8 @@ import profile from "./profile";
 import { MainLayoutCMS } from "@/layouts/MainLayoutCMS";
 import SignInCMS from "@/components/SignInCMS";
 import { MainLayoutSignInCMS } from "@/layouts/MainLayoutSignInCMS";
+import AddCategories from "@/pages/cms/quan-ly-danh-muc/create";
+import EditCategoies from "@/pages/cms/quan-ly-danh-muc/edit";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -105,6 +107,14 @@ export const routers = [
       {
         element: <Admin />,
         path: PATH.admin,
+      },
+      {
+        element: <AddCategories />,
+        path: PATH.categoriesAddCMS,
+      },
+      {
+        element: <EditCategoies />,
+        path: PATH.categoriesCMSDetail,
       },
     ]
   },
