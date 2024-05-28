@@ -3,6 +3,12 @@ const PROFILE = '/ca-nhan';
 export const PATH = {
   home: '/',
   admin: '/admin',
+  categoriesManagement: '/admin/category-cms-management',
+  productsManagement: '/admin/product-cms-management',
+  categoriesCMSDetail: '/admin/detail-categories/edit',
+  productsCMSDetail: '/admin/products/:code',
+  categoriesAddCMS: '/admin/add-categories',
+  productsAddCMS: '/admin/add-products',
   error: '/404',
   products: '/san-pham',
   productDetail: '/:slug',

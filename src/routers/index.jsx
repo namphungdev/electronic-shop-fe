@@ -10,6 +10,13 @@ import profile from "./profile";
 import { MainLayoutCMS } from "@/layouts/MainLayoutCMS";
 import SignInCMS from "@/components/SignInCMS";
 import { MainLayoutSignInCMS } from "@/layouts/MainLayoutSignInCMS";
+import TabCMS from "@/components/TabCMS";
+import CategoryManagement from "@/pages/cms/quan-ly-danh-muc";
+import AddCategories from "@/pages/cms/quan-ly-danh-muc/create";
+import EditCategories from "@/pages/cms/quan-ly-danh-muc/edit";
+import ProductManagement from "@/pages/cms/quan-ly-san-pham";
+import AddProducts from "@/pages/cms/quan-ly-san-pham/create";
+import EditProducts from "@/pages/cms/quan-ly-san-pham/edit";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -31,6 +38,7 @@ const OrderCompletedPage = lazy(() =>
 );
 export const routers = [
   {
+    path: "/",
     element: <MainLayout />,
     children: [
       {
@@ -101,11 +109,15 @@ export const routers = [
 
   {
     element: <MainLayoutCMS />,
+    path: "/admin",
     children: [
-      {
-        element: <Admin />,
-        path: PATH.admin,
-      },
+      { element: <Admin />, path: PATH.admin },
+      { element: <CategoryManagement />, path: PATH.categoriesManagement },
+      { element: <AddCategories />, path: PATH.categoriesAddCMS },
+      { element: <EditCategories />, path: PATH.categoriesCMSDetail },
+      { element: <ProductManagement />, path: PATH.productsManagement },
+      { element: <AddProducts />, path: PATH.productsAddCMS },
+      { element: <EditProducts />, path: PATH.productsCMSDetail },
     ]
   },
 
