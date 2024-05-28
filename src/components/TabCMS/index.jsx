@@ -15,6 +15,14 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden
   }
 
+  .body .ant-layout .sc-ipEyDJ iDMrPv .css-dev-only-do-not-override-diro6f {
+    background-color: #f5f5f9 !important;
+  }
+
+  body .ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-diro6f {
+    background-color: #f5f5f9 !important;
+  }
+
   .ant-layout {
     min-height: 100%;
   }
