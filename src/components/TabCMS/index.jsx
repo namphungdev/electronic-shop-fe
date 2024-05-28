@@ -21,6 +21,17 @@ const GlobalStyle = createGlobalStyle`
 
   .ant-layout {
     min-height: 100%;
+    background-color: #f5f5f9 !important;
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+  }
+
+  .ant-pagination {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
   }
 `;
 

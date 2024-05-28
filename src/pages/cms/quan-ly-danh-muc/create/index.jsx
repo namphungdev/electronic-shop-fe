@@ -133,7 +133,7 @@ const AddCategories = () => {
                                             id="categoryName"
                                             value={inputCategoryName}
                                             onChange={handleInputChange('categoryName')}
-                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12 px-4"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                                         />
                                         {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
                                     </div>
@@ -152,7 +152,7 @@ const AddCategories = () => {
                                             id="categoryDescription"
                                             value={inputCategoryDescription}
                                             onChange={handleInputChange('categoryDescription')}
-                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12 px-4"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                                         />
                                     </div>
                                 </div>
@@ -161,7 +161,7 @@ const AddCategories = () => {
                                 <div className="form-group">
                                     <label htmlFor="categoryStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
                                     <select
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 h-12 px-4"
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                                         id="categoryStatus"
                                         value={categoryStatus}
                                         onChange={handleInputChange('categoryStatus')}
