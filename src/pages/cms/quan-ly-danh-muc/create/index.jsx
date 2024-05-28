@@ -174,7 +174,7 @@ const AddCategories = () => {
 
                             <div className="col-12 d-flex justify-center">
                                 <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>
-                                <Button danger htmlType="button">HỦY</Button>
+                                <Button danger htmlType="button" onClick={() => navigate(PATH.categoriesManagement)}>HỦY</Button>
                             </div>
                         </div>
                     </div>

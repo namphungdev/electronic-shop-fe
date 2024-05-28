@@ -49,6 +49,19 @@ const StyledTable = styled(Table)`
     overflow: auto;
 `;
 
+const locale = {
+    items_per_page: '/ Trang',
+    jump_to: 'Đi đến',
+    jump_to_confirm: 'xác nhận',
+    page: '',
+    prev_page: 'Trang trước',
+    next_page: 'Trang sau',
+    prev_5: '5 trang trước',
+    next_5: '5 trang sau',
+    prev_3: '3 trang trước',
+    next_3: '3 trang sau',
+};
+
 const CategoryManagement = () => {
     const navigate = useNavigate()
     const [dataListCategories, setDataListCategories] = useState([]);
@@ -69,17 +82,20 @@ const CategoryManagement = () => {
             dataIndex: 'name',
             key: 'name',
         },
-        {
-            title: 'Mô tả',
-            dataIndex: 'description',
-            key: 'description',
-        },
+        // {
+        //     title: 'Mô tả',
+        //     dataIndex: 'description',
+        //     key: 'description',
+        // },
         {
             title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
             render: (status) => (
-                <Tag color={status === 'ACTIVE' ? 'green' : 'red'}>
+                <Tag 
+                    color={status === 'ACTIVE' ? 'green' : 'red'}
+                    style={{ width: 130, textAlign: 'center', fontSize: 13, padding: '5px 0px' }}
+                >
                     {status === 'ACTIVE' ? 'Hoạt động' : 'Không hoạt động'}
                 </Tag>
             ),
@@ -223,16 +239,23 @@ const CategoryManagement = () => {
                             style={{ width: 200 }}
                             onChange={handleFilterStatus}
                             allowClear
+                            defaultValue=""
                         >
+                            <Option value="">Tất cả</Option>
                             <Option value="ACTIVE">Hoạt động</Option>
                             <Option value="INACTIVE">Không hoạt động</Option>
                         </Select>
                     </FilterContainer>
                     <CustomButton onClick={() => navigate(PATH.categoriesAddCMS)} type="primary" icon={<PlusOutlined />}>
-                        THÊM
+                        <span style={{
+                            'color': '#fff',
+                            'font-weight': '600'
+                        }}>
+                            THÊM
+                        </span>
                     </CustomButton>
                 </Toolbar>
-                
+
                 <StyledTable
                     columns={columns}
                     dataSource={dataListCategories}
@@ -240,7 +263,7 @@ const CategoryManagement = () => {
                     locale={{ emptyText: 'Không có kết quả hiển thị' }}
                     pagination={false}
                 />
-                
+
                 <Pagination
                     current={pagination.current}
                     pageSize={pagination.pageSize}
@@ -248,6 +271,7 @@ const CategoryManagement = () => {
                     onChange={handleTableChange}
                     showSizeChanger
                     onShowSizeChange={handleTableChange}
+                    locale={locale} // Thêm thuộc tính locale vào Pagination
                 />
             </div>
 
@@ -270,7 +294,7 @@ const CategoryManagement = () => {
                     </Button>
                 </div>
             </Modal>
-        </ContentContainer>
+        </ContentContainer >
     );
 
 }
