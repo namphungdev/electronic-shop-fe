@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Table, Input, Button, Space, Select, Tag, Modal } from 'antd';
+import { Table, Input, Button, Space, Select, Tag, Modal, Pagination } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import useQuery from '@/hooks/useQuery';
 import { productServiceHHB } from '@/services/product.service';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
+import { toast } from 'react-toastify';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -44,7 +45,7 @@ const CustomButton = styled(Button)`
 `;
 
 const StyledTable = styled(Table)`
-    height: 450px;
+    height: 400px;
     overflow: auto;
 `;
 
@@ -54,6 +55,13 @@ const CategoryManagement = () => {
     const [filterStatus, setFilterStatus] = useState(null);
     const [searchKeyword, setSearchKeyword] = useState("");
     const [isFirstLoad, setIsFirstLoad] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCategoryCode, setSelectedCategoryCode] = useState(null);
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 10,
+        total: 0,
+    });
 
     const columns = [
         {
@@ -103,17 +111,17 @@ const CategoryManagement = () => {
     const categoriesListParam = useMemo(
         () => ({
             keyword: searchKeyword,
-            pageIndex: 1,
-            pageSize: 10,
-            status: filterStatus
+            pageIndex: pagination.current,
+            pageSize: pagination.pageSize,
+            status: filterStatus,
         }),
-        [searchKeyword, filterStatus]
+        [searchKeyword, filterStatus, pagination.current, pagination.pageSize]
     );
 
     const params = isFirstLoad ? initialParams : categoriesListParam;
 
     const {
-        data: { data: getCategoriesList = [], paginate: { totalPageCategoriesList } = {} } = {},
+        data: { data: getCategoriesList = [], paginate: { totalRecords } = {}, } = {},
         loading: loadingCategoriesList,
     } = useQuery({
         queryKey: `product-page-${JSON.stringify(categoriesListParam)}`,
@@ -133,10 +141,18 @@ const CategoryManagement = () => {
                 status: category.status,
             }));
             setDataListCategories(formattedData);
+            setPagination((prev) => ({
+                ...prev,
+                total: totalRecords,
+            }));
         } else {
             setDataListCategories([]);
+            setPagination((prev) => ({
+                ...prev,
+                total: 0,
+            }));
         }
-    }, [getCategoriesList]);
+    }, [getCategoriesList, totalRecords]);
 
     useEffect(() => {
         setIsFirstLoad(false);
@@ -144,37 +160,49 @@ const CategoryManagement = () => {
 
     const handleFilterStatus = (value) => {
         setFilterStatus(value);
+        setPagination((prev) => ({
+            ...prev,
+            current: 1,
+        }));
     };
 
     const handleSearch = (value) => {
         setSearchKeyword(value);
+        setPagination((prev) => ({
+            ...prev,
+            current: 1,
+        }));
+    };
+
+    const handleTableChange = (page, pageSize) => {
+        setPagination((prev) => ({
+            ...prev,
+            current: page,
+            pageSize,
+        }));
     };
 
     const showDeleteConfirm = (code) => {
-        Modal.confirm({
-            title: 'Bạn có muốn xóa danh mục sản phẩm này không?',
-            content: 'Hành động không thể hoàn tác',
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            onOk() {
-                handleConfirmDelete(code);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
+        setSelectedCategoryCode(code);
+        setIsModalOpen(true);
     };
 
-    const handleConfirmDelete = (code) => {
-        // Add your delete logic here
-        console.log('Deleting category with code:', code);
-        // Example: Call your delete service
-        // productServiceHHB.deleteCategory(code).then(() => {
-        //     // Refresh the list or handle post-delete actions
-        // });
+    const handleDeleteCategory = async () => {
+        setIsModalOpen(false);
+        try {
+            const res = await productServiceHHB.deleteCategories(selectedCategoryCode)
+            if (res.result && res.code == 200) {
+                toast.success('Xóa danh mục thành công')
+                handleTableChange(pagination.current, pagination.pageSize); // Refetch data
+            }
+        } catch (error) {
+            toast.error(res.message)
+        }
     };
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <ContentContainer>
@@ -204,6 +232,7 @@ const CategoryManagement = () => {
                         THÊM
                     </CustomButton>
                 </Toolbar>
+                
                 <StyledTable
                     columns={columns}
                     dataSource={dataListCategories}
@@ -211,7 +240,36 @@ const CategoryManagement = () => {
                     locale={{ emptyText: 'Không có kết quả hiển thị' }}
                     pagination={false}
                 />
+                
+                <Pagination
+                    current={pagination.current}
+                    pageSize={pagination.pageSize}
+                    total={pagination.total}
+                    onChange={handleTableChange}
+                    showSizeChanger
+                    onShowSizeChange={handleTableChange}
+                />
             </div>
+
+            <Modal
+                visible={isModalOpen}
+                onCancel={closeModal}
+                footer={null}
+                centered
+            >
+                <div className="text-center">
+                    <svg className="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa danh mục này không?</h3>
+                    <Button type="primary" danger onClick={handleDeleteCategory}>
+                        Đồng ý
+                    </Button>
+                    <Button onClick={closeModal} style={{ marginLeft: 8 }}>
+                        Hủy
+                    </Button>
+                </div>
+            </Modal>
         </ContentContainer>
     );
 

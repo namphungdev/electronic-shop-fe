@@ -72,8 +72,8 @@ const EditCategories = () => {
         try {
             const res = await productServiceHHB.updateCategory(params)
             if (res && res.result && res.code == 200) {
-                toast.success('Chỉnh sửa danh mục thành công')
                 navigate(PATH.categoriesManagement)
+                toast.success('Chỉnh sửa danh mục thành công')
             }
         } catch (error) {
             toast.error(res.message)

@@ -3,16 +3,52 @@ import { Space, Button } from 'antd';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { productServiceHHB } from '@/services/product.service';
+import { PATH } from '@/config';
+
+// Character map for converting Vietnamese characters to non-accented equivalents
+const characterMap = {
+    'á': 'a', 'à': 'a', 'ả': 'a', 'ã': 'a', 'ạ': 'a',
+    'ă': 'a', 'ắ': 'a', 'ằ': 'a', 'ẳ': 'a', 'ẵ': 'a', 'ặ': 'a',
+    'â': 'a', 'ấ': 'a', 'ầ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ậ': 'a',
+    'đ': 'd',
+    'é': 'e', 'è': 'e', 'ẻ': 'e', 'ẽ': 'e', 'ẹ': 'e',
+    'ê': 'e', 'ế': 'e', 'ề': 'e', 'ể': 'e', 'ễ': 'e', 'ệ': 'e',
+    'í': 'i', 'ì': 'i', 'ỉ': 'i', 'ĩ': 'i', 'ị': 'i',
+    'ó': 'o', 'ò': 'o', 'ỏ': 'o', 'õ': 'o', 'ọ': 'o',
+    'ô': 'o', 'ố': 'o', 'ồ': 'o', 'ổ': 'o', 'ỗ': 'o', 'ộ': 'o',
+    'ơ': 'o', 'ớ': 'o', 'ờ': 'o', 'ở': 'o', 'ỡ': 'o', 'ợ': 'o',
+    'ú': 'u', 'ù': 'u', 'ủ': 'u', 'ũ': 'u', 'ụ': 'u',
+    'ư': 'u', 'ứ': 'u', 'ừ': 'u', 'ử': 'u', 'ữ': 'u', 'ự': 'u',
+    'ý': 'y', 'ỳ': 'y', 'ỷ': 'y', 'ỹ': 'y', 'ỵ': 'y'
+};
+
+// Function to convert Vietnamese characters to non-accented equivalents
+const convertVietnameseToNonAccented = (str) => {
+    return str
+        .split('')
+        .map(char => characterMap[char] || char)
+        .join('')
+        .toLowerCase()
+        .replace(/[^\w\s]/gi, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/ /g, '-');
+};
 
 const AddCategories = () => {
     const navigate = useNavigate()
     const [inputCategoryCode, setInputCategoryCode] = useState('');
     const [inputCategoryName, setInputCategoryName] = useState('');
     const [inputCategoryDescription, setInputCategoryDescription] = useState('');
-    const [categoryStatus, setCategoryStatus] = useState('');
+    const [categoryStatus, setCategoryStatus] = useState('ACTIVE');
+    const [nameError, setNameError] = useState('');
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (!inputCategoryName) {
+            setNameError('Tên danh mục không được để trống');
+            return;
+        }
         const params = {
             code: inputCategoryCode,
             name: inputCategoryName,
@@ -21,27 +57,24 @@ const AddCategories = () => {
         }
         try {
             const res = await productServiceHHB.insertCategory(params)
-            if (res && res.result && res.code == 200) {
-                toast.success('Thêm danh mục thành công')
+            if (res.result && res.code == 200) {
                 navigate(PATH.categoriesManagement)
+                toast.success('Thêm danh mục thành công')
             }
         } catch (error) {
             toast.error(res.message)
         }
-
     };
 
     const handleInputChange = (fieldName) => (e) => {
         const { value } = e.target;
         switch (fieldName) {
             case 'categoryName':
+                if (nameError) {
+                    setNameError('');
+                }
                 setInputCategoryName(value);
-                const codeConvert = value
-                    .toLowerCase()
-                    .replace(/[^\w\s]/gi, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-')
-                    .replace(/ /g, '-');
+                const codeConvert = convertVietnameseToNonAccented(value);
                 setInputCategoryCode(codeConvert);
                 break;
             case 'categoryDescription':
@@ -82,7 +115,7 @@ const AddCategories = () => {
                                             disabled
                                             value={inputCategoryCode}
                                             onChange={handleInputChange('categoryCode')}
-                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12 px-4"
                                         />
                                     </div>
                                 </div>
@@ -100,8 +133,9 @@ const AddCategories = () => {
                                             id="categoryName"
                                             value={inputCategoryName}
                                             onChange={handleInputChange('categoryName')}
-                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12 px-4"
                                         />
+                                        {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +152,7 @@ const AddCategories = () => {
                                             id="categoryDescription"
                                             value={inputCategoryDescription}
                                             onChange={handleInputChange('categoryDescription')}
-                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                                            className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12 px-4"
                                         />
                                     </div>
                                 </div>
@@ -127,7 +161,7 @@ const AddCategories = () => {
                                 <div className="form-group">
                                     <label htmlFor="categoryStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
                                     <select
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 h-12"
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 h-12 px-4"
                                         id="categoryStatus"
                                         value={categoryStatus}
                                         onChange={handleInputChange('categoryStatus')}
