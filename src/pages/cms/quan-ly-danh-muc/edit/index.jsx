@@ -38,6 +38,7 @@ const EditCategories = () => {
             setInputCategoryCode(getCategoriesList.code);
             setInputCategoryName(getCategoriesList.name);
             setInputCategoryDescription(getCategoriesList.description)
+            setCategoryStatus(getCategoriesList.status || '')
         }
     }, [getCategoriesList]);
 

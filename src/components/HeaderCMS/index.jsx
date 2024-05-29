@@ -8,7 +8,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logoutAction } from '@/stores/auth/authReducer';
 import { toast } from 'react-toastify';
+import { createGlobalStyle } from 'styled-components';
 
+const GlobalStyle = createGlobalStyle`
+  .custom-navbar {
+    width: 87%;
+    margin-left: auto;
+    margin-right: 0;
+    background: rgb(255, 255, 255) !important;
+  }
+`;
 
 const HeaderCMS = () => {
   const dispatch = useDispatch();
@@ -16,17 +25,11 @@ const HeaderCMS = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light w-full z-10 bg-white shadow-lg h-10">
+      <GlobalStyle />
+      <nav className="custom-navbar navbar navbar-expand-lg navbar-light w-full z-10 bg-white shadow-lg h-10">
         <div className="container flex justify-between items-center px-4">
           {/* Brand */}
-          {/* <Link className="navbar-brand" to={PATH.home}>
-            <img
-              style={{ width: '50px', height: 'auto' }}
-              srcSet="/img/logos.png 2x"
-            />
-          </Link> */}
-
-          <div className="navbar-collapse" id="navbarCollapse" style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <div className="navbar-collapse" id="navbarCollapse" style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <ul className="navbar-nav flex-row items-center">
               <li className="nav-item ">
                 {user ? (

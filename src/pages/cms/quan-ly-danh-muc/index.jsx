@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Table, Input, Button, Space, Select, Tag, Modal, Pagination } from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import useQuery from '@/hooks/useQuery';
 import { productServiceHHB } from '@/services/product.service';
@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 
 const { Search } = Input;
 const { Option } = Select;
-const { confirm } = Modal;
 
 const ContentContainer = styled.div`
 height: calc(100vh - 64px);
@@ -92,7 +91,7 @@ const CategoryManagement = () => {
             dataIndex: 'status',
             key: 'status',
             render: (status) => (
-                <Tag 
+                <Tag
                     color={status === 'ACTIVE' ? 'green' : 'red'}
                     style={{ width: 130, textAlign: 'center', fontSize: 13, padding: '5px 0px' }}
                 >
@@ -205,11 +204,11 @@ const CategoryManagement = () => {
 
     const handleDeleteCategory = async () => {
         setIsModalOpen(false);
+        const res = await productServiceHHB.deleteCategories(selectedCategoryCode)
         try {
-            const res = await productServiceHHB.deleteCategories(selectedCategoryCode)
             if (res.result && res.code == 200) {
                 toast.success('Xóa danh mục thành công')
-                handleTableChange(pagination.current, pagination.pageSize); // Refetch data
+                window.location.reload()
             }
         } catch (error) {
             toast.error(res.message)
@@ -246,12 +245,12 @@ const CategoryManagement = () => {
                             <Option value="INACTIVE">Không hoạt động</Option>
                         </Select>
                     </FilterContainer>
-                    <CustomButton onClick={() => navigate(PATH.categoriesAddCMS)} type="primary" icon={<PlusOutlined />}>
+                    <CustomButton onClick={() => navigate(PATH.categoriesAddCMS)} type="primary">
                         <span style={{
                             'color': '#fff',
-                            'font-weight': '600'
+                            'font-weight': '500'
                         }}>
-                            THÊM
+                            Thêm
                         </span>
                     </CustomButton>
                 </Toolbar>
