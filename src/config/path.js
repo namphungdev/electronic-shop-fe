@@ -5,6 +5,7 @@ export const PATH = {
   admin: '/admin',
   categoriesManagement: '/admin/category-cms-management',
   productsManagement: '/admin/product-cms-management',
+  usersManagement: '/admin/user-cms-management',
   categoriesCMSDetail: '/admin/detail-categories/edit',
   productsCMSDetail: '/admin/products/:code',
   categoriesAddCMS: '/admin/add-categories',

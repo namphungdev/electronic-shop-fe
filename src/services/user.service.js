@@ -1,9 +1,13 @@
-import { USER_API, USER_API_HHB } from "@/config";
+import { AUTH_API_HHB, USER_API, USER_API_HHB } from "@/config";
 import { http } from "@/utils";
 export const userService = {
-  // getProfile: () => http.get(`${USER_API}`),
+
+  // user cms
   getProfile: () => http.get(`${USER_API_HHB}`),
 
+  getUsersList: (param) => http.get(`${AUTH_API_HHB}/list-users/${param.pageIndex}/${param.pageSize}?keyword=${param.keyword}&status=${param.status}`),
+
+  // user cms
   register: (data) => http.post(`${USER_API}/register`, data),
 
   updateInfo: (data) => http.patch(`${USER_API}`, data),

@@ -59,40 +59,43 @@ const TabCMS = () => {
 
   const handleMenuClick = ({ key }) => {
     setSelectedKey(key);
-    navigate(key); // Điều hướng tới route tương ứng với mục menu được chọn
+    navigate(key); 
   };
 
   const menuItems = [
+    // {
+    //   key: '/admin/category-cms-management',
+    //   icon: <UserOutlined />,
+    //   label: 'Quản lý',
+    //   children: [
+    //     { key: '/admin/category-cms-management', label: 'Quản lý danh mục' },
+    //     { key: '/admin/product-cms-management', label: 'Quản lý sản phẩm' },
+    //   ],
+    // },
+
     {
       key: '/admin/category-cms-management',
       icon: <UserOutlined />,
-      label: 'Quản lý',
-      children: [
-        { key: '/admin/category-cms-management', label: 'Quản lý danh mục' },
-        { key: '/admin/product-cms-management', label: 'Quản lý sản phẩm' },
-      ],
-    },
-
-    {
-      key: '/admin/category-cms-management',
-      icon: <LaptopOutlined />,
       label: 'Quản lý danh mục',
-      // children: [
-      //   { key: '/admin/category-cms-management', label: 'Quản lý danh mục' },
-      //   { key: '/admin/product-cms-management', label: 'Quản lý sản phẩm' },
-      // ],
     },
 
     {
-      key: '/admin/category-cms-management',
-      icon: <LaptopOutlined />,
-      label: 'Phân quyền người dùng',
-      // children: [
-      //   { key: '/admin/category-cms-management', label: 'Quản lý danh mục' },
-      //   { key: '/admin/product-cms-management', label: 'Quản lý sản phẩm' },
-      // ],
+      key: '/admin/product-cms-management',
+      icon: <UserOutlined />,
+      label: 'Quản lý sản phẩm',
     },
 
+    {
+      key: '/admin/user-cms-management',
+      icon: <LaptopOutlined />,
+      label: 'Danh sách người dùng',
+    },
+
+    // {
+    //   key: '/admin/product-cms-management',
+    //   icon: <LaptopOutlined />,
+    //   label: 'Phân quyền người dùng',
+    // },
   ];
 
   return (
