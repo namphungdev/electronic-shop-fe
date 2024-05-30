@@ -55,10 +55,7 @@ const SignInCMS = () => {
       );
 
       setTimeout(() => {
-        // Show the toast message with the latest value stored in localStorage
         toast.success(localStorage.getItem('message_error'));
-
-        // Remove the message from localStorage
         localStorage.removeItem('message_error');
       }, 1000);
 
@@ -98,70 +95,71 @@ const SignInCMS = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto w-auto d-flex h-auto"
-            srcSet="/img/logos.png 2x"
-          />
-        </div>
+    <div className="flex min-h-screen flex-col justify-center items-center">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img
+          className="mx-auto w-auto d-flex h-auto"
+          srcSet="/img/logos.png 2x"
+        />
+      </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="select-none"
-            onSubmit={onLogin}
-            autoComplete="off"
-            ref={formRef}
-          >
-            <div className="row">
-              <div className="col-12">
-                {/* Email */}
-                <Field
-                  className="form-control form-control-sm"
-                  id="loginEmail"
-                  placeholder="Email Address *"
-                  {...register("username")}
-                />
-              </div>
-              <div className="col-12">
-                {/* Password */}
-                <Field
-                  className="form-control form-control-sm"
-                  id="loginPassword"
-                  type="password"
-                  placeholder="Password *"
-                  {...register("password")}
-                />
-              </div>
-              <div className="col-12 col-md">
-                {/* Remember */}
-                <div className="form-group">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      className="custom-control-input"
-                      id="loginRemember"
-                      type="checkbox"
-                    />
-                    <label
-                      className="custom-control-label"
-                      htmlFor="loginRemember"
-                    >
-                      Remember me
-                    </label>
-                  </div>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form
+          className="select-none"
+          onSubmit={onLogin}
+          autoComplete="off"
+          ref={formRef}
+        >
+          <div className="row">
+            <div className="col-12">
+              {/* Email */}
+              <Field
+                className="form-control form-control-sm"
+                id="loginEmail"
+                placeholder="Tên đăng nhập *"
+                {...register("username")}
+              />
+            </div>
+            <div className="col-12">
+              {/* Password */}
+              <Field
+                className="form-control form-control-sm"
+                id="loginPassword"
+                type="password"
+                placeholder="Mật khẩu *"
+                {...register("password")}
+              />
+            </div>
+            <div className="col-12 col-md">
+              {/* Remember */}
+              <div className="form-group">
+                <div className="custom-control custom-checkbox">
+                  <input
+                    className="custom-control-input"
+                    id="loginRemember"
+                    type="checkbox"
+                    checked={checkRemember}
+                    onChange={(e) => setCheckRemember(e.target.checked)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="loginRemember"
+                  >
+                    Remember me
+                  </label>
                 </div>
               </div>
-
-              <div className="col-12">
-                {/* Button */}
-                <Button loading={_loading}>Đăng nhập</Button>
-              </div>
-
             </div>
-          </form>
-        </div>
+
+            <div className="col-12">
+              {/* Button */}
+              <Button loading={_loading}>Đăng nhập</Button>
+            </div>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
+  </>
   );
 };
 

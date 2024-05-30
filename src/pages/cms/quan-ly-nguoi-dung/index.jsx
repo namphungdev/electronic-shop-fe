@@ -38,6 +38,12 @@ const CustomSearch = styled(Search)`
   }
 `;
 
+const CustomSelect = styled(Select)`
+  .ant-select-clear {
+    display: none
+  }
+`;
+
 const CustomButton = styled(Button)`
   display: flex;
   align-items: center;
@@ -195,7 +201,7 @@ const UserManagement = () => {
                                 style={{ maxWidth: '500px', flex: '1' }}
                                 onSearch={handleSearch}
                             />
-                            <Select
+                            <CustomSelect
                                 placeholder="Trạng thái"
                                 style={{ width: 200 }}
                                 onChange={handleFilterStatus}
@@ -205,7 +211,7 @@ const UserManagement = () => {
                                 <Option value="">Tất cả</Option>
                                 <Option value="ACTIVE">Hoạt động</Option>
                                 <Option value="INACTIVE">Không hoạt động</Option>
-                            </Select>
+                            </CustomSelect>
                         </FilterContainer>
                     </Toolbar>
 

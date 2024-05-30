@@ -12,8 +12,8 @@ const { Search } = Input;
 const { Option } = Select;
 
 const ContentContainer = styled.div`
-height: calc(100vh - 64px);
-overflow: hidden; 
+    overflow: hidden; 
+    height: calc(100vh - 64px);
 `;
 
 
@@ -37,6 +37,12 @@ const CustomSearch = styled(Search)`
   }
 `;
 
+const CustomSelect = styled(Select)`
+  .ant-select-clear {
+    display: none
+  }
+`;
+
 const CustomButton = styled(Button)`
   display: flex;
   align-items: center;
@@ -44,7 +50,7 @@ const CustomButton = styled(Button)`
 `;
 
 const StyledTable = styled(Table)`
-    height: 400px;
+    height: 55vh;
     overflow: auto;
 `;
 
@@ -236,7 +242,7 @@ const CategoryManagement = () => {
                             style={{ maxWidth: '500px', flex: '1' }}
                             onSearch={handleSearch}
                         />
-                        <Select
+                        <CustomSelect
                             placeholder="Trạng thái"
                             style={{ width: 200 }}
                             onChange={handleFilterStatus}
@@ -246,7 +252,7 @@ const CategoryManagement = () => {
                             <Option value="">Tất cả</Option>
                             <Option value="ACTIVE">Hoạt động</Option>
                             <Option value="INACTIVE">Không hoạt động</Option>
-                        </Select>
+                        </CustomSelect>
                     </FilterContainer>
                     <CustomButton onClick={() => navigate(PATH.categoriesAddCMS)} type="primary">
                         <span style={{

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LaptopOutlined, UserOutlined } from '@ant-design/icons';
+import { ContactsOutlined, FileTextOutlined, LaptopOutlined, ShoppingCartOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useAuth } from '@/hooks/useAuth';
@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
 
   .ant-layout {
     min-height: 100%;
+    z-index: 2;
     background-color: #f5f5f9 !important;
   }
 
@@ -63,39 +64,23 @@ const TabCMS = () => {
   };
 
   const menuItems = [
-    // {
-    //   key: '/admin/category-cms-management',
-    //   icon: <UserOutlined />,
-    //   label: 'Quản lý',
-    //   children: [
-    //     { key: '/admin/category-cms-management', label: 'Quản lý danh mục' },
-    //     { key: '/admin/product-cms-management', label: 'Quản lý sản phẩm' },
-    //   ],
-    // },
-
     {
       key: '/admin/category-cms-management',
-      icon: <UserOutlined />,
+      icon: <FileTextOutlined />,
       label: 'Quản lý danh mục',
     },
 
     {
       key: '/admin/product-cms-management',
-      icon: <UserOutlined />,
+      icon: <ShoppingCartOutlined />,
       label: 'Quản lý sản phẩm',
     },
 
     {
       key: '/admin/user-cms-management',
-      icon: <LaptopOutlined />,
+      icon: <TeamOutlined />,
       label: 'Danh sách người dùng',
     },
-
-    // {
-    //   key: '/admin/product-cms-management',
-    //   icon: <LaptopOutlined />,
-    //   label: 'Phân quyền người dùng',
-    // },
   ];
 
   return (
@@ -110,7 +95,7 @@ const TabCMS = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <Sider
+          <Sider width={220}
             style={{
               background: colorBgContainer,
               height: '100vh',
@@ -118,9 +103,7 @@ const TabCMS = () => {
               left: 0,
               top: 0,
               bottom: 0,
-              // overflow: 'auto'
             }}
-            width={200}
           >
             <div style={{ textAlign: 'center', padding: '20px 0' }}>
               <Link to={PATH.home}>
@@ -144,9 +127,7 @@ const TabCMS = () => {
           </Sider>
           <Content
             style={{
-              marginLeft: 200, // Chừa khoảng trống cho Sider
-              padding: '0 24px',
-              minHeight: 200,
+              marginLeft: 255, 
             }}
           >
             <Outlet />

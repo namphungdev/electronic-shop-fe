@@ -36,7 +36,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-12 col-md-3">
               {/* Heading */}
-              <h4 className="mb-6 text-white">Shopper.</h4>
+              <h4 className="mb-6 text-white">NHUMAIDAO</h4>
               {/* Social */}
               <ul className="list-unstyled list-inline mb-7 mb-md-0">
                 <li className="list-inline-item">
@@ -66,19 +66,19 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-6 col-sm">
+            <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white">Support</h6>
+              <h6 className="heading-xxs mb-4 text-white">Thông tin liên hệ</h6>
               {/* Links */}
               <ul className="list-unstyled mb-7 mb-sm-0">
                 <li>
-                  <a className="text-gray-300" href="./contact-us.html">
-                    Contact Us
+                  <a className="text-gray-300">
+                    Thông tin liên hệ
                   </a>
                 </li>
                 <li>
-                  <a className="text-gray-300" href="./faq.html">
-                    FAQs
+                  <a className="text-gray-300">
+                    Trụ sở chính: 1 Phan Chu Trinh, Phường Tân Thành, Quận Tân Phú
                   </a>
                 </li>
                 <li>
@@ -87,7 +87,7 @@ const Footer = () => {
                     data-toggle="modal"
                     href="#modalSizeChart"
                   >
-                    Size Guide
+                    Trụ sở chính: 1 Phan Chu Trinh, Phường Tân Thành, Quận Tân Phú
                   </a>
                 </li>
                 <li>
@@ -95,86 +95,67 @@ const Footer = () => {
                     className="text-gray-300"
                     href="./shipping-and-returns.html"
                   >
-                    Shipping &amp; Returns
+                    Trụ sở chính: 1 Phan Chu Trinh, Phường Tân Thành, Quận Tân Phú
                   </a>
                 </li>
               </ul>
             </div>
-            <div className="col-6 col-sm">
+            <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white">Shop</h6>
+              <h6 className="heading-xxs mb-4 text-white">Giới thiệu</h6>
               {/* Links */}
               <ul className="list-unstyled mb-7 mb-sm-0">
                 <li>
                   <a className="text-gray-300" href="./shop.html">
-                    Men's Shopping
+                   Giới thiệu
                   </a>
                 </li>
                 <li>
                   <a className="text-gray-300" href="./shop.html">
-                    Women's Shopping
+                    Liên hệ
                   </a>
                 </li>
                 <li>
                   <a className="text-gray-300" href="./shop.html">
-                    Kids' Shopping
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-300" href="./shop.html">
-                    Discounts
+                    Tin tức
                   </a>
                 </li>
               </ul>
             </div>
-            <div className="col-6 col-sm">
+            <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white">Company</h6>
+              <h6 className="heading-xxs mb-4 text-white">Hỗ trợ khách hàng</h6>
               {/* Links */}
               <ul className="list-unstyled mb-0">
                 <li>
                   <a className="text-gray-300" href="./about.html">
-                    Our Story
+                    Mua hàng Online
                   </a>
                 </li>
                 <li>
                   <a className="text-gray-300" href="#!">
-                    Careers
+                    Chính sách bảo hành
                   </a>
                 </li>
                 <li>
                   <a className="text-gray-300" href="#!">
-                    Terms &amp; Conditions
+                    Chính sách đổi trả
                   </a>
                 </li>
                 <li>
                   <a className="text-gray-300" href="#!">
-                    Privacy &amp; Cookie policy
+                    Cam kết mua hàng đảm bảo
                   </a>
                 </li>
               </ul>
             </div>
-            <div className="col-6 col-sm">
+            <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white">Contact</h6>
+              <h6 className="heading-xxs mb-4 text-white">Map</h6>
               {/* Links */}
-              <ul className="list-unstyled mb-0">
-                <li>
-                  <a className="text-gray-300" href="#!">
-                    1-202-555-0105
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-300" href="#!">
-                    1-202-555-0106
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-300" href="#!">
-                    help@shopper.com
-                  </a>
-                </li>
-              </ul>
+              <div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.192844820119!2d106.63248457436676!3d10.79653725882382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529538a127823%3A0x94902c228651620f!2zNzdhIMSQxrDhu51uZyBUcuG6p24gVOG6pW4sIFTDom4gU8ahbiBOaMOsLCBUw6JuIFBow7osIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1716221897210!5m2!1svi!2s" width="100%" height="250" style={{ border: 0 }} allowFullScreen="" loading="lazy"></iframe>
+              </div>
             </div>
           </div>
         </div>

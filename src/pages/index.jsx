@@ -193,80 +193,14 @@ export const Home = () => {
       </section>
       {/* COUNTDOWN */}
       <section
-        className="py-13 bg-cover"
-        style={{ backgroundImage: 'url(/img/covers/cover-4.jpg)' }}
+        className="py-13"
       >
         <div className="container">
-          <div className="row justify-content-end">
-            <div className="col-12 col-md-8 col-lg-6">
-              {/* Heading */}
-              <h3 className="mb-7">
-                Giãm hơn 50% <br />
-                Bộ sưu tập mùa hè
-              </h3>
-              {/* Counter */}
-              <div
-                className="d-flex mb-9"
-                data-countdown
-                data-date="Dec 5, 2023 15:37:25"
-              >
-                <div className="text-center">
-                  <div
-                    className="font-size-h1 font-weight-bolder text-primary"
-                    data-days
-                  >
-                    00
-                  </div>
-                  <div className="heading-xxs text-muted">Days</div>
-                </div>
-                <div className="px-1 px-md-4">
-                  <div className="font-size-h2 font-weight-bolder text-primary">
-                    :
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div
-                    className="font-size-h1 font-weight-bolder text-primary"
-                    data-hours
-                  >
-                    00
-                  </div>
-                  <div className="heading-xxs text-muted">Hours</div>
-                </div>
-                <div className="px-1 px-md-4">
-                  <div className="font-size-h2 font-weight-bolder text-primary">
-                    :
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div
-                    className="font-size-h1 font-weight-bolder text-primary"
-                    data-minutes
-                  >
-                    00
-                  </div>
-                  <div className="heading-xxs text-muted">Minutes</div>
-                </div>
-                <div className="px-1 px-md-4">
-                  <div className="font-size-h2 font-weight-bolder text-primary">
-                    :
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div
-                    className="font-size-h1 font-weight-bolder text-primary"
-                    data-seconds
-                  >
-                    00
-                  </div>
-                  <div className="heading-xxs text-muted">Seconds</div>
-                </div>
-              </div>
-              {/* Button */}
-              <a className="btn btn-dark" href="shop.html">
-                Mua ngay <i className="fe fe-arrow-right ml-2" />
-              </a>
-            </div>
+          <div className="row justify-content-center">
+            <img
+              style={{ width: 'auto', height: 'auto' }}
+              srcSet="/img/logos.png 2x"
+            />
           </div>
         </div>
       </section>

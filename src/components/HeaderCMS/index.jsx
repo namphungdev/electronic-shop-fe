@@ -12,7 +12,8 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   .custom-navbar {
-    width: 87%;
+    width: 100%;
+    z-index: 1;
     margin-left: auto;
     margin-right: 0;
     background: rgb(255, 255, 255) !important;

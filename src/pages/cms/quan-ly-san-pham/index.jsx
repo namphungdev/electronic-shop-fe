@@ -38,6 +38,12 @@ const CustomSearch = styled(Search)`
   }
 `;
 
+const CustomSelect = styled(Select)`
+  .ant-select-clear {
+    display: none
+  }
+`;
+
 const CustomButton = styled(Button)`
   display: flex;
   align-items: center;
@@ -125,7 +131,7 @@ const ProductManagement = () => {
                 enterButton
                 style={{ maxWidth: '500px', flex: '1' }}
               />
-              <Select
+              <CustomSelect
                 placeholder="Trạng thái"
                 style={{ width: 200 }}
                 allowClear
@@ -134,7 +140,7 @@ const ProductManagement = () => {
                 <Option value="">Tất cả</Option>
                 <Option value="ACTIVE">Hoạt động</Option>
                 <Option value="INACTIVE">Không hoạt động</Option>
-              </Select>
+              </CustomSelect>
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.productsAddCMS)} type="primary">
               <span style={{

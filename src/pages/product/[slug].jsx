@@ -6,7 +6,6 @@ import Field from '@/components/Field';
 import ImagePreview from '@/components/ImagePreview';
 import InputQuantity from '@/components/InputQuantity';
 import Pagination from '@/components/Pagination';
-import Rating from '@/components/Rating';
 import { ReviewCardList } from '@/components/ReviewCard';
 import ShortenContent from '@/components/ShortenContent';
 import Skeleton from '@/components/Skeleton';
@@ -73,11 +72,13 @@ const ProductDetailPage = () => {
     });
 
     useEffect(() => {
-      // không tìm thấy data -> 404 page
-      if(detailHHB?.data == null || detailHHB?.result == false) {
-        navigate(PATH.error)
+      if (
+        !loadingGetProductDetailHHB &&
+        (!detailHHB || Object.keys(detailHHB).length === 0 || detailHHB?.data == null)
+      ) {
+        navigate(PATH.error);
       }
-    }, [])
+    }, [detailHHB, loadingGetProductDetailHHB, navigate]);
     
 
   const [srcImgHHB, setSrcImgHHB] = useState(() => {
