@@ -199,7 +199,7 @@ export const Home = () => {
           <div className="row justify-content-center">
             <img
               style={{ width: 'auto', height: 'auto' }}
-              srcSet="/img/logos.png 2x"
+              srcSet="/img/qr_code.jpg "
             />
           </div>
         </div>
