@@ -8,26 +8,26 @@ const Footer = () => {
     >
       <div className="py-12 border-bottom border-gray-700">
         <div className="container">
-          <div className='mb-12 '>
-            <div className="mb-7 text-white flex">
-              <div className='w-72 text-2xl'>Đơn vị bán (Seller):</div>
-              <span className="flex-grow ml-12 text-2xl">CÔNG TY TNHH TM-DV THIẾT BỊ ĐIỆN TỬ NHƯ MAI ĐÀO</span>
+          <div className='mb-12 border border-white leading-tight p-4 bg-white'>
+            <div className="mb-3 text-gray flex">
+              <div className='w-72'>Đơn vị bán (Seller):</div>
+              <span className="flex-grow ml-12 font-bold">CÔNG TY TNHH TM-DV THIẾT BỊ ĐIỆN TỬ NHƯ MAI ĐÀO</span>
             </div>
-            <div className="mb-7 text-white flex">
-              <div className='w-72 text-2xl'>Mã số thuế (Tax Code):</div>
-              <span className="flex-grow ml-12 text-2xl">0 3 1 7 8 7 7 7 0 6</span>
+            <div className="mb-3 text-gray flex">
+              <div className='w-72'>Mã số thuế (Tax Code):</div>
+              <span className="flex-grow ml-12 font-bold">0 3 1 7 8 7 7 7 0 6</span>
             </div>
-            <div className="mb-7 text-white flex">
-              <div className='w-72 text-2xl'>Địa chỉ (Address):</div>
-              <span className="flex-grow ml-12 text-2xl">77A Trần Tấn, Phường Tân Sơn Nhì, Quận Tân Phú, TP.HCM</span>
+            <div className="mb-3 text-gray flex">
+              <div className='w-72'>Địa chỉ (Address):</div>
+              <span className="flex-grow ml-12 ">77A Trần Tấn, Phường Tân Sơn Nhì, Quận Tân Phú, TP.HCM</span>
             </div>
-            <div className="mb-7 text-white flex">
-              <div className='w-72 text-2xl'>Điện thoại (Tel):</div>
-              <span className="flex-grow ml-12 text-2xl">0965.117729 / 0876866820</span>
+            <div className="mb-3 text-gray flex">
+              <div className='w-72'>Điện thoại (Tel):</div>
+              <span className="flex-grow ml-12 ">0965.117729 / 0876866820</span>
             </div>
-            <div className="mb-7 text-white flex">
-              <div className='w-72 text-2xl'>Số tài khoản (Account No):</div>
-              <span className="flex-grow ml-12 text-2xl">STK</span>
+            <div className=" text-gray flex">
+              <div className='w-72'>Số tài khoản (Account No):</div>
+              <span className="flex-grow ml-12 ">STK</span>
             </div>
           </div>
 
@@ -39,24 +39,7 @@ const Footer = () => {
               <ul className="list-disc pl-5 mb-7 mb-sm-0">
                 <li className='text-white'>
                   <a className="text-gray-300">
-                    Trụ sở chính: 1 Phan Chu Trinh, Phường Tân Thành, Quận Tân Phú
-                  </a>
-                </li>
-                <li className='text-white'>
-                  <a
-                    className="text-gray-300"
-                    data-toggle="modal"
-                    href="#modalSizeChart"
-                  >
-                    Trụ sở chính: 1 Phan Chu Trinh, Phường Tân Thành, Quận Tân Phú
-                  </a>
-                </li>
-                <li className='text-white'>
-                  <a
-                    className="text-gray-300"
-                    href="./shipping-and-returns.html"
-                  >
-                    Trụ sở chính: 1 Phan Chu Trinh, Phường Tân Thành, Quận Tân Phú
+                    Chi nhánh chính: 77A Trần Tấn, Phường Tân Sơn Nhì, Quận Tân Phú, TP.HCM
                   </a>
                 </li>
               </ul>

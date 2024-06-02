@@ -33,6 +33,22 @@ export const productServiceHHB = {
   getProductDetailHHB: (slug) =>
     http.post(`${PRODUCT_API_HHB}/web-get-product-detail/${slug}`),
 
+  getProductsList: (productsListParam, signal) =>
+    http.post(`${PRODUCT_API_HHB}/get-product-list`, productsListParam, {
+      signal,
+    }),
+
+  insertProduct: (productsListInsert, signal) =>
+    http.post(`${PRODUCT_API_HHB}/insert-product`, productsListInsert, {
+      signal,
+    }),
+
+  getProductDetailCMS: (slug) =>
+    http.get(`${PRODUCT_API_HHB}/get-product-detail/${slug}`),
+
+  deleteProducts: (code) =>
+    http.put(`${PRODUCT_API_HHB}/delete-product/${code}`),
+
   // categories
 
   getCategoriesHHB: (signal) =>
@@ -58,4 +74,6 @@ export const productServiceHHB = {
     http.put(`${CATEGORY_API_HHB}/update-category`, categoriesListUpdate, {
       signal,
     }),
+
+  // product 
 };

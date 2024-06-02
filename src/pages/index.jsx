@@ -196,9 +196,10 @@ export const Home = () => {
         className="py-13"
       >
         <div className="container">
+          <h3 className='text-center py-4'>Quét mã QR để được hỗ trợ tư vấn mua hàng nhanh nhất</h3>
           <div className="row justify-content-center">
             <img
-              style={{ width: 'auto', height: 'auto' }}
+              style={{ width: '500px', height: 'auto' }}
               srcSet="/img/qr_code.jpg "
             />
           </div>

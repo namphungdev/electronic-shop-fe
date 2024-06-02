@@ -17,7 +17,6 @@ height: calc(100vh - 64px);
 overflow: hidden; 
 `;
 
-
 const Toolbar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -69,51 +68,180 @@ const locale = {
 };
 
 const ProductManagement = () => {
-
   const navigate = useNavigate()
-
-  const dataSource = [
-    {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street',
-    },
-    {
-      key: '2',
-      name: 'John',
-      age: 42,
-      address: '10 Downing Street',
-    },
-  ];
+  const [dataListProducts, setDataListProducts] = useState([]);
+  const [filterStatus, setFilterStatus] = useState(null);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProductSlug, setSelectedProductSlug] = useState(null);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
 
   const columns = [
     {
-      title: 'Name',
+      title: 'Tên',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Danh mục',
+      dataIndex: 'categoryName',
+      key: 'categoryName',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Giá',
+      dataIndex: 'price',
+      key: 'price',
+    },
+    // {
+    //   title: 'Mở bán',
+    //   dataIndex: 'isPublished',
+    //   key: 'isPublished',
+    // },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status) => (
+        <Tag
+          color={status === 'ACTIVE' ? 'green' : 'red'}
+          style={{ width: 130, textAlign: 'center', fontSize: 13, padding: '5px 0px' }}
+        >
+          {status === 'ACTIVE' ? 'Hoạt động' : 'Không hoạt động'}
+        </Tag>
+      ),
     },
     {
       title: 'Hành động',
       key: 'action',
-      render: (_, record) => (
+      render: (_, record) => 
+      (
         <>
-          <EditOutlined />
-          <DeleteOutlined />
+          <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
+            localStorage.setItem('product-slug', record.slug)
+            navigate(`${PATH.productsCMSDetail}`)
+           }} />
+          <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.slug)} />
         </>
       ),
     },
   ];
+
+  const initialParams = {
+    keyword: "",
+    pageIndex: 1,
+    pageSize: 10,
+    categoryCode: null,
+    status: null
+  };
+
+  const productsListParam = useMemo(
+    () => ({
+      keyword: searchKeyword,
+      pageIndex: pagination.current,
+      pageSize: pagination.pageSize,
+      categoryCode: null,
+      status: filterStatus,
+    }),
+    [searchKeyword, filterStatus, pagination.current, pagination.pageSize]
+  );
+
+  const params = isFirstLoad ? initialParams : productsListParam;
+
+  const {
+    data: { data: getProductsList = [], paginate: { totalRecords } = {}, } = {},
+    loading: loadingProductsList,
+  } = useQuery({
+    queryKey: `product-page-${JSON.stringify(productsListParam)}`,
+    keepPreviousData: true,
+    keepStorage: false,
+    queryFn: ({ signal }) =>
+      productServiceHHB.getProductsList(params, signal),
+  });
+
+  useEffect(() => {
+    if (getProductsList?.data?.length) {
+      const formattedData = getProductsList?.data?.map((product, index) => ({
+        id: product.id,
+        code: product.code,
+        name: product.name,
+        categoryName: product.categoryName,
+        price: product.price,
+        slug: product.slug,
+        description: product.shortDescription,
+        status: product.status,
+      }));
+      setDataListProducts(formattedData);
+      setPagination((prev) => ({
+        ...prev,
+        total: totalRecords,
+      }));
+    } else {
+      setDataListProducts([]);
+      setPagination((prev) => ({
+        ...prev,
+        total: 0,
+      }));
+    }
+  }, [getProductsList, totalRecords]);
+
+  useEffect(() => {
+    setIsFirstLoad(false);
+  }, []);
+
+  const handleFilterStatus = (value) => {
+    setFilterStatus(value);
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+  };
+
+  const handleSearch = (value) => {
+    setSearchKeyword(value);
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+  };
+
+  const handleTableChange = (page, pageSize) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: page,
+      pageSize,
+    }));
+  };
+
+  const showDeleteConfirm = (slug) => {
+    setSelectedProductSlug(slug);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteProduct = async () => {
+    setIsModalOpen(false);
+    try {
+      const res = await productServiceHHB.deleteProducts(selectedProductSlug);
+
+      if (res.result && res.code === 200) {
+        toast.success('Xóa sản phẩm thành công');
+        window.location.reload();
+      } else {
+        toast.error(res.message || 'Đã có lỗi xảy ra');
+      }
+    } catch (error) {
+      toast.error('Đã có lỗi xảy ra khi xóa sản phẩm');
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <ContentContainer>
@@ -130,16 +258,18 @@ const ProductManagement = () => {
                 placeholder="Tìm kiếm ..."
                 enterButton
                 style={{ maxWidth: '500px', flex: '1' }}
+                onSearch={handleSearch}
               />
               <CustomSelect
                 placeholder="Trạng thái"
                 style={{ width: 200 }}
+                onChange={handleFilterStatus}
                 allowClear
-                defaultValue=""
+                defaultValue={null}
               >
-                <Option value="">Tất cả</Option>
+                <Option value={null}>Tất cả</Option>
                 <Option value="ACTIVE">Hoạt động</Option>
-                <Option value="INACTIVE">Không hoạt động</Option>
+                <Option value="IACTIVE">Không hoạt động</Option>
               </CustomSelect>
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.productsAddCMS)} type="primary">
@@ -151,8 +281,45 @@ const ProductManagement = () => {
               </span>
             </CustomButton>
           </Toolbar>
-          <Table dataSource={dataSource} columns={columns} pagination={false} />
+
+          <StyledTable
+            columns={columns}
+            dataSource={dataListProducts}
+            loading={loadingProductsList}
+            locale={{ emptyText: 'Không có kết quả hiển thị' }}
+            pagination={false}
+          />
+
+          <Pagination
+            current={pagination.current}
+            pageSize={pagination.pageSize}
+            total={pagination.total}
+            onChange={handleTableChange}
+            showSizeChanger
+            onShowSizeChange={handleTableChange}
+            locale={locale} // Thêm thuộc tính locale vào Pagination
+          />
         </div>
+
+        <Modal
+          visible={isModalOpen}
+          onCancel={closeModal}
+          footer={null}
+          centered
+        >
+          <div className="text-center">
+            <svg className="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa sản phẩm này không?</h3>
+            <Button type="primary" danger onClick={handleDeleteProduct}>
+              Đồng ý
+            </Button>
+            <Button onClick={closeModal} style={{ marginLeft: 8 }}>
+              Hủy
+            </Button>
+          </div>
+        </Modal>
       </ContentContainer>
     </>
 

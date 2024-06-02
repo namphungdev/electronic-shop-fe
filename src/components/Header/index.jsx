@@ -47,7 +47,7 @@ const Header = () => {
         {/* NAVBAR */}
 
         {/* NAVBAR */}
-        <nav className="navbar navbar-expand-lg navbar-light fixed top-0 left-0 w-full z-10 " style={{background: 'rgb(215, 158, 105)'}}>
+        <nav className="navbar navbar-expand-lg navbar-light fixed top-0 left-0 w-full z-10 " style={{background: '#70d9fe'}}>
           <div className="container">
             {/* Brand */}
             <Link className="navbar-brand" to={PATH.home}>

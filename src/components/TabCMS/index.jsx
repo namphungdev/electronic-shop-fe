@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ContactsOutlined, FileTextOutlined, LaptopOutlined, ShoppingCartOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
+import { FileTextOutlined, ShoppingCartOutlined, TeamOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useAuth } from '@/hooks/useAuth';
@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
+  }
+
+  .ant-menu-item {
+    padding-left: 15px !important
   }
 `;
 
@@ -80,6 +84,12 @@ const TabCMS = () => {
       key: '/admin/user-cms-management',
       icon: <TeamOutlined />,
       label: 'Danh sách người dùng',
+    },
+
+    {
+      key: '/admin/permission-cms-users',
+      icon: <UserSwitchOutlined />,
+      label: 'Phân quyền người dùng',
     },
   ];
 

@@ -179,7 +179,7 @@ const AddCategories = () => {
                         </div>
                     </div>
                 </div>
-            </form >
+            </form>
         </>
     );
 };
