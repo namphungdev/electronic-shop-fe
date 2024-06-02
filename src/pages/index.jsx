@@ -27,12 +27,12 @@ export const Home = () => {
             >
               <div className="card-body mt-auto mb-n11 py-8">
                 {/* Heading */}
-                <h1 className="mb-0 font-weight-bolder">Women</h1>
+                <h1 className="mb-0 font-weight-bolder">Nguồn</h1>
               </div>
               <div className="card-body mt-auto py-8">
                 {/* Button */}
                 <a className="btn btn-white stretched-link" href="/nguon-12v/5">
-                  Shop Women <i className="fe fe-arrow-right ml-2" />
+                Nguồn <i className="fe fe-arrow-right ml-2" />
                 </a>
               </div>
             </div>
@@ -40,7 +40,7 @@ export const Home = () => {
           {/* Card */}
           <div
             className="col-12 col-md-6 col-lg-4 d-flex flex-column bg-cover"
-            style={{ backgroundImage: 'url(/img/covers/cover-2.jpg)' }}
+            style={{ backgroundImage: 'url(/img/covers/82f3383b2efd4cbda98d0313d3778e7a-228x228.jpg)' }}
           >
             <div
               className="card bg-dark-5 bg-hover text-white text-center"
@@ -48,12 +48,12 @@ export const Home = () => {
             >
               <div className="card-body mt-auto mb-n11 py-8">
                 {/* Heading */}
-                <h1 className="mb-0 font-weight-bolder">Men</h1>
+                <h1 className="mb-0 font-weight-bolder">Đèn Led</h1>
               </div>
               <div className="card-body mt-auto py-8">
                 {/* Button */}
-                <a className="btn btn-white stretched-link" href="/san-pham">
-                  Shop Men <i className="fe fe-arrow-right ml-2" />
+                <a className="btn btn-white stretched-link" href="/led-5m-12v/8">
+                Đèn Led <i className="fe fe-arrow-right ml-2" />
                 </a>
               </div>
             </div>
@@ -61,7 +61,7 @@ export const Home = () => {
           {/* Card */}
           <div
             className="col-12 col-md-6 col-lg-4 d-flex flex-column bg-cover"
-            style={{ backgroundImage: 'url(/img/covers/cover-3.jpg)' }}
+            style={{ backgroundImage: 'url(/img/covers/64f3825ee14f49bf8f25ddcbbc9a50d6-228x228.png)' }}
           >
             <div
               className="card bg-dark-5 bg-hover text-white text-center"
@@ -70,13 +70,13 @@ export const Home = () => {
               <div className="card-body mt-auto mb-n11 py-8">
                 {/* Heading */}
                 <h1 className="mb-0 font-weight-bolder">
-                  Đồ chơi, Mẹ &amp; Bé
+                  Đế điện
                 </h1>
               </div>
               <div className="card-body mt-auto py-8">
                 {/* Button */}
-                <a className="btn btn-white stretched-link" href="/san-pham">
-                  Shop Kids <i className="fe fe-arrow-right ml-2" />
+                <a className="btn btn-white stretched-link" href="/de-dien/3">
+                Đế điện <i className="fe fe-arrow-right ml-2" />
                 </a>
               </div>
             </div>
