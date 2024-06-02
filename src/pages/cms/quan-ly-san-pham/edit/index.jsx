@@ -6,6 +6,7 @@ import Loading from '@/components/Loading';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
+import { useCategoriesHHB } from '@/hooks/useCategories';
 
 const EditProducts = () => {
   const navigate = useNavigate()
@@ -20,6 +21,7 @@ const EditProducts = () => {
   const [categoryStatus, setCategoryStatus] = useState('ACTIVE');
 
   useEffect(() => {
+
     const productSlugFromStorage = localStorage.getItem('product-slug');
     if (productSlugFromStorage) {
       setProductSlug(productSlugFromStorage);
@@ -39,10 +41,15 @@ const EditProducts = () => {
 
   console.log('getProductsList', getProductsList)
 
-    useEffect(() => {
-      if (getProductsList.name !== undefined || getProductsList.shortDescription !== undefined || getCategoriesList.description !== undefined ) {
-        setInputProductName(getProductsList.name);
-      }
+  useEffect(() => {
+    if (getProductsList.name !== undefined || getProductsList.shortDescription !== undefined || getProductsList.price !== undefined || getProductsList.quanlity !== undefined || getProductsList.status !== undefined || getProductsList.categoryCode !== undefined) {
+      setInputProductName(getProductsList.name);
+      setInputProductDescription(getProductsList.shortDescription)
+      setInputProductPrice(getProductsList.price)
+      setInputProductQuanlity(getProductsList.quanlity)
+      setCategoryStatus(getProductsList.status)
+      setCategoryCode(getProductsList.categoryCode)
+    }
   }, [getProductsList]);
 
   // const handleInputChange = (fieldName) => (e) => {
@@ -184,23 +191,118 @@ const EditProducts = () => {
                 </div>
 
                 <div className="col-md-6">
-                <div className="form-group">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Mô tả sản phẩm *
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      placeholder='Mô tả sản phẩm'
-                      type="text"
-                      name="shortDescription"
-                      id="shortDescription"
-                      value={inputProductDescription}
-                      onChange={handleInputChange('shortDescription')}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                    />
+                  <div className="form-group">
+                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                      Mô tả sản phẩm *
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        placeholder='Mô tả sản phẩm'
+                        type="text"
+                        name="shortDescription"
+                        id="shortDescription"
+                        value={inputProductDescription}
+                        onChange={handleInputChange('shortDescription')}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                      Giá *
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        placeholder='Giá'
+                        type="text"
+                        name="price"
+                        id="price"
+                        value={inputProductPrice}
+                        onChange={handleInputChange('price')}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                      Số lượng *
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        placeholder='Số lượng'
+                        type="text"
+                        name="quanlity"
+                        id="quanlity"
+                        value={inputProductQuanlity}
+                        onChange={handleInputChange('quanlity')}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                      Link hình ảnh
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        placeholder='Link hình ảnh'
+                        type="text"
+                        name="images"
+                        id="images"
+                        value={inputProductImg}
+                        onChange={handleInputChange('images')}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label htmlFor="categoryCode" className="block text-sm font-medium leading-6 text-gray-900">Mã danh mục</label>
+                    <select
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      id="categoryCode"
+                      value={categoryCode}
+                      // onChange={handleInputChange('categoryCode')}
+                    >
+                      <option value="">Chọn mã danh mục</option>
+                      {/* {categoryListHHB?.map((category) => (
+                        <option key={category.id} value={category.slug}>
+                          {category.title}
+                        </option>
+                      ))} */}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label htmlFor="categoryStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
+                    <select
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      id="categoryStatus"
+                      value={categoryStatus}
+                      // onChange={handleInputChange('categoryStatus')}
+                    >
+                      <option value="ACTIVE">Hoạt động</option>
+                      <option value="IACTIVE">Không hoạt động</option>
+                    </select>
+                  </div>
+                </div>
+
+
+
+                {/*  */}
 
                 <div className="col-12 d-flex justify-center">
                   <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>

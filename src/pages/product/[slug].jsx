@@ -71,15 +71,15 @@ const ProductDetailPage = () => {
       },
     });
 
-    useEffect(() => {
-      if (
-        !loadingGetProductDetailHHB &&
-        (!detailHHB || Object.keys(detailHHB).length === 0 || detailHHB?.data == null)
-      ) {
-        navigate(PATH.error);
-      }
-    }, [detailHHB, loadingGetProductDetailHHB, navigate]);
-    
+  useEffect(() => {
+    if (
+      !loadingGetProductDetailHHB &&
+      (!detailHHB || Object.keys(detailHHB).length === 0 || detailHHB?.data == null)
+    ) {
+      navigate(PATH.error);
+    }
+  }, [detailHHB, loadingGetProductDetailHHB, navigate]);
+
 
   const [srcImgHHB, setSrcImgHHB] = useState(() => {
     if (!loadingGetProductDetailHHB)
@@ -105,35 +105,44 @@ const ProductDetailPage = () => {
   }, [cart, detail]);
 
   const handleUpdateCart = () => {
-    user
-      ? dispatch(
-          updateCartAction({
-            id: detail?.id,
-            data: { quantity: quantity + +inputRef?.current },
-            toast: true,
-            pending: (
-              <>
-                Đang thêm{' '}
-                <span className="font-semibold italic">"{detail?.name}"</span>{' '}
-                vào giỏ hàng
-              </>
-            ),
-            success: (
-              <>
-                Đã thêm{' '}
-                <span className="font-semibold italic">"{detail?.name}"</span>{' '}
-                vào giỏ hàng thành công
-              </>
-            ),
-            alert: true,
-          })
-        )
-      : (navigate(PATH.auth, {
-          state: {
-            redirect: pathname,
-          },
-        }),
-        toast.warn('Vui lòng đăng nhập để mua sản phẩm'));
+    toast.warning('Tính năng mua hàng đang trong quá trình phát triển', {
+      autoClose: 5000,
+    }
+    )
+    toast.success('Vui lòng liên hệ SĐT: 0965117729 để được hỗ trợ và tư vấn mua hàng nhanh nhất!', {
+      autoClose: 5000,
+    }
+    )
+
+    // user
+    //   ? dispatch(
+    //       updateCartAction({
+    //         id: detail?.id,
+    //         data: { quantity: quantity + +inputRef?.current },
+    //         toast: true,
+    //         pending: (
+    //           <>
+    //             Đang thêm{' '}
+    //             <span className="font-semibold italic">"{detail?.name}"</span>{' '}
+    //             vào giỏ hàng
+    //           </>
+    //         ),
+    //         success: (
+    //           <>
+    //             Đã thêm{' '}
+    //             <span className="font-semibold italic">"{detail?.name}"</span>{' '}
+    //             vào giỏ hàng thành công
+    //           </>
+    //         ),
+    //         alert: true,
+    //       })
+    //     )
+    //   : (navigate(PATH.auth, {
+    //       state: {
+    //         redirect: pathname,
+    //       },
+    //     }),
+    //     toast.warn('Vui lòng đăng nhập để mua sản phẩm'));
   };
 
   // ==== wishList ====
@@ -392,12 +401,11 @@ const ProductDetailPage = () => {
                               className="btn-block mb-2 normal-case"
                               loading={loadingUpdatecart[detailHHB?.data?.id]}
                             >
-                              Add to Cart
+                              Thêm vào giỏ hàng
                               <i className="fe fe-shopping-cart ml-2" />
                             </Button>
                           </div>
-                          <div className="col-12 col-lg-auto">
-                            {/* Wishlist */}
+                          {/* <div className="col-12 col-lg-auto">
                             <Button
                               className="btn-block mb-2 normal-case"
                               outline
@@ -405,7 +413,7 @@ const ProductDetailPage = () => {
                             >
                               Wishlist <i className="fe fe-heart ml-2" />
                             </Button>
-                          </div>
+                          </div> */}
                         </div>
                         <p className="mb-0">
                           <span className="mr-4">Share:</span>

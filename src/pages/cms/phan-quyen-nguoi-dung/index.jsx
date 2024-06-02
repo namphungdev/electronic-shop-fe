@@ -17,8 +17,6 @@ const ContentContainer = styled.div`
     height: calc(100vh - 64px);
 `;
 
-
-
 const Toolbar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -52,7 +50,7 @@ const CustomButton = styled(Button)`
 `;
 
 const StyledTable = styled(Table)`
-    height: 55vh;
+    height: 25vh;
     overflow: auto;
 `;
 
@@ -165,12 +163,110 @@ const PermissionUsers = () => {
                     locale={{ emptyText: 'Không có kết quả hiển thị' }}
                     pagination={false}
                 />
+
+                {/* <div className="flex items-center justify-center mb-4">
+                    <h3 className="text-blue-600 font-semibold">Đặt hẹn</h3>
+                    <div className="flex space-x-12 ml-auto">
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
+                            <span className="text-blue-600">Tạo mới</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
+                            <span className="text-blue-600">Cập nhật</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
+                            <span className="text-blue-600">Xóa</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
+                            <span className="text-blue-600">Xem chi tiết</span>
+                        </label>
+                    </div>
+                </div> */}
+
+
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-gray-600 font-semibold text-xl">Quản lý sản phẩm</h3>
+                    <div className="flex space-x-12" style={{paddingRight: '50px'}}>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Tạo mới</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Cập nhật</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xóa</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xem danh sách</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xem chi tiết</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-gray-600 font-semibold text-xl">Quản lý danh mục</h3>
+                    <div className="flex space-x-12" style={{paddingRight: '50px'}}>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Tạo mới</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Cập nhật</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xóa</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xem danh sách</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xem chi tiết</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-gray-600 font-semibold text-xl">Danh sách người dùng</h3>
+                    <div className="flex space-x-12" style={{paddingRight: '50px'}}>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Tạo mới</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Cập nhật</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xóa</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xem danh sách</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                            <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
+                            <span className="text-gray-600">Xem chi tiết</span>
+                        </label>
+                    </div>
+                </div>
+
             </div>
-
-
         </ContentContainer>
-
-
     )
 }
 
