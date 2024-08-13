@@ -36,6 +36,7 @@ export const PATH = {
   },
   shipping: '/shipping-and-return',
   faq: 'faq',
+  camera: 'camera',
   contact: 'lien-he',
   about: 'gioi-thieu',
   auth: '/signin',

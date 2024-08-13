@@ -19,6 +19,7 @@ import AddProducts from "@/pages/cms/quan-ly-san-pham/create";
 import EditProducts from "@/pages/cms/quan-ly-san-pham/edit";
 import UserManagement from "@/pages/cms/quan-ly-nguoi-dung";
 import PermissionUsers from "@/pages/cms/phan-quyen-nguoi-dung";
+import Camera from "@/pages/Camera";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -93,6 +94,10 @@ export const routers = [
       {
         element: <ShippingPage />,
         path: PATH.about,
+      },
+      {
+        element: <Camera />,
+        path: PATH.camera,
       },
       {
         element: <ContactPage />,

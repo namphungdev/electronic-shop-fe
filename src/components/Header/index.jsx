@@ -25,6 +25,10 @@ const HeaderNavs = [
     nav: 'Sản phẩm',
   },
   {
+    to: PATH.camera,
+    nav: 'Camera',
+  },
+  { 
     to: PATH.contact,
     nav: 'Liên hệ',
   },
@@ -45,15 +49,13 @@ const Header = () => {
       <CartDrawer />
       <div>
         {/* NAVBAR */}
-
-        {/* NAVBAR */}
-        <nav className="navbar navbar-expand-lg navbar-light fixed top-0 left-0 w-full z-10 " style={{background: '#70d9fe'}}>
+        <nav className="navbar navbar-expand-lg navbar-light fixed top-0 left-0 w-full z-10 " style={{background: '#ba9344'}}>
           <div className="container">
             {/* Brand */}
             <Link className="navbar-brand" to={PATH.home}>
               <img
                 style={{ width: '75px', height: 'auto' }}
-                srcSet="/img/logos.png 2x"
+                srcSet="/img/logo-gach.jpg 2x"
               />
             </Link>
             {/* Toggler */}

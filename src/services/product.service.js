@@ -43,6 +43,11 @@ export const productServiceHHB = {
       signal,
     }),
 
+  updateProduct: (productsListUpdate, signal) =>
+    http.put(`${PRODUCT_API_HHB}/update-product`, productsListUpdate, {
+      signal,
+    }),
+
   getProductDetailCMS: (slug) =>
     http.get(`${PRODUCT_API_HHB}/get-product-detail/${slug}`),
 

@@ -23,26 +23,6 @@ const Toolbar = styled.div`
   margin-bottom: 16px;
 `;
 
-const FilterContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  flex: 1;
-`;
-
-const CustomSearch = styled(Search)`
-  .ant-input-search-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
-const CustomSelect = styled(Select)`
-  .ant-select-clear {
-    display: none
-  }
-`;
-
 const CustomButton = styled(Button)`
   display: flex;
   align-items: center;
@@ -54,18 +34,6 @@ const StyledTable = styled(Table)`
     overflow: auto;
 `;
 
-const locale = {
-    items_per_page: '/ Trang',
-    jump_to: 'Đi đến',
-    jump_to_confirm: 'xác nhận',
-    page: '',
-    prev_page: 'Trang trước',
-    next_page: 'Trang sau',
-    prev_5: '5 trang trước',
-    next_5: '5 trang sau',
-    prev_3: '3 trang trước',
-    next_3: '3 trang sau',
-};
 
 const PermissionUsers = () => {
 
@@ -164,32 +132,12 @@ const PermissionUsers = () => {
                     pagination={false}
                 />
 
-                {/* <div className="flex items-center justify-center mb-4">
-                    <h3 className="text-blue-600 font-semibold">Đặt hẹn</h3>
-                    <div className="flex space-x-12 ml-auto">
-                        <label className="flex items-center space-x-1">
-                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
-                            <span className="text-blue-600">Tạo mới</span>
-                        </label>
-                        <label className="flex items-center space-x-1">
-                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
-                            <span className="text-blue-600">Cập nhật</span>
-                        </label>
-                        <label className="flex items-center space-x-1">
-                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
-                            <span className="text-blue-600">Xóa</span>
-                        </label>
-                        <label className="flex items-center space-x-1">
-                            <input type="checkbox" className="form-checkbox h-6 w-6 text-blue-600" />
-                            <span className="text-blue-600">Xem chi tiết</span>
-                        </label>
-                    </div>
-                </div> */}
+            </div >
 
-
+            <div className="py-5 px-5 my-5 mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-gray-600 font-semibold text-xl">Quản lý sản phẩm</h3>
-                    <div className="flex space-x-12" style={{paddingRight: '50px'}}>
+                    <div className="flex space-x-12" style={{ paddingRight: '50px' }}>
                         <label className="flex items-center space-x-1">
                             <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
                             <span className="text-gray-600">Tạo mới</span>
@@ -215,7 +163,7 @@ const PermissionUsers = () => {
 
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-gray-600 font-semibold text-xl">Quản lý danh mục</h3>
-                    <div className="flex space-x-12" style={{paddingRight: '50px'}}>
+                    <div className="flex space-x-12" style={{ paddingRight: '50px' }}>
                         <label className="flex items-center space-x-1">
                             <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
                             <span className="text-gray-600">Tạo mới</span>
@@ -241,7 +189,7 @@ const PermissionUsers = () => {
 
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-gray-600 font-semibold text-xl">Danh sách người dùng</h3>
-                    <div className="flex space-x-12" style={{paddingRight: '50px'}}>
+                    <div className="flex space-x-12" style={{ paddingRight: '50px' }}>
                         <label className="flex items-center space-x-1">
                             <input type="checkbox" className="form-checkbox h-6 w-6 text-gray-600" />
                             <span className="text-gray-600">Tạo mới</span>
@@ -264,7 +212,6 @@ const PermissionUsers = () => {
                         </label>
                     </div>
                 </div>
-
             </div>
         </ContentContainer>
     )

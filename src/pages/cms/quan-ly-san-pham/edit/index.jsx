@@ -19,9 +19,13 @@ const EditProducts = () => {
   const [inputProductImg, setInputProductImg] = useState("");
   const [categoryCode, setCategoryCode] = useState('');
   const [categoryStatus, setCategoryStatus] = useState('ACTIVE');
+  const [isPublished, setIsPublished] = useState(true);
+  const [errors, setErrors] = useState({});
+
+  const { categoryListHHB, loadingCategoryHHB } = useCategoriesHHB();
+
 
   useEffect(() => {
-
     const productSlugFromStorage = localStorage.getItem('product-slug');
     if (productSlugFromStorage) {
       setProductSlug(productSlugFromStorage);
@@ -39,38 +43,21 @@ const EditProducts = () => {
       productServiceHHB.getProductDetailCMS(productSlug, signal),
   });
 
-  console.log('getProductsList', getProductsList)
+  // console.log('getProductsList', getProductsList)
 
   useEffect(() => {
     if (getProductsList.name !== undefined || getProductsList.shortDescription !== undefined || getProductsList.price !== undefined || getProductsList.quanlity !== undefined || getProductsList.status !== undefined || getProductsList.categoryCode !== undefined) {
+      setInputProductCode(getProductsList.code)
       setInputProductName(getProductsList.name);
       setInputProductDescription(getProductsList.shortDescription)
       setInputProductPrice(getProductsList.price)
       setInputProductQuanlity(getProductsList.quanlity)
       setCategoryStatus(getProductsList.status)
       setCategoryCode(getProductsList.categoryCode)
+      setInputProductImg(getProductsList.images?.[0]?.base_url || ''); // Set image link
+      setIsPublished(getProductsList.isPublished);
     }
   }, [getProductsList]);
-
-  // const handleInputChange = (fieldName) => (e) => {
-  //     const { value } = e.target;
-  //     switch (fieldName) {
-  //         case 'categoryName':
-  //             setInputCategoryName(value);
-  //             break;
-  //         case 'categoryCode':
-  //             setInputCategoryCode(value);
-  //             break;
-  //         case 'categoryDescription':
-  //             setInputCategoryDescription(value);
-  //             break;
-  //         case 'categoryStatus':
-  //             setCategoryStatus(value);
-  //             break;
-  //         default:
-  //             break;
-  //     }
-  // };
 
   const validate = () => {
     const newErrors = {};
@@ -86,6 +73,37 @@ const EditProducts = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    const params = {
+      isPublished: isPublished,
+      description: null,
+      specifications: "[]",
+      code: inputProductCode,
+      name: inputProductName,
+      shortDescription: inputProductDescription,
+      price: parseFloat(inputProductPrice),
+      quanlity: parseFloat(inputProductQuanlity),
+      images: inputProductImg ? [{ base_url: inputProductImg }] : [],
+      categoryCode: categoryCode,
+      status: categoryStatus
+  }
+  console.log('params 88', params)
+
+  try {
+    const res = await productServiceHHB.updateProduct(params)
+    if (res.result && res.code == 200) {
+      navigate(PATH.productsManagement)
+      toast.success('Cập nhật sản phẩm thành công')
+    }
+  } catch (error) {
+    toast.error(res.message)
+  }
   };
 
   const handleInputChange = (fieldName) => (e) => {
@@ -144,6 +162,9 @@ const EditProducts = () => {
         break;
       case 'categoryStatus':
         setCategoryStatus(value);
+        break;
+      case 'isPublished':
+        setIsPublished(value === 'true');
         break;
       default:
         break;
@@ -273,14 +294,14 @@ const EditProducts = () => {
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                       id="categoryCode"
                       value={categoryCode}
-                      // onChange={handleInputChange('categoryCode')}
+                      onChange={handleInputChange('categoryCode')}
                     >
                       <option value="">Chọn mã danh mục</option>
-                      {/* {categoryListHHB?.map((category) => (
+                      {categoryListHHB?.map((category) => (
                         <option key={category.id} value={category.slug}>
                           {category.title}
                         </option>
-                      ))} */}
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -292,7 +313,7 @@ const EditProducts = () => {
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                       id="categoryStatus"
                       value={categoryStatus}
-                      // onChange={handleInputChange('categoryStatus')}
+                      onChange={handleInputChange('categoryStatus')}
                     >
                       <option value="ACTIVE">Hoạt động</option>
                       <option value="IACTIVE">Không hoạt động</option>
@@ -300,13 +321,24 @@ const EditProducts = () => {
                   </div>
                 </div>
 
-
-
-                {/*  */}
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label htmlFor="isPublished" className="block text-sm font-medium leading-6 text-gray-900">Công khai</label>
+                    <select
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      id="isPublished"
+                      value={isPublished.toString()}
+                      onChange={handleInputChange('isPublished')}
+                    >
+                      <option value="true">Có</option>
+                      <option value="false">Không</option>
+                    </select>
+                  </div>
+                </div>
 
                 <div className="col-12 d-flex justify-center">
                   <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>
-                  <Button danger htmlType="button" onClick={() => navigate(PATH.categoriesManagement)}>HỦY</Button>
+                  <Button danger htmlType="button" onClick={() => navigate(PATH.productsManagement)}>HỦY</Button>
                 </div>
               </div>
             </div>
