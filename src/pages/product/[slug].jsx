@@ -40,6 +40,8 @@ import {
   useParams,
 } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Slider from '@/components/Slider';
+import './style.css'
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
@@ -228,6 +230,7 @@ const ProductDetailPage = () => {
 
   return (
     <>
+      {/* Breadcrumb */}
       <nav className="py-5">
         <div className="container">
           <div className="row">
@@ -235,8 +238,8 @@ const ProductDetailPage = () => {
               {!loadingGetProductDetailHHB ? (
                 <Breadcrumb>
                   <Breadcrumb.Item to={PATH.home}>Home</Breadcrumb.Item>
-                  <Breadcrumb.Item>{categoryTitle}</Breadcrumb.Item>
-                  <Breadcrumb.Item>{detailHHB?.data?.name}</Breadcrumb.Item>
+                  <Breadcrumb.Item>Sản phẩm</Breadcrumb.Item>
+                  <Breadcrumb.Item>Tên sản phẩm</Breadcrumb.Item>
                 </Breadcrumb>
               ) : (
                 <Skeleton width={577} height={18} borderRadius={4} />
@@ -245,6 +248,7 @@ const ProductDetailPage = () => {
           </div>
         </div>
       </nav>
+      {/* Product */}
       <section>
         <div className="container">
           <div className="row">
@@ -252,15 +256,9 @@ const ProductDetailPage = () => {
               {loadingGetProductDetailHHB ? (
                 <LoadingDetail />
               ) : (
-                <div className="row">
-                  <div className="col-12 col-md-6">
-                    {/* Card */}
+                <div className='grid grid-cols-3 gap-3'>
+                  <div className="product-image">
                     <div className="card">
-                      {/* Badge */}
-                      {/* <div className="badge badge-primary card-badge text-uppercase">
-                        Sale
-                      </div> */}
-                      {/* Slider */}
                       <ZoomImage timesIncrease={2}>
                         {({
                           handleMouseLeave,
@@ -270,7 +268,7 @@ const ProductDetailPage = () => {
                           styleImage,
                         }) => (
                           <div
-                            className={`mb-4 overflow-hidden relative h-[538px] cursor-zoom-in`}
+                            className={`mb-4 overflow-hidden relative h-[450px] cursor-zoom-in`}
                             id="productSlider"
                             ref={imageWrapperRef}
                           >
@@ -342,100 +340,65 @@ const ProductDetailPage = () => {
                       images={detailHHB?.data?.images}
                     />
                   </div>
-                  <div className="col-12 col-md-6 pl-lg-10">
-                    {/* Header */}
-                    <div className="row mb-1">
-                      <div className="col">
-                        {/* Preheading */}
-                        <a className="text-muted">{categoryTitle}</a>
-                      </div>
-                      <div className="col-auto items-center flex">
-                        {/* Rating */}
-                        {/* {detail?.rating_average ? (
-                          <Rating value={detail?.rating_average} />
-                        ) : null}
-
-                        <a
-                          className="font-size-sm text-reset ml-2"
-                          href="#reviews"
-                        >
-                          Reviews ({detail?.review_count})
-                        </a> */}
+                  <div className='product-description'>
+                    <h1 className='title-product text-[2rem] m-0 mb-[5px] leading-none font-bold pb-2'>Tên sản phẩm</h1>
+                    <div className='product-top clearfix'>
+                      <div className='pb-1'>
+                        Mã sản phẩm: BF410
                       </div>
                     </div>
-                    {/* Heading */}
-                    <h3 className="mb-2">{detailHHB?.data?.name}</h3>
-                    {/* Price */}
-                    <div className="mb-7">
-                      {detailHHB?.data?.real_price < detailHHB?.data?.price ? (
-                        <>
-                          <span className="font-size-lg font-weight-bold text-gray-350 text-decoration-line-through">
-                            {currency(detailHHB?.data?.price)}
-                          </span>
-                          <span className="ml-1 font-size-h5 font-weight-bolder text-primary">
-                            {currency(detailHHB?.data?.real_price)}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="ml-1 font-size-h5 font-weight-bolder text-primary">
-                          {currency(detailHHB?.data?.price)}
-                        </span>
-                      )}
-                    </div>
-                    <p>{detailHHB?.data?.short_description}</p>
-                    {/* Form */}
-                    <div>
-                      <div className="form-group">
-                        <div className="form-row mb-7 items-baseline">
-                          <div className="col-12 col-lg-auto">
-                            <InputQuantity
-                              hideAction={true}
-                              quantity={1}
-                              ref={inputRef}
-                            />
-                          </div>
-                          <div className="col-12 col-lg">
-                            {/* Submit */}
-                            <Button
-                              onClick={handleUpdateCart}
-                              className="btn-block mb-2 normal-case"
-                              loading={loadingUpdatecart[detailHHB?.data?.id]}
-                            >
-                              Thêm vào giỏ hàng
-                              <i className="fe fe-shopping-cart ml-2" />
-                            </Button>
-                          </div>
-                          {/* <div className="col-12 col-lg-auto">
-                            <Button
-                              className="btn-block mb-2 normal-case"
-                              outline
-                              onClick={() => onAddWishList(detailHHB?.data?.id)}
-                            >
-                              Wishlist <i className="fe fe-heart ml-2" />
-                            </Button>
-                          </div> */}
+                    <div className="inventory_quantity text-[1rem] flex mr-[15px]">
+                      <span className='mb-break'>
+                        <div className='stock-brand-title'>
+                          Thương hiệu: TOTO
                         </div>
-                        <p className="mb-0">
-                          <span className="mr-4">Share:</span>
-                          <a
-                            className="btn btn-xxs btn-circle btn-light font-size-xxxs text-gray-350"
-                            href="#!"
-                          >
-                            <i className="fab fa-twitter" />
-                          </a>
-                          <a
-                            className="btn btn-xxs btn-circle btn-light font-size-xxxs text-gray-350"
-                            href="#!"
-                          >
-                            <i className="fab fa-facebook-f" />
-                          </a>
-                          <a
-                            className="btn btn-xxs btn-circle btn-light font-size-xxxs text-gray-350"
-                            href="#!"
-                          >
-                            <i className="fab fa-pinterest-p" />
-                          </a>
-                        </p>
+                      </span>
+                      <span className="line-product">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                      <span className='mb-break'>
+                        <div className='stock-brand-title'>
+                          Tình trạng: Còn hàng
+                        </div>
+                      </span>
+                    </div>
+                    <div className="product-price">
+                      <div className='special-price'>
+                        <span>1,740,000đ</span>
+                      </div>
+                    </div>
+                    <div className='product-btn'>
+                      <button type="button" className="btn_base" id="button-cart">
+                        <span className="txt-main">Liên hệ</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className='product-commit'>
+                    <div className="block-policy">
+                      <div className='policy-item'>
+                        <span className='marker-policy'>1</span>
+                        <div className='icon-policy'>
+                          <img src="/img/product_policy_1.svg" alt="Cam kết chính hãng 100%" />
+                        </div>
+                        <div className='info-policy'>
+                          Cam kết chính hãng 100%
+                        </div>
+                      </div>
+                      <div className='policy-item'>
+                        <span className='marker-policy'>2</span>
+                        <div className='icon-policy'>
+                          <img src="/img/product_policy_2.svg" alt="Bảo hành 12 tháng (click xem chi tiết)" />
+                        </div>
+                        <div className='info-policy'>
+                          Bảo hành 12 tháng (click xem chi tiết)
+                        </div>
+                      </div>
+                      <div className='policy-item'>
+                        <span className='marker-policy'>3</span>
+                        <div className='icon-policy'>
+                          <img src="/img/product_policy_3.svg" alt="Đổi trả hàng trong 7 ngày (click xem chi tiết)" />
+                        </div>
+                        <div className='info-policy'>
+                          Đổi trả hàng trong 7 ngày (click xem chi tiết)
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -444,7 +407,376 @@ const ProductDetailPage = () => {
             </div>
           </div>
         </div>
+      </section >
+
+{/* REVIEWS */}
+<section className="py-12">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12 col-md-10 col-lg-8 col-xl-6 text-center">
+              {/* Preheading */}
+              <h6 className="heading-xxs mb-3 text-gray-400">
+                What buyers say
+              </h6>
+              {/* Heading */}
+              <h2 className="mb-10">Latest buyers Reviews</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <Slider
+                className="select-none !pb-20"
+                slidesPerView={1}
+                spaceBetween={32}
+                loop
+                grabCursor
+                speed={600}
+                pagination={{ clickable: true }}
+                breakpoints={{
+                  //min-width
+                  768: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                }}
+              >
+                <div className="card-lg card border">
+                  <div className="card-body">
+                    <div className="row align-items-center mb-6">
+                      <div className="col-4">
+                        <img
+                          src="/img/products/product-13.jpg"
+                          alt="..."
+                          className="img-fluid"
+                        />
+                      </div>
+                      <div className="col-8 ml-n2">
+                        <a className="font-size-xs text-muted" href="shop.html">
+                          Shoes
+                        </a>
+                        <a
+                          className="d-block font-weight-bold text-body"
+                          href="product.html"
+                        >
+                          Low top Sneakers
+                        </a>
+                        <div
+                          className="rating font-size-xxs text-warning"
+                          data-value={3}
+                        >
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="mb-0">
+                      <p className="text-muted">
+                        From creepeth said moved given divide make multiply of
+                        him shall itself also above second doesn't unto created
+                        saying land herb sea midst night wherein.
+                      </p>
+                      <footer className="font-size-xs text-muted">
+                        Logan Edwards,{' '}
+                        <time dateTime="2019-06-01">01 Jun 2019</time>
+                      </footer>
+                    </blockquote>
+                  </div>
+                </div>
+                <div className="card-lg card border">
+                  <div className="card-body">
+                    <div className="row align-items-center mb-6">
+                      <div className="col-4">
+                        <img
+                          src="/img/products/product-14.jpg"
+                          alt="..."
+                          className="img-fluid"
+                        />
+                      </div>
+                      <div className="col-8 ml-n2">
+                        <a className="font-size-xs text-muted" href="shop.html">
+                          Dresses
+                        </a>
+                        <a
+                          className="d-block font-weight-bold text-body"
+                          href="product.html"
+                        >
+                          Cotton print Dress
+                        </a>
+                        <div
+                          className="rating font-size-xxs text-warning"
+                          data-value={5}
+                        >
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="mb-0">
+                      <p className="text-muted">
+                        God every fill great replenish darkness unto. Very open.
+                        Likeness their that light. Given under image to. Subdue
+                        of shall cattle day fish form saw spirit and given
+                        stars, us you whales may, land, saw fill unto.
+                      </p>
+                      <footer className="font-size-xs text-muted">
+                        Jane Jefferson,{' '}
+                        <time dateTime="2019-05-29">29 May 2019</time>
+                      </footer>
+                    </blockquote>
+                  </div>
+                </div>
+                <div className="card-lg card border">
+                  <div className="card-body">
+                    <div className="row align-items-center mb-6">
+                      <div className="col-4">
+                        <img
+                          src="/img/products/product-15.jpg"
+                          alt="..."
+                          className="img-fluid"
+                        />
+                      </div>
+                      <div className="col-8 ml-n2">
+                        <a className="font-size-xs text-muted" href="shop.html">
+                          T-shirts
+                        </a>
+                        <a
+                          className="d-block font-weight-bold text-body"
+                          href="product.html"
+                        >
+                          Oversized print T-shirt
+                        </a>
+                        <div
+                          className="rating font-size-xxs text-warning"
+                          data-value={4}
+                        >
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="mb-0">
+                      <p className="text-muted">
+                        Fill his waters wherein signs likeness waters. Second
+                        light gathered appear sixth fourth, seasons behold
+                        creeping female.
+                      </p>
+                      <footer className="font-size-xs text-muted">
+                        Darrell Baker,{' '}
+                        <time dateTime="2019-05-18">18 May 2019</time>
+                      </footer>
+                    </blockquote>
+                  </div>
+                </div>
+                <div className="card-lg card border">
+                  <div className="card-body">
+                    <div className="row align-items-center mb-6">
+                      <div className="col-4">
+                        <img
+                          src="/img/products/product-10.jpg"
+                          alt="..."
+                          className="img-fluid"
+                        />
+                      </div>
+                      <div className="col-8 ml-n2">
+                        <a className="font-size-xs text-muted" href="shop.html">
+                          Bags &amp; Accessories
+                        </a>
+                        <a
+                          className="d-block font-weight-bold text-body"
+                          href="product.html"
+                        >
+                          Suede cross body Bag
+                        </a>
+                        <div
+                          className="rating font-size-xxs text-warning"
+                          data-value={4}
+                        >
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="mb-0">
+                      <p className="text-muted">
+                        God every fill great replenish darkness unto. Very open.
+                        Likeness their that light. Given under image to. Subdue
+                        of shall cattle day fish form saw spirit and given
+                        stars.
+                      </p>
+                      <footer className="font-size-xs text-muted">
+                        Pavel Doe,{' '}
+                        <time dateTime="2019-05-29">29 May 2019</time>
+                      </footer>
+                    </blockquote>
+                  </div>
+                </div>
+                <div className="card-lg card border">
+                  <div className="card-body">
+                    <div className="row align-items-center mb-6">
+                      <div className="col-4">
+                        <img
+                          src="/img/products/product-13.jpg"
+                          alt="..."
+                          className="img-fluid"
+                        />
+                      </div>
+                      <div className="col-8 ml-n2">
+                        <a className="font-size-xs text-muted" href="shop.html">
+                          Shoes
+                        </a>
+                        <a
+                          className="d-block font-weight-bold text-body"
+                          href="product.html"
+                        >
+                          Low top Sneakers
+                        </a>
+                        <div
+                          className="rating font-size-xxs text-warning"
+                          data-value={3}
+                        >
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="mb-0">
+                      <p className="text-muted">
+                        From creepeth said moved given divide make multiply of
+                        him shall itself also above second doesn't unto created
+                        saying land herb sea midst night wherein.
+                      </p>
+                      <footer className="font-size-xs text-muted">
+                        Logan Edwards,{' '}
+                        <time dateTime="2019-06-01">01 Jun 2019</time>
+                      </footer>
+                    </blockquote>
+                  </div>
+                </div>
+                <div className="card-lg card border">
+                  <div className="card-body">
+                    <div className="row align-items-center mb-6">
+                      <div className="col-4">
+                        <img
+                          src="/img/products/product-14.jpg"
+                          alt="..."
+                          className="img-fluid"
+                        />
+                      </div>
+                      <div className="col-8 ml-n2">
+                        <a className="font-size-xs text-muted" href="shop.html">
+                          Dresses
+                        </a>
+                        <a
+                          className="d-block font-weight-bold text-body"
+                          href="product.html"
+                        >
+                          Cotton print Dress
+                        </a>
+                        <div
+                          className="rating font-size-xxs text-warning"
+                          data-value={5}
+                        >
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                          <div className="rating-item">
+                            <i className="fas fa-star" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <blockquote className="mb-0">
+                      <p className="text-muted">
+                        God every fill great replenish darkness unto. Very open.
+                        Likeness their that light. Given under image to. Subdue
+                        of shall cattle day fish form saw spirit and given
+                        stars, us you whales may, land, saw fill unto.
+                      </p>
+                      <footer className="font-size-xs text-muted">
+                        Jane Jefferson,{' '}
+                        <time dateTime="2019-05-29">29 May 2019</time>
+                      </footer>
+                    </blockquote>
+                  </div>
+                </div>
+              </Slider>
+            </div>
+          </div>
+        </div>
       </section>
+
       {!loadingGetProductDetailHHB ? (
         <>
           <section className="pt-11">
@@ -453,11 +785,7 @@ const ProductDetailPage = () => {
                 <Tab>
                   <div className="col-12">
                     <div className="nav nav-tabs nav-overflow justify-content-start justify-content-md-center border-bottom">
-                      <Tab.Title className="nav-link">Description</Tab.Title>
-                      <Tab.Title className="nav-link">Size &amp; Fit</Tab.Title>
-                      <Tab.Title className="nav-link">
-                        Shipping &amp; Return
-                      </Tab.Title>
+                      <Tab.Title className="nav-link">Mô tả</Tab.Title>
                     </div>
                     <div className="tab-content">
                       <Tab.Content className="tab-pane">
@@ -465,123 +793,9 @@ const ProductDetailPage = () => {
                           <div className="col-12 col-lg-10 col-xl-8">
                             <div className="row">
                               <div className="col-12">
-                                <ShortenContent
-                                  className="text-gray-500"
-                                  dangerouslySetInnerHTML={{
-                                    __html: detailHHB?.data?.description,
-                                  }}
-                                />
+
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </Tab.Content>
-                      <Tab.Content className="tab-pane">
-                        <div className="row justify-content-center py-9">
-                          <div className="col-12 col-lg-10 col-xl-8">
-                            <div className="row">
-                              <div className="col-12 col-md-6">
-                                {/* Text */}
-                                <p className="mb-4">
-                                  <strong>Fitting information:</strong>
-                                </p>
-                                {/* List */}
-                                <ul className="mb-md-0 text-gray-500">
-                                  <li>
-                                    Upon seas hath every years have whose subdue
-                                    creeping they're it were.
-                                  </li>
-                                  <li>Make great day bearing.</li>
-                                  <li>
-                                    For the moveth is days don't said days.
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="col-12 col-md-6">
-                                {/* Text */}
-                                <p className="mb-4">
-                                  <strong>Model measurements:</strong>
-                                </p>
-                                {/* List */}
-                                <ul className="list-unstyled text-gray-500">
-                                  <li>Height: 1.80 m</li>
-                                  <li>Bust/Chest: 89 cm</li>
-                                  <li>Hips: 91 cm</li>
-                                  <li>Waist: 65 cm</li>
-                                  <li>Model size: M</li>
-                                </ul>
-                                {/* Size */}
-                                <p className="mb-0">
-                                  <img
-                                    src="/img/icons/icon-ruler.svg"
-                                    alt="..."
-                                    className="img-fluid"
-                                  />
-                                  <a
-                                    className="text-reset text-decoration-underline ml-3"
-                                    data-toggle="modal"
-                                    href="#modalSizeChart"
-                                  >
-                                    Size chart
-                                  </a>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </Tab.Content>
-                      <Tab.Content className="tab-pane">
-                        <div className="row justify-content-center py-9">
-                          <div className="col-12 col-lg-10 col-xl-8">
-                            {/* Table */}
-                            <div className="table-responsive">
-                              <table className="table table-bordered table-sm table-hover">
-                                <thead>
-                                  <tr>
-                                    <th>Shipping Options</th>
-                                    <th>Delivery Time</th>
-                                    <th>Price</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>Standard Shipping</td>
-                                    <td>Delivery in 5 - 7 working days</td>
-                                    <td>$8.00</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Express Shipping</td>
-                                    <td>Delivery in 3 - 5 working days</td>
-                                    <td>$12.00</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1 - 2 day Shipping</td>
-                                    <td>Delivery in 1 - 2 working days</td>
-                                    <td>$12.00</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Free Shipping</td>
-                                    <td>
-                                      Living won't the He one every subdue meat
-                                      replenish face was you morning firmament
-                                      darkness.
-                                    </td>
-                                    <td>$0.00</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            {/* Caption */}
-                            <p className="mb-0 text-gray-500">
-                              May, life blessed night so creature likeness
-                              their, for.{' '}
-                              <a
-                                className="text-body text-decoration-underline"
-                                href="#!"
-                              >
-                                Find out more
-                              </a>
-                            </p>
                           </div>
                         </div>
                       </Tab.Content>
@@ -592,153 +806,11 @@ const ProductDetailPage = () => {
             </div>
           </section>
 
-          <section className="pt-9 pb-11" id="reviews">
-            <div className="container">
-              <ErrorBoundary>
-                <div className="row">
-                  <div className="col-12">
-                    {reviewList && (
-                      <h4 className="mb-10 text-center">
-                        Customer Reviews ({reviewList.length})
-                      </h4>
-                    )}
-
-                    {user && state?.orderId && (
-                      <div className="h-auto" id="reviewForm">
-                        <div className="row">
-                          <div className="col-12 mb-6 text-center">
-                            <p className="mb-1 font-size-xs">Score:</p>
-                            <div className="rating-form">
-                              <div
-                                className="rating h5 text-dark"
-                                data-value={valueRating}
-                              >
-                                {createArray(5).map((_, id) => (
-                                  <div
-                                    className="rating-item cursor-pointer"
-                                    key={id}
-                                    onClick={() => setValueRating(id + 1)}
-                                  >
-                                    <i className="fas fa-star" />
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <Field
-                              {...register('content')}
-                              className="form-control form-control-sm"
-                              id="reviewText"
-                              rows={5}
-                              placeholder="Review *"
-                              renderInput={({
-                                error,
-                                className,
-                                _onChange,
-                                ...props
-                              }) => (
-                                <textarea
-                                  {...props}
-                                  onChange={_onChange}
-                                  className={cn(className, {
-                                    'border-red-500 placeholder:text-red-500':
-                                      error,
-                                  })}
-                                />
-                              )}
-                            />
-                          </div>
-                          <div className="col-12 text-center">
-                            <Button
-                              className="normal-case"
-                              loading={loadingPostReview}
-                              onClick={onPostReview}
-                            >
-                              Post Review
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    <div className="mt-8">
-                      <ReviewCardList
-                        loading={loadingGetReview}
-                        loadingCount={3}
-                        empty={
-                          <EmptyText>
-                            Sản phẩm hiện tại chưa có đánh giá nào
-                          </EmptyText>
-                        }
-                        data={reviewList}
-                      />
-                    </div>
-                    {
-                      <Pagination
-                        totalPage={paginate?.totalPage}
-                        style={{ marginTop: 20 }}
-                      />
-                    }
-                  </div>
-                </div>
-              </ErrorBoundary>
-            </div>
-          </section>
-
-          <section className="bg-light py-9">
-            <div className="container">
-              <div className="row">
-                <div className="col-12 col-md-6 col-lg-3">
-                  <div className="d-flex mb-6 mb-lg-0">
-                    <i className="fe fe-truck font-size-lg text-primary" />
-                    <div className="ml-6">
-                      <h6 className="heading-xxs mb-1">Free shipping</h6>
-                      <p className="mb-0 font-size-sm text-muted">
-                        From all orders over $100
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                  <div className="d-flex mb-6 mb-lg-0">
-                    <i className="fe fe-repeat font-size-lg text-primary" />
-                    <div className="ml-6">
-                      <h6 className="mb-1 heading-xxs">Free returns</h6>
-                      <p className="mb-0 font-size-sm text-muted">
-                        Return money within 30 days
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                  <div className="d-flex mb-6 mb-md-0">
-                    <i className="fe fe-lock font-size-lg text-primary" />
-                    <div className="ml-6">
-                      <h6 className="mb-1 heading-xxs">Secure shopping</h6>
-                      <p className="mb-0 font-size-sm text-muted">
-                        You're in safe hands
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                  <div className="d-flex">
-                    <i className="fe fe-tag font-size-lg text-primary" />
-                    <div className="ml-6">
-                      <h6 className="mb-1 heading-xxs">Over 10,000 Styles</h6>
-                      <p className="mb-0 font-size-sm text-muted">
-                        We have everything you need
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
         </>
       ) : (
         <div className="min-h-[500px]"></div>
-      )}
+      )
+      }
     </>
   );
 };

@@ -1,0 +1,279 @@
+/* CSS cho page Home -- tab of sản phẩm giảm giá */
+
+.product-h2-custom::before {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #ba9344;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+}
+
+.li-current {
+    background: #ba9344;
+    color: white;
+    cursor: pointer;
+}
+
+.tab-cate:hover {
+    background: #ba9344;
+    color: white;
+    cursor: pointer;
+}
+
+.tab-cate {
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.tab-cate:first-child {
+    -webkit-clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.tab-cate:last-child {
+    -webkit-clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+/* CSS cho page Home -- tab of sản phẩm giảm giá */
+
+
+
+/* CSS cho page Home -- Sản phẩm giá sale */
+
+.block-product-sell {
+    padding: 16px;
+}
+
+.product-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 300px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+    box-sizing: border-box;
+}
+
+.product-card:hover {
+    box-shadow: rgba(60, 64, 67, 0.1) 0 1px 2px 0,
+        rgba(60, 64, 67, 0.15) 0 2px 6px 2px;
+}
+
+.product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.product-card .navbar-brand {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.product-card-content {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    /* margin-bottom: 30px; */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.product-card-price {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.price-box {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-top: auto;
+    padding: 20px 0px;
+}
+
+.price {
+    color: red;
+    font-weight: 800;
+    display: block;
+    width: auto;
+    font-size: 1.5rem;
+    line-height: initial;
+}
+
+.compare-price {
+    display: block;
+    width: auto;
+    color: #7b7b7b;
+    font-size: 1.4rem;
+    text-decoration: line-through;
+    line-height: initial;
+    margin-left: 8px;
+}
+
+.btn-sell-contact {
+    width: 100%;
+    clip-path: inherit;
+    color: white;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 0.3s;
+    border: 0;
+    position: relative;
+    padding: 0;
+    background: #ba9344;
+    cursor: pointer;
+}
+
+.btn-sell-contact:hover {
+    color: white;
+}
+
+/* CSS cho page Home -- Sản phẩm giá sale */
+
+
+/* CSS cho page Contact */
+
+.layout-contact {
+    margin-bottom: 30px;
+}
+
+.layout-contact .contact-content {
+    margin-bottom: 20px;
+}
+
+.layout-contact .des_foo {
+    margin-bottom: 10px
+}
+
+.layout-contact .contact-content .time-work .contact-item {
+    position: relative;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.layout-contact .contact-content .time-work .contact-item>svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    color: #002d3a;
+    position: relative;
+}
+
+.layout-contact .contact-content .time-work .contact-item .link-store-footer {
+    margin-top: 15px;
+}
+
+.layout-contact .contact-form {
+    background: #f5f5f5;
+    padding: 20px 15px;
+    border-radius: 0px;
+}
+
+.layout-contact .contact-form .group_contact input {
+    padding: 5px 20px;
+}
+
+.layout-contact .contact-form .group_contact textarea {
+    padding: 10px 20px;
+}
+
+.layout-contact .contact-form .group_contact input,
+.layout-contact .contact-form .group_contact textarea {
+    border: 1px solid #e1e1e1;
+    width: 100%;
+    margin-bottom: 15px;
+    outline: none;
+    font-size: 14px;
+    border-radius: 0px;
+}
+
+.layout-contact .contact-form .group_contact .invalid-feedback {
+    margin-top: -0.75rem;
+    margin-bottom: 15px;
+}
+
+.layout-contact .contact-form .btn-contact {
+    background: #ba9344;
+    padding: 8px 20px 6px 16px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    -webkit-clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    border: none;
+}
+
+.layout-contact .contact-form .group_contact svg {
+    margin-left: 4px;
+    margin-right: 0px;
+}
+
+.col-lg-7 {
+    height: 100vh;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.map iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* CSS cho page Contact */

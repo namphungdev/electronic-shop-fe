@@ -6626,7 +6626,6 @@ dt {
   font-weight: 500;
 }
 .navbar-brand,
-b,
 strong {
   font-weight: 600;
 }
@@ -7034,6 +7033,24 @@ pre code {
   .container-sm,
   .container-xl {
     max-width: 1140px;
+  }
+}
+@media (min-width: 1500px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl {
+    max-width: 1360px;
+  }
+}
+@media (min-width: 1600px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl {
+    max-width: 1440px;
   }
 }
 .row {

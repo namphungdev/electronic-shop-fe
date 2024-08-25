@@ -1,93 +1,83 @@
-import React from 'react';
+import { PATH } from '@/config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouseChimney, faComments, faXmark } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import "./style.css"
 
 const Footer = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleIcon = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <footer
-      className="bg-dark bg-cover @@classList"
-      style={{ backgroundImage: 'url(/img/patterns/pattern-2.svg)' }}
+      className="bg-[#f9f9f9]"
+      style={{ borderTop: '4px solid #ba9344' }}
     >
-      <div className="py-12 border-bottom border-gray-700">
+      <div className="py-6 border-bottom">
         <div className="container">
-          <div className='mb-12 border border-white leading-tight p-4 bg-white'>
-            <div className="mb-3 text-gray flex">
-              <div className='w-72'>Đơn vị bán (Seller):</div>
-              <span className="flex-grow ml-12 font-bold">CÔNG TY TNHH TM-DV THIẾT BỊ ĐIỆN TỬ NHƯ MAI ĐÀO</span>
-            </div>
-            <div className="mb-3 text-gray flex">
-              <div className='w-72'>Mã số thuế (Tax Code):</div>
-              <span className="flex-grow ml-12 font-bold">0 3 1 7 8 7 7 7 0 6</span>
-            </div>
-            <div className="mb-3 text-gray flex">
-              <div className='w-72'>Địa chỉ (Address):</div>
-              <span className="flex-grow ml-12 ">77A Trần Tấn, Phường Tân Sơn Nhì, Quận Tân Phú, TP.HCM</span>
-            </div>
-            <div className="mb-3 text-gray flex">
-              <div className='w-72'>Điện thoại (Tel):</div>
-              <span className="flex-grow ml-12 ">0965.117729 / 0876866820</span>
-            </div>
-            <div className=" text-gray flex">
-              <div className='w-72'>Số tài khoản (Account No):</div>
-              <span className="flex-grow ml-12 ">STK</span>
-            </div>
-          </div>
-
           <div className="row">
             <div className="col-6 col-sm mb-4 mb-sm-0">
-              {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white text-lg">Thông tin liên hệ</h6>
-              {/* Links */}
-              <ul className="list-disc pl-5 mb-7 mb-sm-0">
-                <li className='text-white'>
-                  <a className="text-gray-300">
-                    Chi nhánh chính: 77A Trần Tấn, Phường Tân Sơn Nhì, Quận Tân Phú, TP.HCM
-                  </a>
-                </li>
-              </ul>
+              <div className="logo-footer flex justify-center">
+                <Link className="navbar-brand" to={PATH.home}>
+                  <img
+                    style={{ width: '75px', height: 'auto' }}
+                    srcSet="/img/backup-logo.png 2x"
+                  />
+                </Link>
+              </div>
+              <div className='des-footer pt-4 text-center'>
+                GẠCH 315 NPP GẠCH ỐP LÁT - TBVS CAO CẤP - TẤM ỐP NHỰA
+              </div>
             </div>
             <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white text-lg">Giới thiệu</h6>
+              <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">LIÊN HỆ</h6>
               {/* Links */}
-              <ul className="list-disc pl-5 mb-7 mb-sm-0">
-                <li className='text-white'>
-                  <a className="text-gray-300" href="./shop.html">
-                    Giới thiệu
-                  </a>
+              <ul className="list-none pl-0 my-4">
+                <li className='text-black'>
+                  <b>Địa chỉ:</b> <span>315 Phan Văn Trị, P10, Quận Gò Vấp, TP.Hồ Chí Minh</span>
                 </li>
-                <li className='text-white'>
-                  <a className="text-gray-300" href="./shop.html">
-                    Liên hệ
-                  </a>
+                <li className='text-black my-1'>
+                  <b>Số điện thoại:</b> <span>0123456789</span>
                 </li>
-                <li className='text-white'>
-                  <a className="text-gray-300" href="./shop.html">
-                    Tin tức
-                  </a>
+                <li className='text-black'>
+                  <b>Email:</b> gach315@gmail.com
                 </li>
               </ul>
+              {/* Tags */}
+              <Link to={PATH.home} className="link-store-footer">
+                <div className="content-footer">
+                  <div className="icon flex mr-2 ml-1">
+                    <FontAwesomeIcon icon={faHouseChimney} />
+                  </div>
+                  <div className="text mt-1 mr-2">
+                    Cửa hàng gạch 315
+                  </div>
+                </div>
+              </Link>
             </div>
             <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white text-lg">Hỗ trợ khách hàng</h6>
+              <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">CHÍNH SÁCH</h6>
               {/* Links */}
-              <ul className="list-disc pl-5 mb-0">
+              <ul className="list-none pl-0 mb-0 my-4">
                 <li className='text-white'>
-                  <a className="text-gray-300" href="./about.html">
-                    Mua hàng Online
-                  </a>
-                </li>
-                <li className='text-white'>
-                  <a className="text-gray-300" href="#!">
+                  <a className="text-black" href="#!">
                     Chính sách bảo hành
                   </a>
                 </li>
                 <li className='text-white'>
-                  <a className="text-gray-300" href="#!">
+                  <a className="text-black" href="#!">
                     Chính sách đổi trả
                   </a>
                 </li>
                 <li className='text-white'>
-                  <a className="text-gray-300" href="#!">
+                  <a className="text-black" href="#!">
                     Cam kết mua hàng đảm bảo
                   </a>
                 </li>
@@ -95,58 +85,129 @@ const Footer = () => {
             </div>
             <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
-              <h6 className="heading-xxs mb-4 text-white text-lg">Map</h6>
+              <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">HƯỚNG DẪN</h6>
               {/* Links */}
-              <div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.192844820119!2d106.63248457436676!3d10.79653725882382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529538a127823%3A0x94902c228651620f!2zNzdhIMSQxrDhu51uZyBUcuG6p24gVOG6pW4sIFTDom4gU8ahbiBOaMOsLCBUw6JuIFBow7osIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1716221897210!5m2!1svi!2s" width="100%" height="250" style={{ border: 0 }} allowFullScreen="" loading="lazy"></iframe>
-              </div>
+              <ul className="list-none pl-0 mb-0 my-4">
+                <li className='text-white'>
+                  <a className="text-black" href="#!">
+                    Chính sách bảo hành
+                  </a>
+                </li>
+                <li className='text-white'>
+                  <a className="text-black" href="#!">
+                    Chính sách đổi trả
+                  </a>
+                </li>
+                <li className='text-white'>
+                  <a className="text-black" href="#!">
+                    Cam kết mua hàng đảm bảo
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-      <div className="py-6">
+
+      <div className="py-1 bg-[#ba9344]">
         <div className="container">
           <div className="row">
             <div className="col">
-              {/* Copyright */}
-              <p className="mb-3 mb-md-0 font-size-xxs text-muted">
-                © 2019 All rights reserved. Designed by Unvab.
+              <p className="mb-3 mb-md-0 font-size-xxs text-white text-center border-none">
+                © 2024 All rights reserved. Designed by Ha Hai Binh.
               </p>
             </div>
-            <div className="col-auto">
-              {/* Payment methods */}
-              <img
-                className="footer-payment"
-                src="/img/payment/mastercard.svg"
-                alt="..."
-              />
-              <img
-                className="footer-payment"
-                src="/img/payment/visa.svg"
-                alt="..."
-              />
-              <img
-                className="footer-payment"
-                src="/img/payment/amex.svg"
-                alt="..."
-              />
-              <img
-                className="footer-payment"
-                src="/img/payment/paypal.svg"
-                alt="..."
-              />
-              <img
-                className="footer-payment"
-                src="/img/payment/maestro.svg"
-                alt="..."
-              />
-              <img
-                className="footer-payment"
-                src="/img/payment/klarna.svg"
-                alt="..."
-              />
+          </div>
+        </div>
+      </div>
+
+      <div className="footer-widget">
+        <div className={`def-content element ${isOpen ? 'visible' : ''}`}>
+          <div className='def-header'>
+            Liên hệ
+            <div className='close-icon-popup' onClick={toggleIcon}>
+              <FontAwesomeIcon className='icon-svg' icon={faXmark} />
             </div>
           </div>
+          <div className='item facebook'>
+            <a
+              href="https://www.facebook.com/GachMenGiaReSG"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="Facebook"
+                className="w-10 h-10 rounded-full shadow-lg"
+                srcSet="/img/2023_Facebook_icon.svg"
+              />
+
+              <div className='detail-content'>
+                <span className='arcu-item-subtitle'>Gạch 315</span>
+              </div>
+            </a>
+          </div>
+          <div className='item phone'>
+            <a
+              href="tel:0911315315"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="Phone"
+                className="w-10 h-10 rounded-full shadow-lg"
+                srcSet="/img/phone-call.svg"
+              />
+
+              <div className='detail-content'>
+                <span className='arcu-item-subtitle'>0911 315 315</span>
+              </div>
+            </a>
+          </div>
+          <div className='item zalo'>
+            <a
+              href="https://zalo.me/0911315315"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="Phone"
+                className="w-10 h-10 rounded-full shadow-lg"
+                srcSet="/img/zalo.jpg"
+              />
+
+              <div className='detail-content'>
+                <span className='arcu-item-subtitle'>0911 315 315</span>
+              </div>
+            </a>
+          </div>
+          <div className='item email'>
+            <a
+              href="mailto:gachmen315@gmail.com"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="Phone"
+                className="w-10 h-10 rounded-full shadow-lg"
+                srcSet="/img/email.svg"
+              />
+
+              <div className='detail-content'>
+                <span className='arcu-item-subtitle'>gachmen315@gmail.com</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div className="out-circle" onClick={toggleIcon}>
+          {isOpen ? (
+            <div className='close-icon element'>
+              <FontAwesomeIcon className='icon-svg' icon={faXmark} />
+            </div>
+          ) : (
+            <div className='main-icon'>
+              <FontAwesomeIcon className='icon-svg' icon={faComments} />
+              <p className='text-sp'> Hỗ trợ </p>
+            </div>
+          )}
         </div>
       </div>
     </footer>

@@ -1,0 +1,126 @@
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light {
+    background: transparent;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal {
+    border-bottom: none;
+    margin-right: 35px;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item::after,
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu::after {
+    border-bottom: 0px solid transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item-selected::after,
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-selected::after {
+    border-bottom-width: 0px;
+    border-bottom-color: transparent;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu .ant-menu-title-content {
+    font-size: 1.2rem;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
+    color: white;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item a,
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item a:hover {
+    color: white;
+}
+
+.ant-menu-item a.active {
+    color: #fff;
+}
+
+.ant-menu-item-selected {
+    color: #fff;
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ant-menu-horizontal {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Search Drawer */
+
+.content::before {
+    background-color: #ba9344;
+}
+
+.navbar {
+    background-color: #ba9344;
+    transition: background-color 0.3s ease;
+    position: relative;
+    width: 100%;
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom: 2px solid #ba9344;
+}
+
+.navbar.scrolled {
+    background-color: #ba9344;
+}
+
+.navbar.homepage {
+    background-color: transparent;
+}
+
+.ant-menu-item a.active {
+    color: #fff;
+}
+
+.ant-menu-item-selected {
+    color: #fff;
+}
+
+.ant-menu-submenu-popup {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.ant-menu-submenu-popup .ant-menu {
+    background-color: #ba9344;
+}
+
+
+.navbar {
+    transition: background-color 0.3s ease;
+}
+
+.scrolled {
+    background-color: white;
+    /* Change this to your desired color */
+}
+
+.white-bg {
+    background-color: white;
+    /* White background for non-homepage routes */
+}
+
+
+
+
+
+
+
+
+

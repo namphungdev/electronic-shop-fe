@@ -148,13 +148,13 @@ const SearchDrawer = () => {
           <div ref={topRef}>
             {/* Header*/}
             <div className="modal-header line-height-fixed font-size-lg">
-              <strong className="mx-auto">Search Products</strong>
+              <div className="mx-auto">Tìm kiếm sản phẩm</div >
             </div>
             {/* Body: Form */}
             <div className="modal-body">
               <div className="form-group">
                 <label className="sr-only" htmlFor="modalSearchCategories">
-                  Categories:
+                  Loại sản phẩm:
                 </label>
                 <select
                   className="custom-select"
@@ -163,7 +163,7 @@ const SearchDrawer = () => {
                   onChange={(e) => setIDCategory(e.target.value)}
                 >
                   <option value="" key={0}>
-                    All Categories
+                    Tất cả loại sản phẩm
                   </option>
 
                   {/* {categoryList?.map((e) => (
@@ -177,7 +177,7 @@ const SearchDrawer = () => {
                 <input
                   className="form-control"
                   type="search"
-                  placeholder="Search"
+                  placeholder="Tìm kiếm"
                   onChange={(e) => setSearch(e.target.value.trim())}
                 />
                 <div className="input-group-append">
@@ -208,7 +208,7 @@ const SearchDrawer = () => {
               to={viewAllLink}
               onClick={onClose}
             >
-              View All <i className="fe fe-arrow-right ml-2" />
+              Xem tất cả <i className="fe fe-arrow-right ml-2" />
             </Link>
           </div>
         </div>

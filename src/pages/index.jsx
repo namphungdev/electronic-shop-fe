@@ -1,208 +1,129 @@
-import ListProducts from '@/components/ListProducts';
+import Carousel from '@/components/Carousel';
 import Slider from '@/components/Slider';
-import Tab from '@/components/Tab';
 import useScrollTop from '@/hooks/useScrollTop';
-import createArray from '@/utils/createArray';
-import React from 'react';
+import React, { useState } from 'react';
+import './style.css'
 import { Link } from 'react-router-dom';
+import { PATH } from '@/config';
+
+export const generateRandomProductData = (count) => {
+  const names = [
+    'Gạch Bông Lát Nền 60X60 VL75205 đá mờ',
+    'Gạch Bông Lát Nền 80X80 VL75206 bóng kính',
+    'Gạch Bông Lát Nền 30X30 VL75207 granite',
+    'Gạch Bông Lát Nền 40X40 VL75208 sứ',
+    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
+    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
+    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
+    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
+    'Gạch Bông Lát Nền 50X50 VL75210 gạch ốp saddadadasdasd',
+    'Gạch Bông Lát Nền',
+  ];
+
+  return Array.from({ length: count }, (_, index) => ({
+    id: index + 1,
+    name: names[index % names.length],
+    price: `${Math.floor(Math.random() * 100000) + 200}đ`,
+  }));
+};
 
 export const Home = () => {
   useScrollTop();
 
+  const sliders = [
+    '/img/banner_1.jpg',
+    '/img/banner_2.jpg',
+    '/img/banner_3.jpg',
+  ]
+ 
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeTitle, setActiveTitle] = useState('Gạch ốp lát');
+
+  const tabs = [
+    'Gạch ốp lát',
+    'Thiết bị vệ sinh',
+    'Tấm ốp nhựa'
+  ];
+
+  const clickProductSell = (index) => {
+    setActiveIndex(index)
+    setActiveTitle(tabs[index]);
+  }
+
+  const products = generateRandomProductData(10); 
+
   return (
     <>
-      <section>
-        <div
-          className="row no-gutters d-block d-lg-flex flickity flickity-lg-none"
-          data-flickity='{"watchCSS": true}'
-        >
-          {/* Item */}
-          <div
-            className="col-12 col-md-6 col-lg-4 d-flex flex-column bg-cover"
-            style={{ backgroundImage: 'url(/img/covers/19c3703bf2f04fed861492d0e462e696-228x228.jpg)' }}
-          >
-            <div
-              className="card bg-dark-5 bg-hover text-white text-center"
-              style={{ minHeight: 470 }}
-            >
-              <div className="card-body mt-auto mb-n11 py-8">
-                {/* Heading */}
-                <h1 className="mb-0 font-weight-bolder">Nguồn</h1>
-              </div>
-              <div className="card-body mt-auto py-8">
-                {/* Button */}
-                <a className="btn btn-white stretched-link" href="/nguon-12v/5">
-                Nguồn <i className="fe fe-arrow-right ml-2" />
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* Card */}
-          <div
-            className="col-12 col-md-6 col-lg-4 d-flex flex-column bg-cover"
-            style={{ backgroundImage: 'url(/img/covers/82f3383b2efd4cbda98d0313d3778e7a-228x228.jpg)' }}
-          >
-            <div
-              className="card bg-dark-5 bg-hover text-white text-center"
-              style={{ minHeight: 470 }}
-            >
-              <div className="card-body mt-auto mb-n11 py-8">
-                {/* Heading */}
-                <h1 className="mb-0 font-weight-bolder">Đèn Led</h1>
-              </div>
-              <div className="card-body mt-auto py-8">
-                {/* Button */}
-                <a className="btn btn-white stretched-link" href="/led-5m-12v/8">
-                Đèn Led <i className="fe fe-arrow-right ml-2" />
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* Card */}
-          <div
-            className="col-12 col-md-6 col-lg-4 d-flex flex-column bg-cover"
-            style={{ backgroundImage: 'url(/img/covers/64f3825ee14f49bf8f25ddcbbc9a50d6-228x228.png)' }}
-          >
-            <div
-              className="card bg-dark-5 bg-hover text-white text-center"
-              style={{ minHeight: 470 }}
-            >
-              <div className="card-body mt-auto mb-n11 py-8">
-                {/* Heading */}
-                <h1 className="mb-0 font-weight-bolder">
-                  Đế điện
-                </h1>
-              </div>
-              <div className="card-body mt-auto py-8">
-                {/* Button */}
-                <a className="btn btn-white stretched-link" href="/de-dien/3">
-                Đế điện <i className="fe fe-arrow-right ml-2" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* SLIDERS */}
+      <section style={{ marginTop: '-100px' }}>
+        <Carousel autoSlide={true}>
+          {sliders.map((s, index) => (
+            <img key={index} src={s} alt={s} className="w-full" />
+          ))}
+        </Carousel>
       </section>
-      {/* FEATURES */}
-      <section className="pt-7">
-        <div className="container">
-          <div className="row pb-7 border-bottom">
-            <div className="col-12 col-md-6 col-lg-3">
-              {/* Item */}
-              <div className="d-flex mb-6 mb-lg-0">
-                {/* Icon */}
-                <i className="fe fe-truck font-size-lg text-primary" />
-                {/* Body */}
-                <div className="ml-6">
-                  {/* Heading */}
-                  <h6 className="heading-xxs mb-1">Free shipping</h6>
-                  {/* Text */}
-                  <p className="mb-0 font-size-sm text-muted">
-                    From all orders over $100
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-3">
-              {/* Item */}
-              <div className="d-flex mb-6 mb-lg-0">
-                {/* Icon */}
-                <i className="fe fe-repeat font-size-lg text-primary" />
-                {/* Body */}
-                <div className="ml-6">
-                  {/* Heading */}
-                  <h6 className="mb-1 heading-xxs">Free returns</h6>
-                  {/* Text */}
-                  <p className="mb-0 font-size-sm text-muted">
-                    Return money within 30 days
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-3">
-              {/* Item */}
-              <div className="d-flex mb-6 mb-md-0">
-                {/* Icon */}
-                <i className="fe fe-lock font-size-lg text-primary" />
-                {/* Body */}
-                <div className="ml-6">
-                  {/* Heading */}
-                  <h6 className="mb-1 heading-xxs">Secure shopping</h6>
-                  {/* Text */}
-                  <p className="mb-0 font-size-sm text-muted">
-                    You're in safe hands
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-3">
-              {/* Item */}
-              <div className="d-flex">
-                {/* Icon */}
-                <i className="fe fe-tag font-size-lg text-primary" />
-                {/* Body */}
-                <div className="ml-6">
-                  {/* Heading */}
-                  <h6 className="mb-1 heading-xxs">Over 10,000 Styles</h6>
-                  {/* Text */}
-                  <p className="mb-0 font-size-sm text-muted">
-                    We have everything you need
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BEST PICKS */}
 
       {/* TOP SELLERS */}
       <section className="py-12">
         <div className="container">
-          <Tab
-            queryList={['do-dien-tu', 'do-gia-dung', 'san-pham-khuyen-mai']}
-            keySearch="tab"
-            callApiOnActive
-          >
-            <div className="row justify-content-center">
-              <div className="col-12 col-md-10 col-lg-8 col-xl-6">
-                <h2 className="mb-4 text-center">Sản phẩm nổi bật</h2>
-                {/* <div className="nav justify-content-center mb-10">
-                  <Tab.Title className="nav-link">Đồ điện tử</Tab.Title>
-                  <Tab.Title className="nav-link">Đồ gia dụng</Tab.Title>
-                  <Tab.Title className="nav-link">
-                    Sản phẩm khuyến mãi
-                  </Tab.Title>
-                </div> */}
+          <div className="flex">
+            <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+              Sản phẩm giảm giá
+            </h2>
+
+            <div className='h-auto flex justify-end flex-1 overflow-hidden'>
+              <div className="relative max-w-full">
+                <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right pb-2 overflow-x-auto overflow-y-hidden list-none'>
+                  {['Gạch ốp lát', 'Thiết bị vệ sinh', 'Tấm ốp nhựa'].map((item, index) => (
+                    <li
+                      key={index}
+                      className={`relative font-medium bg-gray-200 px-5 py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''} ${index < 2 ? 'mx-2' : ''}`}
+                      onClick={() => clickProductSell(index)}
+                    >
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            <div className="tab-content">
-              {createArray(3).map((_, id) => (
-                <Tab.Content
-                  className="tab-pane animate-[fadeIn_1s]"
-                  key={id}
-                  index={id}
-                >
-                  <ListProducts id={[4221, 1883]?.[id]} />
-                </Tab.Content>
+          </div>
+
+          <div className='mt-4 p-4 bg-gray-100 border border-gray-300 rounded'>
+            <h2 className='text-lg font-semibold'>{activeTitle}</h2>
+          </div>
+
+          <div className="block-product-sell">
+            <div className="product-row row">
+              {products.map((product) => (
+                <div key={product.id} className="product-card">
+                  <Link className="navbar-brand" to={`/loa-thung-klipsch-r-8sw-subwoofer-150w-hang-chinh-hang`}>
+                    <img
+                      style={{ height: 'auto' }}
+                      srcSet="/img/Gach-bong-lat-nen-2.jpg"
+                      alt={product.name}
+                    />
+                  </Link>
+                  <div className="product-card-content">
+                    <h3 className="product-card-title">{product.name}</h3>
+                    <div className='price-box'>
+                      <span className='price'>
+                        80,000đ
+                      </span>
+                      <span className='compare-price'>
+                        {product.price}
+                      </span>
+                    </div>
+                    <div className='product-button'>
+                      <Link to={PATH.contact} className='btn-sell-contact'>
+                        Liên hệ
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
-          </Tab>
-        </div>
-      </section>
-      {/* COUNTDOWN */}
-      <section
-        className="py-13"
-      >
-        <div className="container">
-          <h3 className='text-center py-4'>Quét mã QR để được hỗ trợ tư vấn mua hàng nhanh nhất</h3>
-          <div className="row justify-content-center">
-            <img
-              style={{ width: '500px', height: 'auto' }}
-              srcSet="/img/qr_code.jpg "
-            />
           </div>
+
         </div>
       </section>
       {/* REVIEWS */}

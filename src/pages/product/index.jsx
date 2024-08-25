@@ -1,252 +1,101 @@
-import Pagination from '@/components/Pagination';
-import ProductCard from '@/components/ProductCard';
-import Skeleton from '@/components/Skeleton';
-import useQuery from '@/hooks/useQuery';
-import { productServiceHHB } from '@/services/product.service';
-import createArray from '@/utils/createArray';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useMatch } from 'react-router-dom';
-import { useCategoriesHHB } from '@/hooks/useCategories';
-import CategoryLink from '@/components/CategoryLink';
-import { cn } from '@/utils';
-import { PATH } from '@/config';
-import useQueryParams from '@/hooks/useQueryParams';
-import useEffectDidMount from '@/hooks/useEffectDidMount';
 import Breadcrumb from '@/components/Breadcrumb';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDownAZ } from '@fortawesome/free-solid-svg-icons';
+import './style.css'
 
 const options = [
   {
-    value: 'newest', // default
+    value: 'newest',
     title: 'Sản phẩm mới nhất',
   },
   {
     value: 'real_price.desc',
-    title: 'Giá giảm dần',
+    title: 'Giá thấp đến cao',
   },
   {
     value: 'real_price.asc',
-    title: 'Giá tăng dần',
+    title: 'Giá cao đến thấp',
   },
 ];
+
 const ProductPage = () => {
-  const [queryParams, setQueryParams] = useQueryParams({
-    page: 1,
-    // sort: "newest",
-  });
-
-  const [paramsFilter, setParamsFilter] = useState('newest')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [search, setSearch] = useState("")
-
-  const topRef = useRef();
-  const [minPrice, setMinPrice] = useState(queryParams.minPrice || '');
-  const [maxPrice, setMaxPrice] = useState(queryParams.maxPrice || '');
-  const match = useMatch(PATH.category);
-
-  //Khống chế việc render lần 1 cho price
-  useEffectDidMount(() => {
-    setMinPrice('');
-    setMaxPrice('');
-  }, [match?.params.id]);
-
-  const { categoryListHHB, loadingCategoryHHB } = useCategoriesHHB();
-
-  const productParams = useMemo(
-    () => ({
-      keyword: search,
-      pageIndex: currentPage,
-      pageSize: 12,
-      categoryCode: !match ? null : match?.params.slug,
-      orderType: paramsFilter,
-    }),
-    [match?.params.slug, paramsFilter, currentPage, search]
-  );
-
-  const {
-    data: { data: productsHHB = [], paginate: { totalPageHHB } = {} } = {},
-    loadingHHB,
-  } = useQuery({
-    queryKey: `product-page-${JSON.stringify(productParams)}`,
-    keepPreviousData: true,
-    keepStorage: false,
-    queryFn: ({ signal }) =>
-      productServiceHHB.getProductsHHB(productParams, signal),
-  });
-
-  const categoryTitleHHB = useMemo(() => {
-    const { title } =
-      categoryListHHB.find((e) => e.id === +match?.params.id) || {};
-    return title || 'Tất cả sản phẩm';
-  }, [match?.params.id, categoryListHHB.length]);
-
-  const onSubmitPrice = (e) => {
-    e.preventDefault();
-
-    setQueryParams({
-      minPrice: minPrice || undefined,
-      maxPrice: maxPrice || undefined,
-    });
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setCurrentPage(1);
-  }
-
-  useEffect(() => {
-    setQueryParams((prev) => ({
-      ...prev,
-      search: search || undefined,
-    }));
-  }, [search]);
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  }
 
   return (
-    <section className="py-11">
-      <div className="container">
-        <div className="row">
-          <div className="col-12 col-md-4 col-lg-3 self-start category-col">
-            {/* Filters */}
-            <form className="mb-10 mb-md-0" onSubmit={onSubmitPrice}>
-              <ul className="nav nav-vertical" id="filterNav">
-                <li className="nav-item">
-                  {/* Toggle */}
-                  <a
-                    className="nav-link text-2xl border-bottom mb-6 font-semibold"
-                  >
-                    Danh mục sản phẩm
-                  </a>
-                  {/* Collapse */}
-                  <div>
-                    <div className="form-group">
-                      <ul className="list-styled mb-0" id="productsNav">
-                        {loadingCategoryHHB ? (
-                          createArray(16).map((_, id) => (
-                            <Skeleton key={id} height={24} />
-                          ))
-                        ) : (
-                          <>
-                            {' '}
-                            <li className="list-styled-item">
-                              <NavLink
-                                className={cn(
-                                  'list-styled-link',
-                                  ({ isActive }) => ({ active: isActive })
-                                )}
-                                to={PATH.products}
-                              >
-                                Tất cả sản phẩm
-                              </NavLink>
-                            </li>
-                            {categoryListHHB.map((e) => (
-                              <li className="list-styled-item" key={e?.id}>
-                                <CategoryLink
-                                  {...e}
-                                  className={cn({
-                                    active: e?.id === +match?.params.id,
-                                  })}
-                                />
-                              </li>
-                            ))}
-                          </>
-                        )}
-                      </ul>
+    <>
+      <nav className="py-5">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <Breadcrumb>
+                <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+                <Breadcrumb.Item>Tên category</Breadcrumb.Item>
+              </Breadcrumb>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div className="layout-collection">
+        <div className="container">
+          <div className='row'>
+            <div className='col-12 col-title'>
+              <h1>Thiết bị vệ sinh</h1>
+            </div>
+            <div className='block-collection col-sm-12 col-12 col-md-12'>
+              <div className='col-list-cate'>
+                <div className="tab-ul">
+                  <div className="menu-list">
+                    <div className='cate-item'>
+                      Item 1
+                    </div>
+                    <div className='cate-item'>
+                      Item 2
+                    </div>
+                    <div className='cate-item'>
+                      Item 3
                     </div>
                   </div>
-                </li>
-              </ul>
-            </form>
-          </div>
-          <div className="col-12 col-md-8 col-lg-9">
-            <div className="row align-items-center mb-7">
-              <div className="col-12 col-md">
-                {/* Heading */}
-                <h3 ref={topRef} className="mb-1">
-                  {categoryTitleHHB}
-                </h3>
-                {/* Breadcrumb */}
-                <Breadcrumb>
-                  <Breadcrumb.Item to={PATH.home}>Trang chủ</Breadcrumb.Item>
-                  <Breadcrumb.Item>{categoryTitleHHB}</Breadcrumb.Item>
-                </Breadcrumb>
+                </div>
               </div>
-              <div className="col-12 col-md-auto">
+              <div className="ml-3">
+                <div className="select-container">
+                  <select className="custom-select custom-select-xs">
+                    {options.map((e) => (
+                      <option value={e?.value} key={e.value}>
+                        {e.title}
+                      </option>
+                    ))}
+                  </select>
+                  <FontAwesomeIcon icon={faArrowDownAZ} className="select-icon" />
+                </div>
 
               </div>
             </div>
 
-            <div className="row align-items-center mb-7">
-              <div className="col-12 col-md">
-                {/* Search */}
-                <div className="input-group input-group-merge">
-                  <input
-                    className="form-control"
-                    type="search"
-                    placeholder="Tìm kiếm"
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <div className="input-group-append">
-                    <button className="btn btn-outline-border" type="submit" onClick={handleSearch}>
-                      <i className="fe fe-search" />
-                    </button>
-                  </div>
+            <div className='products-view'>
+              <div className="row container">
+                <div className='col-6 col-md-3 col-lg-4 col-xl-3'>
+                    Item 1
                 </div>
-              </div>
-              <div className="col-12 col-md-auto">
-                {/* Select */}
-                <select
-                  className="custom-select custom-select-xs"
-                  value={paramsFilter}
-                  onChange={(e) => {
-                    setParamsFilter(e.target.value)
-                  }}
-                >
-                  {options.map((e) => (
-                    <option value={e?.value} key={e.value}>
-                      {e.title}
-                    </option>
-                  ))}
-                </select>
+
+                <div className='col-6 col-md-3 col-lg-4 col-xl-3'>
+                    Item 2
+                </div>
+
+                <div className='col-6 col-md-3 col-lg-4 col-xl-3'>
+                    Item 3
+                </div>
+
+                <div className='col-6 col-md-3 col-lg-4 col-xl-3'>
+                    Item 4
+                </div>
               </div>
             </div>
-            {queryParams.search ? (
-              <h4 className="mb-5">Tìm kiếm `{queryParams.search}`</h4>
-            ) : (
-              ''
-            )}
-            {/* Products */}
-
-            {loadingCategoryHHB ? (
-              createArray(16).map((_, id) => (
-                <Skeleton key={id} height={24} />
-              ))
-            ) : (
-              <>
-                <div className="row">
-                  <ProductCard
-                    data={productsHHB?.data}
-                    loading={loadingHHB}
-                    loadingCount={9}
-                    emptyText="Rất tiếc không có sản phẩm bạn tìm kiếm"
-                  />
-                </div>
-              </>
-            )}
-
-            {/* Pagination */}
-            {/* {productsHHB && productsHHB.totalPages > 1 && <Pagination totalPage={productsHHB?.totalPages} onPageChange={setCurrentPage} />} */}
-
-            {productsHHB && productsHHB.totalPages > 1 && (
-              <Pagination totalPage={productsHHB?.totalPages} onPageChange={handlePageChange} />
-            )}
-
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 

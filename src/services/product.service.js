@@ -82,3 +82,16 @@ export const productServiceHHB = {
 
   // product 
 };
+
+// Gạch 315
+
+export const productTiles = {
+  getProductTypeList: () =>
+    http.get(`${CATEGORY_API_HHB}/get-web-product-type-list`),
+
+  getCategoryList: (code, signal) => {
+    http.get(`${CATEGORY_API_HHB}/get-web-product-category-list?ProductTypeCode=${code}`, {
+      signal,
+    })
+  } 
+}

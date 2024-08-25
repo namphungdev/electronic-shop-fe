@@ -27,14 +27,15 @@ const ProductDetailPage = lazy(() =>
   delayFallback(import("@/pages/product/[slug]"))
 );
 const AuthPage = lazy(() => delayFallback(import("@/pages/AuthPage")));
-const ContactPage = lazy(() => delayFallback(import("@/pages/ContactPage")));
 const Admin = lazy(() => delayFallback(import("@/pages/Admin")));
 const ResetPasswordPage = lazy(() =>
   delayFallback(import("@/pages/ResetPasswordPage"))
 );
 const ViewCartPage = lazy(() => delayFallback(import("@/pages/ViewCartPage")));
 
-const ShippingPage = lazy(() => delayFallback(import("@/pages/ShippingPage")));
+const AboutPage = lazy(() => delayFallback(import("@/pages/AboutPage")));
+const ContactPage = lazy(() => delayFallback(import("@/pages/ContactPage")));
+
 const CheckoutPage = lazy(() => delayFallback(import("@/pages/CheckoutPage")));
 const OrderCompletedPage = lazy(() =>
   delayFallback(import("@/pages/OrderCompletedPage"), 1500)
@@ -92,16 +93,16 @@ export const routers = [
         path: PATH.productDetail,
       },
       {
-        element: <ShippingPage />,
+        element: <AboutPage />,
         path: PATH.about,
-      },
-      {
-        element: <Camera />,
-        path: PATH.camera,
       },
       {
         element: <ContactPage />,
         path: PATH.contact,
+      },
+      {
+        element: <Camera />,
+        path: PATH.camera,
       },
       {
         element: <Page404 />,

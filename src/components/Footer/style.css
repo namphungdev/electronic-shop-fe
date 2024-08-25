@@ -1,0 +1,197 @@
+.link-store-footer {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  /* Loại bỏ gạch chân của link */
+}
+
+.content-footer {
+  display: inline-flex;
+  color: white;
+  align-items: center;
+  background-color: #ba9344;
+  /* Màu nền ban đầu */
+  padding: 4px 8px;
+  -webkit-clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  position: relative;
+  /* Để căn chỉnh animation */
+  overflow: hidden;
+  /* Để animation không tràn ra ngoài */
+  transition: color 0.4s ease;
+  /* Transition cho màu chữ */
+}
+
+.content-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: blue;
+  /* Màu nền khi hover */
+  z-index: 0;
+  /* Để nền nằm dưới nội dung */
+  transition: left 0.4s ease;
+  /* Transition cho hiệu ứng di chuyển */
+}
+
+.content-footer:hover::before {
+  left: 0;
+  /* Di chuyển màu nền từ trái qua phải khi hover */
+}
+
+.content-footer:hover {
+  color: black;
+  /* Đổi màu chữ khi hover */
+}
+
+.content-footer>* {
+  position: relative;
+  /* Để nội dung nằm trên nền */
+  z-index: 1;
+}
+
+/* footer-widget */
+
+.footer-widget {
+  position: fixed;
+  z-index: 1000;
+  bottom: 100px;
+  top: auto !important;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.def-content {
+  display: none;
+  margin-bottom: 10px;
+  background: #fff;
+  /* padding: 10px; */
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  bottom: 55px;
+  right: 0;
+  border-radius: 8px;
+  transition: 0.2s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  z-index: 1;
+}
+
+.def-content .def-header {
+  text-align: center;
+  background: #005c77;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+  color: #fff;
+  position: relative;
+}
+
+.def-content .def-header .close-icon-popup {
+  position: absolute;
+  line-height: 1;
+  background: #005c77;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  right: 10px;
+  top: 10px;
+  left: initial;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.def-content.visible {
+  display: block;
+}
+
+.def-content .item:hover {
+  background: #f1f1f1;
+}
+
+.def-content .item>a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 10px;
+  transition: 0.3s linear;
+  text-decoration: none !important;
+}
+
+.def-content .item>a img {
+  flex: none;
+  height: 34px;
+  width: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 50%;
+  color: #fff !important;
+}
+
+.def-content .item>a .detail-content {
+  flex-grow: 1;
+  line-height: normal;
+  text-align: left;
+}
+
+.def-content .item>a .detail-content .arcu-item-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #515151;
+}
+
+.out-circle {
+  overflow: hidden;
+  border-radius: 50% 50% 4px;
+  background: #005c77;
+  width: 54px;
+  height: 54px;
+  cursor: pointer;
+}
+
+.out-circle .main-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.out-circle .close-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.out-circle .main-icon .icon-svg,
+.out-circle .close-icon .icon-svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  color: #fff;
+}
+
+.out-circle .main-icon .text-sp {
+  font-size: 0.7rem;
+  color: #fff;
+  margin: 0;
+}
