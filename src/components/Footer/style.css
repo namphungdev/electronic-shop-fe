@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  /* Loại bỏ gạch chân của link */
 }
 
 .content-footer {
@@ -10,16 +9,12 @@
   color: white;
   align-items: center;
   background-color: #ba9344;
-  /* Màu nền ban đầu */
   padding: 4px 8px;
   -webkit-clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
   clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
   position: relative;
-  /* Để căn chỉnh animation */
   overflow: hidden;
-  /* Để animation không tràn ra ngoài */
   transition: color 0.4s ease;
-  /* Transition cho màu chữ */
 }
 
 .content-footer::before {
@@ -30,26 +25,20 @@
   width: 100%;
   height: 100%;
   background-color: blue;
-  /* Màu nền khi hover */
   z-index: 0;
-  /* Để nền nằm dưới nội dung */
   transition: left 0.4s ease;
-  /* Transition cho hiệu ứng di chuyển */
 }
 
 .content-footer:hover::before {
   left: 0;
-  /* Di chuyển màu nền từ trái qua phải khi hover */
 }
 
 .content-footer:hover {
   color: black;
-  /* Đổi màu chữ khi hover */
 }
 
 .content-footer>* {
   position: relative;
-  /* Để nội dung nằm trên nền */
   z-index: 1;
 }
 
@@ -70,17 +59,27 @@
   display: none;
   margin-bottom: 10px;
   background: #fff;
-  /* padding: 10px; */
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  bottom: 55px;
+  bottom: -10px;
   right: 0;
   border-radius: 8px;
   transition: 0.2s;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 300px;
   z-index: 1;
+  position: relative;
+}
+
+.def-content::before {
+  position: absolute;
+  bottom: -8px;
+  right: 22px;
+  left: auto;
+  display: inline-block !important;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #fff;
+  border-left: 8px solid transparent;
+  content: "";
 }
 
 .def-content .def-header {

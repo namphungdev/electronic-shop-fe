@@ -47,6 +47,15 @@
     border-bottom-color: transparent;
 }
 
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover,
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:active {
+    background-color: #ba9344;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item-selected {
+    background-color: #ba9344;
+}
+
 .ant-menu-item a.active {
     color: #fff;
 }

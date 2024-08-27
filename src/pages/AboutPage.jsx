@@ -1,14 +1,17 @@
 import Breadcrumb from '@/components/Breadcrumb'
+import useScrollTop from '@/hooks/useScrollTop';
 import React from 'react'
 
 const AboutPage = () => {
+  useScrollTop();
+
   return (
     <>
       {/* Breadcrumb */}
-      <nav className="py-5">
+      <nav className="py-3 bg-[#f5f5f5] mb-5">
         <div className="container">
           <div className="row">
-            <div className="col-12">
+            <div className="col-12" style={{color: 'red'}}>
               <Breadcrumb>
                 <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
                 <Breadcrumb.Item>Giới thiệu</Breadcrumb.Item>
@@ -18,7 +21,7 @@ const AboutPage = () => {
         </div>
       </nav>
 
-      <div className='layout-about' style={{ margin: '30px 0'}}>
+      <div className='layout-about'>
         <div className="container">
           <div className='inner'>
             <h1>GIỚI THIỆU</h1>

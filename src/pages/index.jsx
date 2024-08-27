@@ -62,7 +62,6 @@ export const Home = () => {
           ))}
         </Carousel>
       </section>
-
       {/* TOP SELLERS */}
       <section className="py-12">
         <div className="container">
@@ -70,14 +69,13 @@ export const Home = () => {
             <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
               Sản phẩm giảm giá
             </h2>
-
             <div className='h-auto flex justify-end flex-1 overflow-hidden'>
               <div className="relative max-w-full">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right pb-2 overflow-x-auto overflow-y-hidden list-none'>
                   {['Gạch ốp lát', 'Thiết bị vệ sinh', 'Tấm ốp nhựa'].map((item, index) => (
                     <li
                       key={index}
-                      className={`relative font-medium bg-gray-200 px-5 py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''} ${index < 2 ? 'mx-2' : ''}`}
+                      className={`relative font-medium bg-gray-200 px-5 py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
                       onClick={() => clickProductSell(index)}
                     >
                       <span>{item}</span>
@@ -87,11 +85,9 @@ export const Home = () => {
               </div>
             </div>
           </div>
-
           <div className='mt-4 p-4 bg-gray-100 border border-gray-300 rounded'>
             <h2 className='text-lg font-semibold'>{activeTitle}</h2>
           </div>
-
           <div className="block-product-sell">
             <div className="product-row row">
               {products.map((product) => (
@@ -123,7 +119,6 @@ export const Home = () => {
               ))}
             </div>
           </div>
-
         </div>
       </section>
       {/* REVIEWS */}

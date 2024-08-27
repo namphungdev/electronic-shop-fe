@@ -40,7 +40,7 @@ const Footer = () => {
               {/* Links */}
               <ul className="list-none pl-0 my-4">
                 <li className='text-black'>
-                  <b>Địa chỉ:</b> <span>315 Phan Văn Trị, P10, Quận Gò Vấp, TP.Hồ Chí Minh</span>
+                  <b>Địa chỉ:</b> <span>1151 Lê Đức Thọ, Phường 13, Quận Gò Vấp, Thành phố Hồ Chí Minh</span>
                 </li>
                 <li className='text-black my-1'>
                   <b>Số điện thoại:</b> <span>0123456789</span>
@@ -50,7 +50,7 @@ const Footer = () => {
                 </li>
               </ul>
               {/* Tags */}
-              <Link to={PATH.home} className="link-store-footer">
+              <Link to={PATH.contact} className="link-store-footer">
                 <div className="content-footer">
                   <div className="icon flex mr-2 ml-1">
                     <FontAwesomeIcon icon={faHouseChimney} />

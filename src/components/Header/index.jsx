@@ -112,6 +112,55 @@ const Header = () => {
     }
   }, [productTypeList]);
 
+  // useEffect(() => {
+  //   const updatedHeaderNavs = HeaderNavs.map(item => {
+  //     switch (item.nav) {
+  //       case 'GẠCH ỐP LÁT':
+  //         const gachOpLat = productTypeList.find(product => product.productTypeName === 'GẠCH ỐP LÁT');
+  //         if (gachOpLat) {
+  //           item.to = `${PATH.products}/${gachOpLat.productTypeCode}`;
+  //         }
+  //         break;
+  //       case 'THIẾT BỊ VỆ SINH':
+  //         const thietBiVeSinh = productTypeList.find(product => product.productTypeName === 'THIẾT BỊ VỆ SINH');
+  //         if (thietBiVeSinh) {
+  //           item.to = `${PATH.products}/${thietBiVeSinh.productTypeCode}`;
+  //         }
+  //         break;
+  //       case 'TẤM ỐP NHỰA':
+  //         const tamOpNhua = productTypeList.find(product => product.productTypeName === 'TẤM ỐP NHỰA');
+  //         if (tamOpNhua) {
+  //           item.to = `${PATH.products}/${tamOpNhua.productTypeCode}`;
+  //         }
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //     return item;
+  //   });
+  
+  //   // Update headerNavs only if they have changed
+  //   if (JSON.stringify(headerNavs) !== JSON.stringify(updatedHeaderNavs)) {
+  //     setHeaderNavs(updatedHeaderNavs);
+  //   }
+  
+  //   const gachOpLat = productTypeList?.find(item => item.productTypeName === 'GẠCH ỐP LÁT')?.productTypeCode || null;
+  //   const thietBiVeSinh = productTypeList?.find(item => item.productTypeName === 'THIẾT BỊ VỆ SINH')?.productTypeCode || null;
+  //   const tamOpNhua = productTypeList?.find(item => item.productTypeName === 'TẤM ỐP NHỰA')?.productTypeCode || null;
+  
+  //   if (
+  //     gachOpLat !== productCodes.gachOpLatCode ||
+  //     thietBiVeSinh !== productCodes.thietBiVeSinhCode ||
+  //     tamOpNhua !== productCodes.tamOpNhuaCode
+  //   ) {
+  //     setProductCodes({
+  //       gachOpLatCode: gachOpLat,
+  //       thietBiVeSinhCode: thietBiVeSinh,
+  //       tamOpNhuaCode: tamOpNhua,
+  //     });
+  //   }
+  // }, [productTypeList, headerNavs, productCodes]);
+
     async function fetchCategoryList(productTypeCode, navName) {
     if (productTypeCode != null) {
       try {

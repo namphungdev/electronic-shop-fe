@@ -8,8 +8,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { PATH } from '@/config';
 import './style.css';
+import useScrollTop from '@/hooks/useScrollTop';
 
 const ContactPage = () => {
+  useScrollTop();
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Tên của bạn là bắt buộc'),
     email: Yup.string().required('Địa chỉ Email là bắt buộc').email('Địa chỉ Email không hợp lệ'),
@@ -28,13 +31,13 @@ const ContactPage = () => {
   return (
     <>
       {/* Breadcrumb */}
-      <nav className="py-5">
+      <nav className="py-3 bg-[#f5f5f5] mb-5">
         <div className="container">
           <div className="row">
             <div className="col-12">
               <Breadcrumb>
                 <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-                <Breadcrumb.Item>Liên hệ với chung tôi</Breadcrumb.Item>
+                <Breadcrumb.Item>Liên hệ với chúng tôi</Breadcrumb.Item>
               </Breadcrumb>
             </div>
           </div>
@@ -52,7 +55,7 @@ const ContactPage = () => {
                   <div className='time-work'>
                     <div className='contact-item'>
                       <FontAwesomeIcon icon={faLocationDot} />
-                      354 Lê Văn Thọ, Phường 11, Quận Gò Vấp
+                      1151 Lê Đức Thọ, Phường 13, Quận Gò Vấp, Thành phố Hồ Chí Minh
                     </div>
                     <div className='contact-item'>
                       <FontAwesomeIcon icon={faPhone} />
@@ -61,18 +64,6 @@ const ContactPage = () => {
                     <div className='contact-item'>
                       <FontAwesomeIcon icon={faEnvelope} />
                       gach315@gmail.com
-                    </div>
-                    <div className='contact-item'>
-                      <Link to={PATH.home} className="link-store-footer">
-                        <div className="content-footer">
-                          <div className="icon flex mr-2 ml-1">
-                            <FontAwesomeIcon icon={faHouseChimney} />
-                          </div>
-                          <div className="text mt-1 mr-2">
-                            Cửa hàng gạch 315
-                          </div>
-                        </div>
-                      </Link>
                     </div>
                   </div>
                 </div>
