@@ -93,5 +93,10 @@ export const productTiles = {
     http.get(`${CATEGORY_API_HHB}/get-web-product-category-list?ProductTypeCode=${code}`, {
       signal,
     })
-  } 
+  },
+
+  productListDiscounted: (listDiscount, signal) =>
+    http.post(`${PRODUCT_API_HHB}/web-get-product-list-discounted-price`, listDiscount, {
+      signal,
+    }),
 }

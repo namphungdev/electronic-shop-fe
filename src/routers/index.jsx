@@ -17,9 +17,7 @@ import EditCategories from "@/pages/cms/quan-ly-danh-muc/edit";
 import ProductManagement from "@/pages/cms/quan-ly-san-pham";
 import AddProducts from "@/pages/cms/quan-ly-san-pham/create";
 import EditProducts from "@/pages/cms/quan-ly-san-pham/edit";
-import UserManagement from "@/pages/cms/quan-ly-nguoi-dung";
-import PermissionUsers from "@/pages/cms/phan-quyen-nguoi-dung";
-import Camera from "@/pages/Camera";
+import SearchPage from "@/pages/SearchPage";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -101,8 +99,8 @@ export const routers = [
         path: PATH.contact,
       },
       {
-        element: <Camera />,
-        path: PATH.camera,
+        element: <SearchPage />,
+        path: PATH.search,
       },
       {
         element: <Page404 />,
@@ -126,8 +124,6 @@ export const routers = [
       { element: <ProductManagement />, path: PATH.productsManagement },
       { element: <AddProducts />, path: PATH.productsAddCMS },
       { element: <EditProducts />, path: PATH.productsCMSDetail },
-      { element: <UserManagement />, path: PATH.usersManagement },
-      { element: <PermissionUsers />, path: PATH.permissionUsers },
     ]
   },
 

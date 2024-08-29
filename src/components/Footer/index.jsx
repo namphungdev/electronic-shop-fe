@@ -188,7 +188,7 @@ const Footer = () => {
               <img
                 alt="Phone"
                 className="w-10 h-10 rounded-full shadow-lg"
-                srcSet="/img/email.svg"
+                srcSet="/img/gmail.svg"
               />
 
               <div className='detail-content'>

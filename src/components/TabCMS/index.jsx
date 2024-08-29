@@ -39,6 +39,14 @@ const GlobalStyle = createGlobalStyle`
   .ant-menu-item {
     padding-left: 15px !important
   }
+
+  .navbar::before {
+    border-bottom: 2px solid transparent
+  }
+
+  :where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item-selected {
+    color: #fff
+  }
 `;
 
 const StyledLayout = styled(Layout)`
@@ -79,18 +87,6 @@ const TabCMS = () => {
       icon: <ShoppingCartOutlined />,
       label: 'Quản lý sản phẩm',
     },
-
-    {
-      key: '/admin/user-cms-management',
-      icon: <TeamOutlined />,
-      label: 'Danh sách người dùng',
-    },
-
-    {
-      key: '/admin/permission-cms-users',
-      icon: <UserSwitchOutlined />,
-      label: 'Phân quyền người dùng',
-    },
   ];
 
   return (
@@ -119,7 +115,7 @@ const TabCMS = () => {
               <Link to={PATH.home}>
                 <img
                   style={{ width: 'auto', height: '100px' }}
-                  srcSet="/img/logos.png 2x"
+                  srcSet="/img/backup-logo.png 2x"
                 />
               </Link>
             </div>

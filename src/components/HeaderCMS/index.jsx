@@ -18,6 +18,12 @@ const GlobalStyle = createGlobalStyle`
     margin-right: 0;
     background: rgb(255, 255, 255) !important;
   }
+
+  :where(.css-dev-only-do-not-override-diro6f).ant-dropdown {
+    min-width: 60px;
+    left: 1340px !important;
+    top: 54px !important;
+  }
 `;
 
 const HeaderCMS = () => {
@@ -59,7 +65,7 @@ const HeaderCMS = () => {
                     <span className="nav-link cursor-pointer">
                       <div className="w-7 h-7 rounded-full overflow-hidden border border-gray-400">
                         <img
-                          src={user?.avatar || avatarDefault}
+                          src={avatarDefault}
                           alt="ava"
                           className="w-full h-full object-cover"
                         />

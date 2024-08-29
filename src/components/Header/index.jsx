@@ -4,7 +4,6 @@ import { onOpenDrawer } from '@/stores/drawerReducer';
 import { Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import SearchDrawer from '../SearchDrawer';
 import { useDispatch } from 'react-redux';
 import CartDrawer from '../CartDrawer';
 const { SubMenu } = Menu;
@@ -15,6 +14,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { productTiles } from '@/services/product.service';
 import axios from 'axios';
 import "./style.css"
+import SearchModal from '../SearchModal';
 
 const HeaderNavs = [
   {
@@ -58,7 +58,13 @@ const Header = () => {
     thietBiVeSinhCode: null,
     tamOpNhuaCode: null,
   });
-  const [activeNav, setActiveNav] = useState(location.pathname); 
+
+  const [activeNav, setActiveNav] = useState(location.pathname);
+  const [isSearchModalVisible, setSearchModalVisible] = useState(false);
+
+  const toggleSearchModal = () => {
+    setSearchModalVisible((prev) => !prev);
+  };
 
   const {
     data: { data: productTypeList = [] } = {}
@@ -96,13 +102,13 @@ const Header = () => {
       }
       return item;
     });
-  
+
     setHeaderNavs(updatedHeaderNavs);
-  
+
     const gachOpLat = productTypeList?.find(item => item.productTypeName === 'GẠCH ỐP LÁT');
     const thietBiVeSinh = productTypeList?.find(item => item.productTypeName === 'THIẾT BỊ VỆ SINH');
     const tamOpNhua = productTypeList?.find(item => item.productTypeName === 'TẤM ỐP NHỰA');
-  
+
     if (gachOpLat && thietBiVeSinh && tamOpNhua) {
       setProductCodes({
         gachOpLatCode: gachOpLat.productTypeCode,
@@ -112,56 +118,7 @@ const Header = () => {
     }
   }, [productTypeList]);
 
-  // useEffect(() => {
-  //   const updatedHeaderNavs = HeaderNavs.map(item => {
-  //     switch (item.nav) {
-  //       case 'GẠCH ỐP LÁT':
-  //         const gachOpLat = productTypeList.find(product => product.productTypeName === 'GẠCH ỐP LÁT');
-  //         if (gachOpLat) {
-  //           item.to = `${PATH.products}/${gachOpLat.productTypeCode}`;
-  //         }
-  //         break;
-  //       case 'THIẾT BỊ VỆ SINH':
-  //         const thietBiVeSinh = productTypeList.find(product => product.productTypeName === 'THIẾT BỊ VỆ SINH');
-  //         if (thietBiVeSinh) {
-  //           item.to = `${PATH.products}/${thietBiVeSinh.productTypeCode}`;
-  //         }
-  //         break;
-  //       case 'TẤM ỐP NHỰA':
-  //         const tamOpNhua = productTypeList.find(product => product.productTypeName === 'TẤM ỐP NHỰA');
-  //         if (tamOpNhua) {
-  //           item.to = `${PATH.products}/${tamOpNhua.productTypeCode}`;
-  //         }
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //     return item;
-  //   });
-  
-  //   // Update headerNavs only if they have changed
-  //   if (JSON.stringify(headerNavs) !== JSON.stringify(updatedHeaderNavs)) {
-  //     setHeaderNavs(updatedHeaderNavs);
-  //   }
-  
-  //   const gachOpLat = productTypeList?.find(item => item.productTypeName === 'GẠCH ỐP LÁT')?.productTypeCode || null;
-  //   const thietBiVeSinh = productTypeList?.find(item => item.productTypeName === 'THIẾT BỊ VỆ SINH')?.productTypeCode || null;
-  //   const tamOpNhua = productTypeList?.find(item => item.productTypeName === 'TẤM ỐP NHỰA')?.productTypeCode || null;
-  
-  //   if (
-  //     gachOpLat !== productCodes.gachOpLatCode ||
-  //     thietBiVeSinh !== productCodes.thietBiVeSinhCode ||
-  //     tamOpNhua !== productCodes.tamOpNhuaCode
-  //   ) {
-  //     setProductCodes({
-  //       gachOpLatCode: gachOpLat,
-  //       thietBiVeSinhCode: thietBiVeSinh,
-  //       tamOpNhuaCode: tamOpNhua,
-  //     });
-  //   }
-  // }, [productTypeList, headerNavs, productCodes]);
-
-    async function fetchCategoryList(productTypeCode, navName) {
+  async function fetchCategoryList(productTypeCode, navName) {
     if (productTypeCode != null) {
       try {
         const response = await axios.get(`${CATEGORY_API_HHB}/get-web-product-category-list?ProductTypeCode=${productTypeCode}`);
@@ -171,10 +128,10 @@ const Header = () => {
           nav: category.productCategoryName,
           submenu: category.subProductCategories.length > 0
             ? category.subProductCategories.map(sub => ({
-                to: `${PATH.products}/${sub.subProductCategoryCode}`,
-                nav: sub.subProductCategoryName,
-              }))
-            : null, 
+              to: `${PATH.products}/${sub.subProductCategoryCode}`,
+              nav: sub.subProductCategoryName,
+            }))
+            : null,
         }));
 
         setHeaderNavs(prevNavs =>
@@ -270,7 +227,10 @@ const Header = () => {
 
   return (
     <>
-      <SearchDrawer />
+      <SearchModal
+        isVisible={isSearchModalVisible}
+        onClose={toggleSearchModal}
+      />
       <CartDrawer />
       <div>
         <nav className={`navbar navbar-expand-lg fixed top-0 left-0 w-full z-10 mb-0 p-2 ${isHomepage ? (scrolled ? 'scrolled' : 'homepage') : ''}`}>
@@ -299,13 +259,13 @@ const Header = () => {
               <ul className="navbar-nav flex-row items-center">
                 <li className="nav-item">
                   <span
-                    className="nav-link cursor-pointer"
-                    data-toggle="modal"
+                    style={{
+                      cursor: 'pointer'
+                    }}
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(onOpenDrawer('search'));
-                    }}
-                  >
+                      // toggleSearchModal();
+                    }}>
                     <i className="fe fe-search" />
                   </span>
                 </li>

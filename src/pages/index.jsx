@@ -1,31 +1,12 @@
 import Carousel from '@/components/Carousel';
 import Slider from '@/components/Slider';
 import useScrollTop from '@/hooks/useScrollTop';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css'
 import { Link } from 'react-router-dom';
 import { PATH } from '@/config';
-
-export const generateRandomProductData = (count) => {
-  const names = [
-    'Gạch Bông Lát Nền 60X60 VL75205 đá mờ',
-    'Gạch Bông Lát Nền 80X80 VL75206 bóng kính',
-    'Gạch Bông Lát Nền 30X30 VL75207 granite',
-    'Gạch Bông Lát Nền 40X40 VL75208 sứ',
-    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
-    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
-    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
-    'Gạch Bông Lát Nền 60X60 VL75209 nhám',
-    'Gạch Bông Lát Nền 50X50 VL75210 gạch ốp saddadadasdasd',
-    'Gạch Bông Lát Nền',
-  ];
-
-  return Array.from({ length: count }, (_, index) => ({
-    id: index + 1,
-    name: names[index % names.length],
-    price: `${Math.floor(Math.random() * 100000) + 200}đ`,
-  }));
-};
+import { productTiles } from '@/services/product.service';
+import useQuery from '@/hooks/useQuery';
 
 export const Home = () => {
   useScrollTop();
@@ -35,22 +16,43 @@ export const Home = () => {
     '/img/banner_2.jpg',
     '/img/banner_3.jpg',
   ]
- 
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [activeTitle, setActiveTitle] = useState('Gạch ốp lát');
 
-  const tabs = [
-    'Gạch ốp lát',
-    'Thiết bị vệ sinh',
-    'Tấm ốp nhựa'
-  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [productCode, setProductCode] = useState();
+
+  const idProduct = activeIndex + 1
+
+  useEffect(() => {
+    if (idProduct == 1) {
+      setProductCode('thiet-bi-ve-sinh')
+    } else if (idProduct == 2) {
+      setProductCode('gach-op-lat')
+    } else {
+      setProductCode('tam-op-nhua')
+    }
+  }, [idProduct])
+
 
   const clickProductSell = (index) => {
     setActiveIndex(index)
-    setActiveTitle(tabs[index]);
   }
 
-  const products = generateRandomProductData(10); 
+  const param = {
+    keyword: '',
+    pageIndex: 1,
+    pageSize: 10,
+    productType: productCode
+  };
+
+  const {
+    data: { data: dataPrice = [] } = {},
+  } = useQuery({
+    queryKey: `product-page-${JSON.stringify(productCode)}`,
+    keepPreviousData: true,
+    keepStorage: false,
+    queryFn: ({ signal }) => productTiles.productListDiscounted(param, signal),
+    enabled: !!productCode,
+  });
 
   return (
     <>
@@ -72,7 +74,7 @@ export const Home = () => {
             <div className='h-auto flex justify-end flex-1 overflow-hidden'>
               <div className="relative max-w-full">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right pb-2 overflow-x-auto overflow-y-hidden list-none'>
-                  {['Gạch ốp lát', 'Thiết bị vệ sinh', 'Tấm ốp nhựa'].map((item, index) => (
+                  {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
                     <li
                       key={index}
                       className={`relative font-medium bg-gray-200 px-5 py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
@@ -85,17 +87,14 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <div className='mt-4 p-4 bg-gray-100 border border-gray-300 rounded'>
-            <h2 className='text-lg font-semibold'>{activeTitle}</h2>
-          </div>
           <div className="block-product-sell">
             <div className="product-row row">
-              {products.map((product) => (
+              {dataPrice && dataPrice?.map((product) => (
                 <div key={product.id} className="product-card">
-                  <Link className="navbar-brand" to={`/loa-thung-klipsch-r-8sw-subwoofer-150w-hang-chinh-hang`}>
+                  <Link className="navbar-brand" to={product.code}>
                     <img
                       style={{ height: 'auto' }}
-                      srcSet="/img/Gach-bong-lat-nen-2.jpg"
+                      srcSet={product.images[0].base_url}
                       alt={product.name}
                     />
                   </Link>
@@ -103,10 +102,10 @@ export const Home = () => {
                     <h3 className="product-card-title">{product.name}</h3>
                     <div className='price-box'>
                       <span className='price'>
-                        80,000đ
+                        {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
                       </span>
                       <span className='compare-price'>
-                        {product.price}
+                        {Number(product.price).toLocaleString('vi-VN')}đ
                       </span>
                     </div>
                     <div className='product-button'>

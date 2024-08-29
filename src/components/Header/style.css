@@ -19,7 +19,7 @@
 }
 
 :where(.css-dev-only-do-not-override-diro6f).ant-menu .ant-menu-title-content {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 :where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
@@ -72,9 +72,8 @@
 
 .ant-menu-horizontal {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     width: 100%;
-    font-size: 1.2rem;
     background: transparent;
     border: none;
 }
@@ -136,19 +135,43 @@
 
 .scrolled {
     background-color: white;
-    /* Change this to your desired color */
 }
 
 .white-bg {
     background-color: white;
-    /* White background for non-homepage routes */
 }
 
 
+.search-modal {
+    position: relative;
+}
 
+.search-modal-overlay {
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    height: auto; 
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
 
+.search-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
 
+.search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-
-
-
+.navbar {
+    z-index: 10;
+}

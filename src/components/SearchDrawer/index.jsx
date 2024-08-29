@@ -86,6 +86,7 @@ const SearchDrawer = () => {
     queryFn: ({ signal }) => productService.getProducts(`?${_qs}`, signal),
   });
 
+
   const querySearchString = queryString.stringify({
     search: searchDebounce || undefined,
   });
