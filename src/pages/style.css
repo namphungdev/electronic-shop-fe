@@ -1,5 +1,9 @@
 /* CSS cho page Home -- tab of sản phẩm giảm giá */
 
+.group-slider {
+    height: 100vh;
+}
+
 .product-h2-custom::before {
     content: "";
     display: block;
@@ -268,5 +272,31 @@
     height: 100%;
 }
 
-
 /* CSS cho page Contact */
+
+
+/* CSS cho logo branch */
+
+.slider-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.slider-img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.swiper-pagination-bullet {
+    background-color: #000; 
+    opacity: 1; 
+  }
+  
+  .swiper-pagination-bullet-active {
+    background-color: #ffcc00; 
+  }
+
+/* CSS cho logo branch */

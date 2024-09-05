@@ -237,7 +237,7 @@ const Header = () => {
           <div className="container">
             <Link className="navbar-brand" to={PATH.home}>
               <img
-                style={{ width: '75px', height: 'auto', borderRadius: '5px' }}
+                style={{ width: '75px', height: 'auto' }}
                 srcSet="/img/backup-logo.png 2x"
               />
             </Link>

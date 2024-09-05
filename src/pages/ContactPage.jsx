@@ -50,8 +50,8 @@ const ContactPage = () => {
             <div className='row'>
               <div className='col-lg-5 col-12'>
                 <div className='contact-content'>
-                  <h4>Gạch 315</h4>
-                  <div className="des_foo">Gạch 315 NPP GẠCH ỐP LÁT - THIẾT BỊ VỆ SINH - TẤM ỐP NHỰA</div>
+                  <h4>VLXD GẠCH 315</h4>
+                  <div className="des_foo">Chuyên phân phối GẠCH ỐP LÁT - THIẾT BỊ VỆ SINH - TẤM ỐP NHỰA ...</div>
                   <div className='time-work'>
                     <div className='contact-item'>
                       <FontAwesomeIcon icon={faLocationDot} />

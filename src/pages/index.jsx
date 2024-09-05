@@ -17,6 +17,22 @@ export const Home = () => {
     '/img/banner_3.jpg',
   ]
 
+  const branch = [
+    '/img/tiles/apodio.png',
+    '/img/tiles/catalan.jpg',
+    '/img/tiles/cmc.png',
+    '/img/tiles/dong-tam.jpg',
+    '/img/tiles/feliz.png',
+    '/img/tiles/gach-prime.jpg',
+    '/img/tiles/logo_bluedragon.jpg',
+    '/img/tiles/logo-tasa.jpg',
+    '/img/tiles/perfetto.jpg',
+    '/img/tiles/taicera.jpg',
+    '/img/tiles/takao.jpg',
+    '/img/tiles/ttc.png',
+    '/img/tiles/viglacera.jpg'
+  ]
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [productCode, setProductCode] = useState();
 
@@ -120,374 +136,50 @@ export const Home = () => {
           </div>
         </div>
       </section>
-      {/* REVIEWS */}
+      {/* BRANCH */}
       <section className="py-12">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-12 col-md-10 col-lg-8 col-xl-6 text-center">
+            <div className="text-center">
+              {/* Heading */}
+              <h2 className="mb-5">Các đối tác của chúng tôi</h2>
               {/* Preheading */}
               <h6 className="heading-xxs mb-3 text-gray-400">
-                What buyers say
+                Chúng tôi luôn chọn những đối tác tin cậy và uy tín để đảm bảo những sản phẩm có chất lượng tốt nhất để gửi tới bạn.
               </h6>
-              {/* Heading */}
-              <h2 className="mb-10">Latest buyers Reviews</h2>
             </div>
           </div>
           <div className="row">
             <div className="col-12">
               <Slider
                 className="select-none !pb-20"
-                slidesPerView={1}
-                spaceBetween={32}
+                slidesPerView={6}
+                spaceBetween={10}
                 loop
                 grabCursor
                 speed={600}
-                pagination={{ clickable: true }}
+                autoplay={{ delay: 1000 }} 
                 breakpoints={{
-                  //min-width
-                  768: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
+                  320: { slidesPerView: 2 },
+                  768: { slidesPerView: 4 },
+                  1024: { slidesPerView: 6 },
                 }}
               >
-                <div className="card-lg card border">
-                  <div className="card-body">
-                    <div className="row align-items-center mb-6">
-                      <div className="col-4">
-                        <img
-                          src="/img/products/product-13.jpg"
-                          alt="..."
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="col-8 ml-n2">
-                        <a className="font-size-xs text-muted" href="shop.html">
-                          Shoes
-                        </a>
-                        <a
-                          className="d-block font-weight-bold text-body"
-                          href="product.html"
-                        >
-                          Low top Sneakers
-                        </a>
-                        <div
-                          className="rating font-size-xxs text-warning"
-                          data-value={3}
-                        >
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="mb-0">
-                      <p className="text-muted">
-                        From creepeth said moved given divide make multiply of
-                        him shall itself also above second doesn't unto created
-                        saying land herb sea midst night wherein.
-                      </p>
-                      <footer className="font-size-xs text-muted">
-                        Logan Edwards,{' '}
-                        <time dateTime="2019-06-01">01 Jun 2019</time>
-                      </footer>
-                    </blockquote>
+                {branch.map((src, index) => (
+                  <div key={index} className="slider-item">
+                    <img
+                      src={src}
+                      alt={`branch-${index}`}
+                      className="slider-img"
+                    />
                   </div>
-                </div>
-                <div className="card-lg card border">
-                  <div className="card-body">
-                    <div className="row align-items-center mb-6">
-                      <div className="col-4">
-                        <img
-                          src="/img/products/product-14.jpg"
-                          alt="..."
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="col-8 ml-n2">
-                        <a className="font-size-xs text-muted" href="shop.html">
-                          Dresses
-                        </a>
-                        <a
-                          className="d-block font-weight-bold text-body"
-                          href="product.html"
-                        >
-                          Cotton print Dress
-                        </a>
-                        <div
-                          className="rating font-size-xxs text-warning"
-                          data-value={5}
-                        >
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="mb-0">
-                      <p className="text-muted">
-                        God every fill great replenish darkness unto. Very open.
-                        Likeness their that light. Given under image to. Subdue
-                        of shall cattle day fish form saw spirit and given
-                        stars, us you whales may, land, saw fill unto.
-                      </p>
-                      <footer className="font-size-xs text-muted">
-                        Jane Jefferson,{' '}
-                        <time dateTime="2019-05-29">29 May 2019</time>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-                <div className="card-lg card border">
-                  <div className="card-body">
-                    <div className="row align-items-center mb-6">
-                      <div className="col-4">
-                        <img
-                          src="/img/products/product-15.jpg"
-                          alt="..."
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="col-8 ml-n2">
-                        <a className="font-size-xs text-muted" href="shop.html">
-                          T-shirts
-                        </a>
-                        <a
-                          className="d-block font-weight-bold text-body"
-                          href="product.html"
-                        >
-                          Oversized print T-shirt
-                        </a>
-                        <div
-                          className="rating font-size-xxs text-warning"
-                          data-value={4}
-                        >
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="mb-0">
-                      <p className="text-muted">
-                        Fill his waters wherein signs likeness waters. Second
-                        light gathered appear sixth fourth, seasons behold
-                        creeping female.
-                      </p>
-                      <footer className="font-size-xs text-muted">
-                        Darrell Baker,{' '}
-                        <time dateTime="2019-05-18">18 May 2019</time>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-                <div className="card-lg card border">
-                  <div className="card-body">
-                    <div className="row align-items-center mb-6">
-                      <div className="col-4">
-                        <img
-                          src="/img/products/product-10.jpg"
-                          alt="..."
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="col-8 ml-n2">
-                        <a className="font-size-xs text-muted" href="shop.html">
-                          Bags &amp; Accessories
-                        </a>
-                        <a
-                          className="d-block font-weight-bold text-body"
-                          href="product.html"
-                        >
-                          Suede cross body Bag
-                        </a>
-                        <div
-                          className="rating font-size-xxs text-warning"
-                          data-value={4}
-                        >
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="mb-0">
-                      <p className="text-muted">
-                        God every fill great replenish darkness unto. Very open.
-                        Likeness their that light. Given under image to. Subdue
-                        of shall cattle day fish form saw spirit and given
-                        stars.
-                      </p>
-                      <footer className="font-size-xs text-muted">
-                        Pavel Doe,{' '}
-                        <time dateTime="2019-05-29">29 May 2019</time>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-                <div className="card-lg card border">
-                  <div className="card-body">
-                    <div className="row align-items-center mb-6">
-                      <div className="col-4">
-                        <img
-                          src="/img/products/product-13.jpg"
-                          alt="..."
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="col-8 ml-n2">
-                        <a className="font-size-xs text-muted" href="shop.html">
-                          Shoes
-                        </a>
-                        <a
-                          className="d-block font-weight-bold text-body"
-                          href="product.html"
-                        >
-                          Low top Sneakers
-                        </a>
-                        <div
-                          className="rating font-size-xxs text-warning"
-                          data-value={3}
-                        >
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="mb-0">
-                      <p className="text-muted">
-                        From creepeth said moved given divide make multiply of
-                        him shall itself also above second doesn't unto created
-                        saying land herb sea midst night wherein.
-                      </p>
-                      <footer className="font-size-xs text-muted">
-                        Logan Edwards,{' '}
-                        <time dateTime="2019-06-01">01 Jun 2019</time>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-                <div className="card-lg card border">
-                  <div className="card-body">
-                    <div className="row align-items-center mb-6">
-                      <div className="col-4">
-                        <img
-                          src="/img/products/product-14.jpg"
-                          alt="..."
-                          className="img-fluid"
-                        />
-                      </div>
-                      <div className="col-8 ml-n2">
-                        <a className="font-size-xs text-muted" href="shop.html">
-                          Dresses
-                        </a>
-                        <a
-                          className="d-block font-weight-bold text-body"
-                          href="product.html"
-                        >
-                          Cotton print Dress
-                        </a>
-                        <div
-                          className="rating font-size-xxs text-warning"
-                          data-value={5}
-                        >
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                          <div className="rating-item">
-                            <i className="fas fa-star" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <blockquote className="mb-0">
-                      <p className="text-muted">
-                        God every fill great replenish darkness unto. Very open.
-                        Likeness their that light. Given under image to. Subdue
-                        of shall cattle day fish form saw spirit and given
-                        stars, us you whales may, land, saw fill unto.
-                      </p>
-                      <footer className="font-size-xs text-muted">
-                        Jane Jefferson,{' '}
-                        <time dateTime="2019-05-29">29 May 2019</time>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
+                ))}
               </Slider>
             </div>
           </div>
         </div>
       </section>
-      {/* BRANDS */}
+
     </>
   );
 };

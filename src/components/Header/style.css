@@ -19,7 +19,7 @@
 }
 
 :where(.css-dev-only-do-not-override-diro6f).ant-menu .ant-menu-title-content {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 :where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
@@ -72,7 +72,7 @@
 
 .ant-menu-horizontal {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     width: 100%;
     background: transparent;
     border: none;
