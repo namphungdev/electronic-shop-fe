@@ -119,10 +119,10 @@ const ProductPage = () => {
       setSort('desc');
     } else if (selectedValue === 2) {
       setOrder('Price');
-      setSort('desc');
+      setSort('asc');
     } else if (selectedValue === 3) {
       setOrder('Price');
-      setSort('asc');
+      setSort('desc');
     }
   };
 
