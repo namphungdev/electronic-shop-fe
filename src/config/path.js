@@ -13,7 +13,7 @@ export const PATH = {
   productsAddCMS: '/admin/add-products',
   error: '/404',
   products: '/san-pham',
-  productDetail: '/:slug',
+  productDetail: '/chi-tiet/:slug',
   category: '/:slug/:id',
   viewCart: '/gio-hang',
   checkout: '/checkout',

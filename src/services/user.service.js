@@ -3,7 +3,7 @@ import { http } from "@/utils";
 export const userService = {
 
   // user cms
-  getProfile: () => http.get(`${USER_API_HHB}`),
+  // getProfile: () => http.get(`${USER_API_HHB}`),
 
   getUsersList: (param) => http.get(`${AUTH_API_HHB}/list-users/${param.pageIndex}/${param.pageSize}?keyword=${param.keyword}&status=${param.status}`),
 

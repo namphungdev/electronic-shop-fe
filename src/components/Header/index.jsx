@@ -36,7 +36,7 @@ const HeaderNavs = [
     submenu: []
   },
   {
-    to: PATH.camera,
+    to: PATH.faq,
     nav: 'TẤM ỐP NHỰA',
     submenu: []
   },
@@ -82,19 +82,19 @@ const Header = () => {
         case 'GẠCH ỐP LÁT':
           const gachOpLat = productTypeList.find(product => product.productTypeName === 'GẠCH ỐP LÁT');
           if (gachOpLat) {
-            item.to = `${PATH.products}/${gachOpLat.productTypeCode}`;
+            item.to = `${PATH.products}/${gachOpLat?.productTypeName}-${gachOpLat.productTypeCode}`;
           }
           break;
         case 'THIẾT BỊ VỆ SINH':
           const thietBiVeSinh = productTypeList.find(product => product.productTypeName === 'THIẾT BỊ VỆ SINH');
           if (thietBiVeSinh) {
-            item.to = `${PATH.products}/${thietBiVeSinh.productTypeCode}`;
+            item.to = `${PATH.products}/${thietBiVeSinh?.type}-${thietBiVeSinh.productTypeCode}`;
           }
           break;
         case 'TẤM ỐP NHỰA':
           const tamOpNhua = productTypeList.find(product => product.productTypeName === 'TẤM ỐP NHỰA');
           if (tamOpNhua) {
-            item.to = `${PATH.products}/${tamOpNhua.productTypeCode}`;
+            item.to = `${PATH.products}/${tamOpNhua?.type}-${tamOpNhua.productTypeCode}`;
           }
           break;
         default:
@@ -124,11 +124,11 @@ const Header = () => {
         const response = await axios.get(`${CATEGORY_API_HHB}/get-web-product-category-list?ProductTypeCode=${productTypeCode}`);
         const categories = response.data.data.productCategory;
         const submenus = categories.map(category => ({
-          to: `${PATH.products}/${category.productCategoryCode}`,
+          to: `${PATH.products}/${category.type}-${category.productCategoryCode}`,
           nav: category.productCategoryName,
           submenu: category.subProductCategories.length > 0
             ? category.subProductCategories.map(sub => ({
-              to: `${PATH.products}/${sub.subProductCategoryCode}`,
+              to: `${PATH.products}/${sub.type}-${sub.subProductCategoryCode}`,
               nav: sub.subProductCategoryName,
             }))
             : null,
@@ -238,7 +238,7 @@ const Header = () => {
             <Link className="navbar-brand" to={PATH.home}>
               <img
                 style={{ width: '75px', height: 'auto' }}
-                srcSet="/img/backup-logo.png 2x"
+                srcSet="/img/logo-vuong.jpg 2x"
               />
             </Link>
             <button

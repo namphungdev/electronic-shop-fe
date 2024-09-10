@@ -89,14 +89,13 @@ export const productTiles = {
   getProductTypeList: () =>
     http.get(`${CATEGORY_API_HHB}/get-web-product-type-list`),
 
-  getCategoryList: (code, signal) => {
-    http.get(`${CATEGORY_API_HHB}/get-web-product-category-list?ProductTypeCode=${code}`, {
-      signal,
-    })
-  },
-
   productListDiscounted: (listDiscount, signal) =>
     http.post(`${PRODUCT_API_HHB}/web-get-product-list-discounted-price`, listDiscount, {
+      signal,
+    }),
+
+  getBreakcumb: (breakcumb, signal) =>
+    http.post(`${CATEGORY_API_HHB}/categorys/get-web-breakcumb-list`, breakcumb, {
       signal,
     }),
 }
