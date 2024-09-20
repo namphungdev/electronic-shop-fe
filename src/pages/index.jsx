@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { PATH } from '@/config';
 import { productTiles } from '@/services/product.service';
 import useQuery from '@/hooks/useQuery';
+import { Spin } from 'antd';
 
 export const Home = () => {
   useScrollTop();
@@ -48,7 +49,6 @@ export const Home = () => {
     }
   }, [idProduct])
 
-
   const clickProductSell = (index) => {
     setActiveIndex(index)
   }
@@ -61,7 +61,7 @@ export const Home = () => {
   };
 
   const {
-    data: { data: dataPrice = [] } = {},
+    data: { data: dataPrice = [], loading: loadingDataPrice } = {},
   } = useQuery({
     queryKey: `product-page-${JSON.stringify(productCode)}`,
     keepPreviousData: true,
@@ -104,35 +104,45 @@ export const Home = () => {
             </div>
           </div>
           <div className="block-product-sell">
-            <div className="product-row row">
-              {dataPrice && dataPrice?.map((product) => (
-                <div key={product.id} className="product-card">
-                  <Link className="navbar-brand" to={product.code}>
-                    <img
-                      style={{ height: 'auto' }}
-                      srcSet={product.images[0].base_url}
-                      alt={product.name}
-                    />
-                  </Link>
-                  <div className="product-card-content">
-                    <h3 className="product-card-title">{product.name}</h3>
-                    <div className='price-box'>
-                      <span className='price'>
-                        {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                      </span>
-                      <span className='compare-price'>
-                        {Number(product.price).toLocaleString('vi-VN')}đ
-                      </span>
-                    </div>
-                    <div className='product-button'>
-                      <Link to={PATH.contact} className='btn-sell-contact'>
-                        Liên hệ
+            {loadingDataPrice ? (
+              <div className="loading-container">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <div className="product-row row">
+                {dataPrice && dataPrice.length > 0 ? (
+                  dataPrice.map((product) => (
+                    <div key={product.id} className="product-card">
+                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                        <img
+                          style={{ height: 'auto' }}
+                          srcSet={product.images[0].base_url}
+                          alt={product.name}
+                        />
                       </Link>
+                      <div className="product-card-content">
+                        <h3 className="product-card-title">{product.name}</h3>
+                        <div className="price-box">
+                          <span className="price">
+                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                          </span>
+                          <span className="compare-price">
+                            {Number(product.price).toLocaleString('vi-VN')}đ
+                          </span>
+                        </div>
+                        <div className="product-button">
+                          <Link to={PATH.contact} className="btn-sell-contact">
+                            Liên hệ
+                          </Link>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  ))
+                ) : (
+                  <p>Không có sản phẩm nào.</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -158,7 +168,7 @@ export const Home = () => {
                 loop
                 grabCursor
                 speed={600}
-                autoplay={{ delay: 1000 }} 
+                autoplay={{ delay: 1000 }}
                 breakpoints={{
                   320: { slidesPerView: 2 },
                   768: { slidesPerView: 4 },

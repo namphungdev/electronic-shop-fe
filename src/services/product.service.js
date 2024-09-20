@@ -94,8 +94,6 @@ export const productTiles = {
       signal,
     }),
 
-  getBreakcumb: (breakcumb, signal) =>
-    http.post(`${CATEGORY_API_HHB}/categorys/get-web-breakcumb-list`, breakcumb, {
-      signal,
-    }),
+  getBreakcumb: (breakcumb) =>
+    http.post(`${CATEGORY_API_HHB}/categorys/get-web-breakcumb-list`, breakcumb),
 }

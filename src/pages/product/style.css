@@ -82,15 +82,11 @@
 }
 
 .products-view.no-products {
-    /* Apply your styles here */
     background-color: #f5f5f5;
-    /* Example background color */
     border: 1px solid #ddd;
-    /* Example border */
     padding: 20px;
-    /* Example padding */
     text-align: center;
-    /* Center the content */
+    margin: 1rem
 }
 
 
@@ -243,12 +239,23 @@
     background: rgb(245, 245, 245);
     margin-bottom: 20px;
     position: relative;
+    display: flex;
+    justify-content: space-between;
 }
 
 .product-price .special-price {
     font-size: 1.6rem;
     font-weight: bold;
     color: #c30000;
+}
+
+.product-price .compare-price {
+    font-size: 1.6rem;
+    font-weight: bold;
+
+    color: #7b7b7b;
+    text-decoration: line-through;
+    line-height: initial;
 }
 
 .product-btn {
@@ -335,4 +342,21 @@
     text-align: left;
     flex-grow: 1;
     margin-left: 10px;
+}
+
+
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab {
+    font-size: 1.2rem;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #ba9344;
+    text-shadow: 0 0 0.25px currentcolor;
+    font-size: 1.2rem;
+}
+
+.description-infor {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 20px;
 }
