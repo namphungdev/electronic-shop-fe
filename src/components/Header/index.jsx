@@ -264,7 +264,7 @@ const Header = () => {
                     }}
                     onClick={(e) => {
                       e.preventDefault();
-                      // toggleSearchModal();
+                      toggleSearchModal();
                     }}>
                     <i className="fe fe-search" />
                   </span>

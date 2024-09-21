@@ -1,12 +1,10 @@
 import React from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faPhone, faEnvelope, faHouseChimney, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { faLocationDot, faPhone, faEnvelope, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { PATH } from '@/config';
 import './style.css';
 import useScrollTop from '@/hooks/useScrollTop';
 
