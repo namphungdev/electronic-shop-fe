@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Space, Button } from 'antd';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { productServiceHHB } from '@/services/product.service';
+import { cmsTitles, productTiles } from '@/services/product.service';
 import { PATH } from '@/config';
+import useQuery from '@/hooks/useQuery';
 
 // Character map for converting Vietnamese characters to non-accented equivalents
 const characterMap = {
@@ -37,29 +38,46 @@ const convertVietnameseToNonAccented = (str) => {
 
 const AddCategories = () => {
     const navigate = useNavigate()
-    const [inputCategoryCode, setInputCategoryCode] = useState('');
-    const [inputCategoryName, setInputCategoryName] = useState('');
-    const [inputCategoryDescription, setInputCategoryDescription] = useState('');
-    const [categoryStatus, setCategoryStatus] = useState('ACTIVE');
+    const [productCategoryCode, setProductCategoryCode] = useState('');
+    const [productCategoryName, setProductCategoryName] = useState('');
+    const [productCategoryStatus, setProductCategoryStatus] = useState('ACTIVE');
+    const [productType, setProductType] = useState('');
+    const [isSub, setIsSub] = useState(true);
     const [nameError, setNameError] = useState('');
+    const [productTypeError, setProductTypeError] = useState('');
+
+    const {
+        data: { data: productTypeList = [] } = {}
+    } = useQuery({
+        queryKey: `get-product-type-list`,
+        keepPreviousData: true,
+        keepStorage: false,
+        queryFn: () =>
+            productTiles.getProductTypeList(),
+    });
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        if (!inputCategoryName) {
-            setNameError('Tên danh mục không được để trống');
+        if (!productCategoryName) {
+            setNameError('Tên danh mục sản phẩm không được để trống');
+            return;
+        }
+        if (!productType) {
+            setProductTypeError('Loại sản phẩm không được để trống');
             return;
         }
         const params = {
-            code: inputCategoryCode,
-            name: inputCategoryName,
-            description: inputCategoryDescription,
-            status: categoryStatus
+            code: productCategoryCode,
+            name: productCategoryName,
+            productType: productType,
+            isSub: isSub,
+            status: productCategoryStatus
         }
         try {
-            const res = await productServiceHHB.insertCategory(params)
+            const res = await cmsTitles.insertProductCategory(params)
             if (res.result && res.code == 200) {
                 navigate(PATH.categoriesManagement)
-                toast.success('Thêm danh mục thành công')
+                toast.success('Thêm danh mục sản phẩm thành công')
             }
         } catch (error) {
             toast.error(res.message)
@@ -69,19 +87,25 @@ const AddCategories = () => {
     const handleInputChange = (fieldName) => (e) => {
         const { value } = e.target;
         switch (fieldName) {
-            case 'categoryName':
+            case 'productCategoryName':
                 if (nameError) {
                     setNameError('');
                 }
-                setInputCategoryName(value);
+                setProductCategoryName(value);
                 const codeConvert = convertVietnameseToNonAccented(value);
-                setInputCategoryCode(codeConvert);
+                setProductCategoryCode(codeConvert);
                 break;
-            case 'categoryDescription':
-                setInputCategoryDescription(value);
+            case 'productType':
+                if (productTypeError) {
+                    setProductTypeError('')
+                }
+                setProductType(value);
                 break;
-            case 'categoryStatus':
-                setCategoryStatus(value);
+            case 'isSub':
+                setIsSub(value === 'true')
+                break;
+            case 'productCategoryStatus':
+                setProductCategoryStatus(value);
                 break;
             default:
                 break;
@@ -91,7 +115,7 @@ const AddCategories = () => {
     return (
         <>
             <Space className='my-3'>
-                <h3>Thêm danh mục</h3>
+                <h3>Thêm danh mục sản phẩm</h3>
             </Space>
             <form
                 onSubmit={onSubmit}
@@ -101,20 +125,21 @@ const AddCategories = () => {
                 <div className="mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
                     <div className="p-6">
                         <div className="row">
+
                             <div className="col-md-6">
                                 <div className="form-group">
                                     <label className="block text-sm font-medium leading-6 text-gray-900">
-                                        Mã danh mục *
+                                        Mã danh mục sản phẩm *
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            placeholder='Mã danh mục'
+                                            placeholder='Mã danh mục sản phẩm'
                                             type="text"
-                                            name="categoryCode"
-                                            id="categoryCode"
+                                            name="productCategoryCode"
+                                            id="productCategoryCode"
                                             disabled
-                                            value={inputCategoryCode}
-                                            onChange={handleInputChange('categoryCode')}
+                                            value={productCategoryCode}
+                                            onChange={handleInputChange('productCategoryCode')}
                                             className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12 px-4"
                                         />
                                     </div>
@@ -123,16 +148,16 @@ const AddCategories = () => {
                             <div className="col-md-6">
                                 <div className="form-group">
                                     <label className="block text-sm font-medium leading-6 text-gray-900">
-                                        Tên danh mục *
+                                        Tên danh mục sản phẩm *
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            placeholder='Tên danh mục'
+                                            placeholder='Tên danh mục sản phẩm'
                                             type="text"
-                                            name="categoryName"
-                                            id="categoryName"
-                                            value={inputCategoryName}
-                                            onChange={handleInputChange('categoryName')}
+                                            name="productCategoryName"
+                                            id="productCategoryName"
+                                            value={productCategoryName}
+                                            onChange={handleInputChange('productCategoryName')}
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                                         />
                                         {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
@@ -141,30 +166,45 @@ const AddCategories = () => {
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group">
-                                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                                        Mô tả danh mục *
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            placeholder='Mô tả danh mục'
-                                            type="text"
-                                            name="categoryDescription"
-                                            id="categoryDescription"
-                                            value={inputCategoryDescription}
-                                            onChange={handleInputChange('categoryDescription')}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                                        />
-                                    </div>
+                                    <label htmlFor="productType" className="block text-sm font-medium leading-6 text-gray-900">Loại sản phẩm</label>
+                                    <select
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                                        id="productType"
+                                        value={productType}
+                                        onChange={handleInputChange('productType')}
+                                    >
+                                        <option value="">Loại sản phẩm</option>
+                                        {productTypeList.map((item) => (
+                                            <option key={item.id} value={item.productTypeCode}>
+                                                {item.productTypeName}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {productTypeError && <p className="text-red-500 text-sm mt-1">{productTypeError}</p>}
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group">
-                                    <label htmlFor="categoryStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
+                                    <label htmlFor="isSub" className="block text-sm font-medium leading-6 text-gray-900">Danh mục con</label>
                                     <select
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                                        id="categoryStatus"
-                                        value={categoryStatus}
-                                        onChange={handleInputChange('categoryStatus')}
+                                        id="isSub"
+                                        value={isSub}
+                                        onChange={handleInputChange('isSub')}
+                                    >
+                                        <option value={true}>Có</option>
+                                        <option value={false}>Không</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="productCategoryStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
+                                    <select
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                                        id="productCategoryStatus"
+                                        value={productCategoryStatus}
+                                        onChange={handleInputChange('productCategoryStatus')}
                                     >
                                         <option value="ACTIVE">Hoạt động</option>
                                         <option value="INACTIVE">Không hoạt động</option>

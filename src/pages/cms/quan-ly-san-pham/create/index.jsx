@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Space, Button } from 'antd';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { productServiceHHB } from '@/services/product.service';
+import { cmsTitles, productServiceHHB } from '@/services/product.service';
 import { useCategoriesHHB } from '@/hooks/useCategories';
 import { PATH } from '@/config';
 
@@ -40,56 +40,25 @@ const AddProducts = () => {
   const navigate = useNavigate()
   const [inputProductCode, setInputProductCode] = useState('');
   const [inputProductName, setInputProductName] = useState('');
-  const [inputProductDescription, setInputProductDescription] = useState('');
-  const [inputProductPrice, setInputProductPrice] = useState("");
-  const [inputProductQuanlity, setInputProductQuanlity] = useState("");
-  const [inputProductImg, setInputProductImg] = useState("");
-  const [categoryCode, setCategoryCode] = useState('');
-  const [categoryStatus, setCategoryStatus] = useState('ACTIVE');
-  const [errors, setErrors] = useState({});
-
-  const { categoryListHHB, loadingCategoryHHB } = useCategoriesHHB();
-
-  const validate = () => {
-    const newErrors = {};
-    if (!inputProductName) newErrors.name = 'Tên sản phẩm không được để trống';
-    if (!inputProductDescription) newErrors.shortDescription = 'Mô tả sản phẩm không được để trống';
-    if (!inputProductPrice) newErrors.price = 'Giá sản phẩm không được để trống';
-    if (isNaN(inputProductPrice)) newErrors.price = 'Giá sản phẩm phải là số';
-    if (!inputProductQuanlity) newErrors.quanlity = 'Số lượng không được để trống';
-    if (isNaN(inputProductQuanlity)) newErrors.quanlity = 'Số lượng phải là số';
-    if (!categoryCode) newErrors.categoryCode = 'Mã danh mục không được để trống';
-    return newErrors;
-  };
+  const [productStatus, setProductStatus] = useState('ACTIVE');
+  const [nameError, setNameError] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    const newErrors = validate();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (!inputProductName) {
+      setNameError('Tên loại sản phẩm không được để trống');
       return;
     }
-
     const params = {
-      isPublished: true,
-      description: null,
-      specifications: "[]",
       code: inputProductCode,
       name: inputProductName,
-      shortDescription: inputProductDescription,
-      price: parseFloat(inputProductPrice),
-      quanlity: parseFloat(inputProductQuanlity),
-      images: inputProductImg ? [{ base_url: inputProductImg }] : [],
-      categoryCode: categoryCode,
-      status: categoryStatus
+      status: productStatus
     }
-
     try {
-      const res = await productServiceHHB.insertProduct(params)
+      const res = await cmsTitles.insertProducts(params)
       if (res.result && res.code == 200) {
         navigate(PATH.productsManagement)
-        toast.success('Thêm sản phẩm thành công')
+        toast.success('Thêm loại sản phẩm thành công')
       }
     } catch (error) {
       toast.error(res.message)
@@ -98,71 +67,27 @@ const AddProducts = () => {
 
   const handleInputChange = (fieldName) => (e) => {
     const { value } = e.target;
-    const newErrors = { ...errors };
-
     switch (fieldName) {
-      case 'name':
+      case 'productName':
+        if (nameError) {
+          setNameError('');
+        }
         setInputProductName(value);
         const codeConvert = convertVietnameseToNonAccented(value);
         setInputProductCode(codeConvert);
-        if (!value) {
-          newErrors.name = 'Tên sản phẩm không được để trống';
-        } else {
-          delete newErrors.name;
-        }
         break;
-      case 'shortDescription':
-        setInputProductDescription(value);
-        if (!value) {
-          newErrors.shortDescription = 'Mô tả sản phẩm không được để trống';
-        } else {
-          delete newErrors.shortDescription;
-        }
-        break;
-      case 'price':
-        setInputProductPrice(value);
-        if (!value) {
-          newErrors.price = 'Giá sản phẩm không được để trống';
-        } else if (isNaN(value)) {
-          newErrors.price = 'Giá sản phẩm phải là số';
-        } else {
-          delete newErrors.price;
-        }
-        break;
-      case 'quanlity':
-        setInputProductQuanlity(value);
-        if (!value) {
-          newErrors.quanlity = 'Số lượng không được để trống';
-        } else if (isNaN(value)) {
-          newErrors.quanlity = 'Số lượng phải là số';
-        } else {
-          delete newErrors.quanlity;
-        }
-        break;
-      case 'images':
-        setInputProductImg(value);
-        break;
-      case 'categoryCode':
-        setCategoryCode(value);
-        if (!value) {
-          newErrors.categoryCode = 'Mã danh mục không được để trống';
-        } else {
-          delete newErrors.categoryCode;
-        }
-        break;
-      case 'categoryStatus':
-        setCategoryStatus(value);
+      case 'productStatus':
+        setProductStatus(value);
         break;
       default:
         break;
     }
-    setErrors(newErrors);
   };
 
   return (
     <>
       <Space className='my-3'>
-        <h3>Thêm sản phẩm</h3>
+        <h3>Thêm loại sản phẩm</h3>
       </Space>
       <form
         onSubmit={onSubmit}
@@ -172,20 +97,21 @@ const AddProducts = () => {
         <div className="mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
           <div className="p-6">
             <div className="row">
+              
               <div className="col-md-6">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Mã sản phẩm *
+                    Mã loại sản phẩm *
                   </label>
                   <div className="mt-2">
                     <input
-                      placeholder='Mã sản phẩm'
+                      placeholder='Mã loại sản phẩm'
                       type="text"
-                      name="code"
-                      id="code"
+                      name="productCode"
+                      id="productCode"
                       disabled
                       value={inputProductCode}
-                      onChange={handleInputChange('code')}
+                      onChange={handleInputChange('productCode')}
                       className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12 px-4"
                     />
                   </div>
@@ -195,134 +121,34 @@ const AddProducts = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Tên sản phẩm *
+                    Tên loại sản phẩm *
                   </label>
                   <div className="mt-2">
                     <input
-                      placeholder='Tên sản phẩm'
+                      placeholder='Tên loại sản phẩm'
                       type="text"
-                      name="name"
-                      id="name"
+                      name="productName"
+                      id="productName"
                       value={inputProductName}
-                      onChange={handleInputChange('name')}
+                      onChange={handleInputChange('productName')}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                     />
-                    {errors.name && <div className="text-red-500">{errors.name}</div>}
+                    {nameError && <div className="text-red-500">{nameError}</div>}
                   </div>
                 </div>
               </div>
 
               <div className="col-md-6">
                 <div className="form-group">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Mô tả sản phẩm *
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      placeholder='Mô tả sản phẩm'
-                      type="text"
-                      name="shortDescription"
-                      id="shortDescription"
-                      value={inputProductDescription}
-                      onChange={handleInputChange('shortDescription')}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                    />
-                    {errors.shortDescription && <div className="text-red-500">{errors.shortDescription}</div>}
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Giá *
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      placeholder='Giá'
-                      type="text"
-                      name="price"
-                      id="price"
-                      value={inputProductPrice}
-                      onChange={handleInputChange('price')}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                    />
-                    {errors.price && <div className="text-red-500">{errors.price}</div>}
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Số lượng *
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      placeholder='Số lượng'
-                      type="text"
-                      name="quanlity"
-                      id="quanlity"
-                      value={inputProductQuanlity}
-                      onChange={handleInputChange('quanlity')}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                    />
-                    {errors.quanlity && <div className="text-red-500">{errors.quanlity}</div>}
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Link hình ảnh
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      placeholder='Link hình ảnh'
-                      type="text"
-                      name="images"
-                      id="images"
-                      value={inputProductImg}
-                      onChange={handleInputChange('images')}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label htmlFor="categoryCode" className="block text-sm font-medium leading-6 text-gray-900">Mã danh mục</label>
+                  <label htmlFor="productStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
                   <select
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                    id="categoryCode"
-                    value={categoryCode}
-                    onChange={handleInputChange('categoryCode')}
-                  >
-                    <option value="">Chọn mã danh mục</option>
-                    {categoryListHHB?.map((category) => (
-                      <option key={category.id} value={category.slug}>
-                        {category.title}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.categoryCode && <div className="text-red-500">{errors.categoryCode}</div>}
-
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label htmlFor="categoryStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
-                  <select
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                    id="categoryStatus"
-                    value={categoryStatus}
-                    onChange={handleInputChange('categoryStatus')}
+                    id="productStatus"
+                    value={productStatus}
+                    onChange={handleInputChange('productStatus')}
                   >
                     <option value="ACTIVE">Hoạt động</option>
-                    <option value="IACTIVE">Không hoạt động</option>
+                    <option value="INACTIVE">Không hoạt động</option>
                   </select>
                 </div>
               </div>

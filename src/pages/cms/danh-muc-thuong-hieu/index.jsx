@@ -3,7 +3,7 @@ import { Table, Input, Button, Space, Select, Tag, Modal, Pagination } from 'ant
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import useQuery from '@/hooks/useQuery';
-import { cmsTitles, productTiles } from '@/services/product.service';
+import { cmsTitles } from '@/services/product.service';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
 import { toast } from 'react-toastify';
@@ -67,12 +67,13 @@ const locale = {
     next_3: '3 trang sau',
 };
 
-const CategoryManagement = () => {
+const BrandCategoryManagement = () => {
     const navigate = useNavigate()
-    const [dataProductCategory, setDataProductCategory] = useState([]);
+    const [dataBrandCategory, setDataBrandCategory] = useState([]);
     const [filterStatus, setFilterStatus] = useState(null);
     const [searchKeyword, setSearchKeyword] = useState("");
-    const [selectedProductType, setSelectedProductType] = useState(null);
+    const [selectedProductCategoryType, setSelectedProductCategoryType] = useState(null);
+    const [selectedBrandType, setSelectedBrandType] = useState(null);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
@@ -83,13 +84,23 @@ const CategoryManagement = () => {
     });
 
     const {
-        data: { data: productTypeList = [] } = {}
+        data: { data: dropdownBrand = [] } = {}
     } = useQuery({
-        queryKey: `get-product-type-list`,
+        queryKey: `get-dropdown-brand`,
         keepPreviousData: true,
         keepStorage: false,
         queryFn: () =>
-            cmsTitles.getDropdownProductType(),
+            cmsTitles.getDropdownBrand(),
+    });
+
+    const {
+        data: { data: dropdownProductCategory = [] } = {}
+    } = useQuery({
+        queryKey: `get-dropdown-product-category`,
+        keepPreviousData: true,
+        keepStorage: false,
+        queryFn: () =>
+            cmsTitles.getDropdownProductCategory(),
     });
 
     const columns = [
@@ -99,25 +110,26 @@ const CategoryManagement = () => {
             key: 'name',
         },
         {
-            title: 'Loại sản phẩm',
-            dataIndex: 'productType',
-            key: 'productType',
-            render: (productType) => {
-                const name = productTypeList.find(
-                    (type) => type.code === productType
+            title: 'Danh mục sản phẩm',
+            dataIndex: 'productCategoryCode',
+            key: 'productCategoryCode',
+            render: (productCategoryCode) => {
+                const name = dropdownProductCategory.find(
+                    (type) => type.code === productCategoryCode
                 )?.name || 'N/A';
                 return name;
             },
         },
         {
-            title: 'Danh mục con',
-            dataIndex: 'isSub',
-            key: 'isSub',
-            render: (isSub) => (
-                <span>
-                    {isSub ? 'Có' : 'Không'}
-                </span>
-            ),
+            title: 'Thương hiệu',
+            dataIndex: 'brandCode',
+            key: 'brandCode',
+            render: (brandCode) => {
+                const name = dropdownBrand.find(
+                    (type) => type.code === brandCode
+                )?.name || 'N/A';
+                return name;
+            },
         },
 
         {
@@ -139,8 +151,8 @@ const CategoryManagement = () => {
             render: (_, record) => (
                 <>
                     <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-                        localStorage.setItem('product-category-id', record.id)
-                        navigate(`${PATH.categoriesCMSDetail}`)
+                        localStorage.setItem('brand-category-id', record.id)
+                        navigate(`${PATH.brandCategoryCMSDetail}`)
                     }
                     }
                     />
@@ -155,56 +167,58 @@ const CategoryManagement = () => {
         pageIndex: 1,
         pageSize: 10,
         status: null,
-        productType: null
+        productCategoryCode: null,
+        brandCode: null
     };
 
-    const categoriesListParam = useMemo(
+    const brandCategoryListParam = useMemo(
         () => ({
             keyword: searchKeyword,
             pageIndex: pagination.current,
             pageSize: pagination.pageSize,
             status: filterStatus,
-            productType: selectedProductType
+            productCategoryCode: selectedProductCategoryType,
+            brandCode: selectedBrandType
         }),
-        [searchKeyword, filterStatus, pagination.current, pagination.pageSize, selectedProductType]
+        [searchKeyword, filterStatus, pagination.current, pagination.pageSize, selectedProductCategoryType, selectedBrandType]
     );
 
-    const params = isFirstLoad ? initialParams : categoriesListParam;
+    const params = isFirstLoad ? initialParams : brandCategoryListParam;
 
     const {
-        data: { data: getProductCategoryList = [], paginate: { totalRecords } = {}, } = {},
-        loading: loadingProductCategoryList,
+        data: { data: getBrandCategoryList = [], paginate: { totalRecords } = {}, } = {},
+        loading: loadingBrandCategoryList,
     } = useQuery({
-        queryKey: `product-page-${JSON.stringify(categoriesListParam)}`,
+        queryKey: `brand-category-page-${JSON.stringify(brandCategoryListParam)}`,
         keepPreviousData: true,
         keepStorage: false,
         queryFn: ({ signal }) =>
-            cmsTitles.getProductCategoryList(params, signal),
+            cmsTitles.getBrandCategoryList(params, signal),
     });
 
     useEffect(() => {
-        if (getProductCategoryList?.data?.length) {
-            const formattedData = getProductCategoryList?.data?.map((item, index) => ({
+        if (getBrandCategoryList?.data?.length) {
+            const formattedData = getBrandCategoryList?.data?.map((item, index) => ({
                 id: item.id,
                 code: item.code,
                 name: item.name,
-                isSub: item.isSub,
-                productType: item.productType,
+                brandCode: item.brandCode,
+                productCategoryCode: item.productCategoryCode,
                 status: item.status,
             }));
-            setDataProductCategory(formattedData);
+            setDataBrandCategory(formattedData);
             setPagination((prev) => ({
                 ...prev,
                 total: totalRecords,
             }));
         } else {
-            setDataProductCategory([]);
+            setDataBrandCategory([]);
             setPagination((prev) => ({
                 ...prev,
                 total: 0,
             }));
         }
-    }, [getProductCategoryList, totalRecords]);
+    }, [getBrandCategoryList, totalRecords]);
 
     useEffect(() => {
         setIsFirstLoad(false);
@@ -226,8 +240,16 @@ const CategoryManagement = () => {
         }));
     };
 
-    const handleProductTypeChange = (value) => {
-        setSelectedProductType(value);
+    const handleProductCategoryTypeChange = (value) => {
+        setSelectedProductCategoryType(value);
+        setPagination((prev) => ({
+            ...prev,
+            current: 1,
+        }));
+    };
+
+    const handleBrandTypeChange = (value) => {
+        setSelectedBrandType(value);
         setPagination((prev) => ({
             ...prev,
             current: 1,
@@ -247,13 +269,13 @@ const CategoryManagement = () => {
         setIsModalOpen(true);
     };
 
-    const handleDeleteProductCategory = async () => {
+    const handleDeleteBrandCategory = async () => {
         setIsModalOpen(false);
-        const res = await cmsTitles.deleteProductCategory(selectedId)
+        const res = await cmsTitles.deleteBrandCategory(selectedId)
         try {
             if (res.result && res.code == 200) {
                 await window.location.reload()
-                await toast.success('Xóa danh mục sản phẩm thành công')
+                await toast.success('Xóa danh mục thương hiệu thành công')
             }
         } catch (error) {
             toast.error(res.message)
@@ -270,7 +292,7 @@ const CategoryManagement = () => {
                 <h3 style={{
                     "color": '#696CFF',
                     "font-weight": "700"
-                }}>Quản lý danh mục sản phẩm</h3>
+                }}>Quản lý danh mục thương hiệu</h3>
             </Space>
             <div className="py-5 px-5 mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
                 <Toolbar>
@@ -278,7 +300,7 @@ const CategoryManagement = () => {
                         <CustomSearch
                             placeholder="Tìm kiếm ..."
                             enterButton
-                            style={{ maxWidth: '500px', flex: '1' }}
+                            style={{ maxWidth: '400px', flex: '1' }}
                             onSearch={handleSearch}
                         />
                         <CustomSelect
@@ -294,20 +316,34 @@ const CategoryManagement = () => {
                         </CustomSelect>
 
                         <CustomSelect
-                            placeholder="Loại sản phẩm"
+                            placeholder="Danh mục sản phẩm"
                             style={{ width: 200 }}
-                            onChange={handleProductTypeChange}
+                            onChange={handleProductCategoryTypeChange}
                             allowClear
                         >
                             <Option value={null}>Tất cả</Option>
-                            {productTypeList.map((productType) => (
-                                <Option key={productType.id} value={productType.code}>
-                                    {productType.name}
+                            {dropdownProductCategory.map((item) => (
+                                <Option key={item.id} value={item.code}>
+                                    {item.name}
+                                </Option>
+                            ))}
+                        </CustomSelect>
+
+                        <CustomSelect
+                            placeholder="Thương hiệu"
+                            style={{ width: 200 }}
+                            onChange={handleBrandTypeChange}
+                            allowClear
+                        >
+                            <Option value={null}>Tất cả</Option>
+                            {dropdownBrand.map((item) => (
+                                <Option key={item.id} value={item.code}>
+                                    {item.name}
                                 </Option>
                             ))}
                         </CustomSelect>
                     </FilterContainer>
-                    <CustomButton onClick={() => navigate(PATH.categoriesAddCMS)} type="primary">
+                    <CustomButton onClick={() => navigate(PATH.brandCategoryAddCMS)} type="primary">
                         <span style={{
                             'color': '#fff',
                             'font-weight': '500'
@@ -319,8 +355,8 @@ const CategoryManagement = () => {
 
                 <StyledTable
                     columns={columns}
-                    dataSource={dataProductCategory}
-                    loading={loadingProductCategoryList}
+                    dataSource={dataBrandCategory}
+                    loading={loadingBrandCategoryList}
                     locale={{ emptyText: 'Không có kết quả hiển thị' }}
                     pagination={false}
                 />
@@ -346,8 +382,8 @@ const CategoryManagement = () => {
                     <svg className="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa danh mục sản phẩm này không?</h3>
-                    <Button type="primary" danger onClick={handleDeleteProductCategory}>
+                    <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa danh mục thương hiệu này không?</h3>
+                    <Button type="primary" danger onClick={handleDeleteBrandCategory}>
                         Đồng ý
                     </Button>
                     <Button onClick={closeModal} style={{ marginLeft: 8 }}>
@@ -356,8 +392,7 @@ const CategoryManagement = () => {
                 </div>
             </Modal>
         </ContentContainer >
-    );
-
+    )
 }
 
-export default CategoryManagement 
+export default BrandCategoryManagement

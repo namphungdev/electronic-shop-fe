@@ -37,7 +37,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .ant-menu-item {
-    padding-left: 15px !important
+    padding-left: 10px !important
   }
 
   .navbar::before {
@@ -77,15 +77,27 @@ const TabCMS = () => {
 
   const menuItems = [
     {
+      key: '/admin/branch-cms-management',
+      icon: <TeamOutlined />,
+      label: 'Quản lý thương hiệu',
+    },
+
+    {
       key: '/admin/category-cms-management',
       icon: <FileTextOutlined />,
-      label: 'Quản lý danh mục',
+      label: 'Danh mục sản phẩm',
+    },
+
+    {
+      key: '/admin/branch-category-cms-management',
+      icon: <UserSwitchOutlined />,
+      label: 'Danh mục thương hiệu',
     },
 
     {
       key: '/admin/product-cms-management',
       icon: <ShoppingCartOutlined />,
-      label: 'Quản lý sản phẩm',
+      label: 'Quản lý loại sản phẩm',
     },
   ];
 
@@ -101,7 +113,7 @@ const TabCMS = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <Sider width={220}
+          <Sider width={233}
             style={{
               background: colorBgContainer,
               height: '100vh',

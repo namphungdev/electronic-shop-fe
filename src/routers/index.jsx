@@ -11,6 +11,7 @@ import { MainLayoutCMS } from "@/layouts/MainLayoutCMS";
 import SignInCMS from "@/components/SignInCMS";
 import { MainLayoutSignInCMS } from "@/layouts/MainLayoutSignInCMS";
 import TabCMS from "@/components/TabCMS";
+import BranchManagement from "@/pages/cms/quan-ly-thuong-hieu";
 import CategoryManagement from "@/pages/cms/quan-ly-danh-muc";
 import AddCategories from "@/pages/cms/quan-ly-danh-muc/create";
 import EditCategories from "@/pages/cms/quan-ly-danh-muc/edit";
@@ -18,6 +19,11 @@ import ProductManagement from "@/pages/cms/quan-ly-san-pham";
 import AddProducts from "@/pages/cms/quan-ly-san-pham/create";
 import EditProducts from "@/pages/cms/quan-ly-san-pham/edit";
 import SearchPage from "@/pages/SearchPage";
+import AddBrand from "@/pages/cms/quan-ly-thuong-hieu/create";
+import EditBrand from "@/pages/cms/quan-ly-thuong-hieu/edit";
+import BrandCategoryManagement from "@/pages/cms/danh-muc-thuong-hieu";
+import EditBrandCategory from "@/pages/cms/danh-muc-thuong-hieu/edit";
+import AddBrandCategory from "@/pages/cms/danh-muc-thuong-hieu/create";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -118,9 +124,19 @@ export const routers = [
     path: "/admin",
     children: [
       { element: <Admin />, path: PATH.admin },
+
+      { element: <BranchManagement />, path: PATH.branchManagement },
+      { element: <AddBrand />, path: PATH.brandAddCMS },
+      { element: <EditBrand />, path: PATH.brandCMSDetail },
+      
       { element: <CategoryManagement />, path: PATH.categoriesManagement },
       { element: <AddCategories />, path: PATH.categoriesAddCMS },
       { element: <EditCategories />, path: PATH.categoriesCMSDetail },
+
+      { element: <BrandCategoryManagement />, path: PATH.branchCategory },
+      { element: <AddBrandCategory />, path: PATH.brandCategoryAddCMS },
+      { element: <EditBrandCategory />, path: PATH.brandCategoryCMSDetail },
+      
       { element: <ProductManagement />, path: PATH.productsManagement },
       { element: <AddProducts />, path: PATH.productsAddCMS },
       { element: <EditProducts />, path: PATH.productsCMSDetail },

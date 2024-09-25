@@ -1,4 +1,4 @@
-import { PRODUCT_API, CATEGORY_API_HHB, PRODUCT_API_HHB } from '@/config';
+import { PRODUCT_API, CATEGORY_API_HHB, PRODUCT_API_HHB, CMS_API_HHB } from '@/config';
 import { http } from '@/utils';
 
 export const productService = {
@@ -96,4 +96,111 @@ export const productTiles = {
 
   getBreakcumb: (breakcumb) =>
     http.post(`${CATEGORY_API_HHB}/categorys/get-web-breakcumb-list`, breakcumb),
+}
+
+export const cmsTitles = {
+  // dropdown
+  getDropdownBrand: () =>
+    http.get(`${CMS_API_HHB}/get-dropdown-brand`),
+
+  getDropdownBrandCategory: () =>
+    http.get(`${CMS_API_HHB}/get-dropdown-brand-category`),
+
+  getDropdownProductType: () =>
+    http.get(`${CMS_API_HHB}/get-dropdown-product-type`),
+
+  getDropdownProductCategory: () =>
+    http.get(`${CMS_API_HHB}/get-dropdown-product-category`),
+
+  // Branch
+  getBranchList: (branch, signal) =>
+    http.post(`${CMS_API_HHB}/get-brand-list`, branch, {
+      signal,
+    }),
+
+  deleteBranch: (id) =>
+    http.delete(`${CMS_API_HHB}/delete-brand/${id}`),
+
+  insertBrand: (brandList, signal) =>
+    http.post(`${CMS_API_HHB}/insert-brand`, brandList, {
+      signal,
+    }),
+
+  updateBrand: (brandList, signal) =>
+    http.put(`${CMS_API_HHB}/update-brand`, brandList, {
+      signal,
+    }),
+
+  getBranDetail: (slug) =>
+    http.get(`${CMS_API_HHB}/get-brand-detail/${slug}`),
+
+  // Danh mục sản phẩm
+
+  getProductCategoryList: (param, signal) =>
+    http.post(`${CMS_API_HHB}/get-product-category-list`, param, {
+      signal,
+    }),
+
+  insertProductCategory: (param, signal) =>
+    http.post(`${CMS_API_HHB}/insert-product-category`, param, {
+      signal,
+    }),
+
+  deleteProductCategory: (id) =>
+    http.delete(`${CMS_API_HHB}/delete-product-category/${id}`),
+
+  getProductCategoryDetail: (slug) =>
+    http.get(`${CMS_API_HHB}/get-product-category-detail/${slug}`),
+
+  updateProductCategory: (param, signal) =>
+    http.put(`${CMS_API_HHB}/update-product-category`, param, {
+      signal,
+    }),
+
+  // Danh mục thương hiệu
+
+  getBrandCategoryList: (param, signal) =>
+    http.post(`${CMS_API_HHB}/get-brand-category-list`, param, {
+      signal,
+    }),
+
+  insertBrandCategory: (param, signal) =>
+    http.post(`${CMS_API_HHB}/insert-brand-category`, param, {
+      signal,
+    }),
+
+  deleteBrandCategory: (id) =>
+    http.delete(`${CMS_API_HHB}/delete-brand-category/${id}`),
+
+  getBrandCategoryDetail: (slug) =>
+    http.get(`${CMS_API_HHB}/get-brand-category-detail/${slug}`),
+
+  updateBrandCategory: (param, signal) =>
+    http.put(`${CMS_API_HHB}/update-brand-category`, param, {
+      signal,
+    }),
+
+  // Loại sản phẩm
+
+  getProductList: (param, signal) =>
+    http.post(`${CMS_API_HHB}/get-product-type-list`, param, {
+      signal,
+    }),
+
+  insertProducts: (param, signal) =>
+    http.post(`${CMS_API_HHB}/insert-product-type`, param, {
+      signal,
+    }),
+
+  deleteProduct: (id) =>
+    http.delete(`${CMS_API_HHB}/delete-product-type/${id}`),
+
+  getProductsDetail: (slug) =>
+    http.get(`${CMS_API_HHB}/get-product-type-detail/${slug}`),
+
+  updateProducts: (param, signal) =>
+    http.put(`${CMS_API_HHB}/update-product-type`, param, {
+      signal,
+    }),
+
 }

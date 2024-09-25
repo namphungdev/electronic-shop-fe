@@ -99,7 +99,7 @@ const SignInCMS = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto w-auto d-flex h-auto"
-          srcSet="/img/logo-gach.jpg 5x"
+          srcSet="/img/logo-vuong.jpg 5x"
         />
       </div>
 

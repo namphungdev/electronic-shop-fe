@@ -3,11 +3,10 @@ import { Table, Input, Button, Space, Select, Tag, Modal, Pagination } from 'ant
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import useQuery from '@/hooks/useQuery';
-import { productServiceHHB } from '@/services/product.service';
+import { cmsTitles } from '@/services/product.service';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
 import { toast } from 'react-toastify';
-import { userService } from '@/services/user.service';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -69,39 +68,25 @@ const locale = {
 
 const ProductManagement = () => {
   const navigate = useNavigate()
-  const [dataListProducts, setDataListProducts] = useState([]);
+  const [dataListProduct, setDataListProduct] = useState([]);
   const [filterStatus, setFilterStatus] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProductSlug, setSelectedProductSlug] = useState(null);
   const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-    total: 0,
+      current: 1,
+      pageSize: 10,
+      total: 0,
   });
+
 
   const columns = [
     {
-      title: 'Tên',
+      title: 'Tên loại sản phẩm',
       dataIndex: 'name',
       key: 'name',
     },
-    {
-      title: 'Danh mục',
-      dataIndex: 'categoryName',
-      key: 'categoryName',
-    },
-    {
-      title: 'Giá',
-      dataIndex: 'price',
-      key: 'price',
-    },
-    // {
-    //   title: 'Mở bán',
-    //   dataIndex: 'isPublished',
-    //   key: 'isPublished',
-    // },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
@@ -122,10 +107,10 @@ const ProductManagement = () => {
       (
         <>
           <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-            localStorage.setItem('product-slug', record.slug)
+            localStorage.setItem('product-type-slug', record.id)
             navigate(`${PATH.productsCMSDetail}`)
            }} />
-          <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.slug)} />
+          <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
         </>
       ),
     },
@@ -135,7 +120,6 @@ const ProductManagement = () => {
     keyword: "",
     pageIndex: 1,
     pageSize: 10,
-    categoryCode: null,
     status: null
   };
 
@@ -144,7 +128,6 @@ const ProductManagement = () => {
       keyword: searchKeyword,
       pageIndex: pagination.current,
       pageSize: pagination.pageSize,
-      categoryCode: null,
       status: filterStatus,
     }),
     [searchKeyword, filterStatus, pagination.current, pagination.pageSize]
@@ -160,7 +143,7 @@ const ProductManagement = () => {
     keepPreviousData: true,
     keepStorage: false,
     queryFn: ({ signal }) =>
-      productServiceHHB.getProductsList(params, signal),
+      cmsTitles.getProductList(params, signal),
   });
 
   useEffect(() => {
@@ -169,19 +152,15 @@ const ProductManagement = () => {
         id: product.id,
         code: product.code,
         name: product.name,
-        categoryName: product.categoryName,
-        price: product.price,
-        slug: product.slug,
-        description: product.shortDescription,
         status: product.status,
       }));
-      setDataListProducts(formattedData);
+      setDataListProduct(formattedData);
       setPagination((prev) => ({
         ...prev,
         total: totalRecords,
       }));
     } else {
-      setDataListProducts([]);
+      setDataListProduct([]);
       setPagination((prev) => ({
         ...prev,
         total: 0,
@@ -225,16 +204,16 @@ const ProductManagement = () => {
   const handleDeleteProduct = async () => {
     setIsModalOpen(false);
     try {
-      const res = await productServiceHHB.deleteProducts(selectedProductSlug);
+      const res = await cmsTitles.deleteProduct(selectedProductSlug);
 
       if (res.result && res.code === 200) {
-        toast.success('Xóa sản phẩm thành công');
+        toast.success('Xóa loại sản phẩm thành công');
         window.location.reload();
       } else {
         toast.error(res.message || 'Đã có lỗi xảy ra');
       }
     } catch (error) {
-      toast.error('Đã có lỗi xảy ra khi xóa sản phẩm');
+      toast.error('Đã có lỗi xảy ra khi xóa loại sản phẩm');
     }
   };
 
@@ -249,7 +228,7 @@ const ProductManagement = () => {
           <h3 style={{
             "color": '#696CFF',
             "font-weight": "700"
-          }}>Quản lý sản phẩm</h3>
+          }}>Quản lý loại sản phẩm</h3>
         </Space>
         <div className="py-5 px-5 mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
           <Toolbar>
@@ -269,7 +248,7 @@ const ProductManagement = () => {
               >
                 <Option value={null}>Tất cả</Option>
                 <Option value="ACTIVE">Hoạt động</Option>
-                <Option value="IACTIVE">Không hoạt động</Option>
+                <Option value="INACTIVE">Không hoạt động</Option>
               </CustomSelect>
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.productsAddCMS)} type="primary">
@@ -284,7 +263,7 @@ const ProductManagement = () => {
 
           <StyledTable
             columns={columns}
-            dataSource={dataListProducts}
+            dataSource={dataListProduct}
             loading={loadingProductsList}
             locale={{ emptyText: 'Không có kết quả hiển thị' }}
             pagination={false}
@@ -311,7 +290,7 @@ const ProductManagement = () => {
             <svg className="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa sản phẩm này không?</h3>
+            <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa loại sản phẩm này không?</h3>
             <Button type="primary" danger onClick={handleDeleteProduct}>
               Đồng ý
             </Button>

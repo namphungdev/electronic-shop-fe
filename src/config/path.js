@@ -3,14 +3,28 @@ const PROFILE = '/ca-nhan';
 export const PATH = {
   home: '/',
   admin: '/admin',
+
+  // usersManagement: '/admin/user-cms-management',
+  // permissionUsers: '/admin/permission-cms-users',
+
+  // list
+  branchManagement: '/admin/branch-cms-management',
+  branchCategory: '/admin/branch-category-cms-management',
   categoriesManagement: '/admin/category-cms-management',
   productsManagement: '/admin/product-cms-management',
-  usersManagement: '/admin/user-cms-management',
-  permissionUsers: '/admin/permission-cms-users',
+
+  // edit
   categoriesCMSDetail: '/admin/detail-categories/edit',
+  brandCMSDetail: '/admin/detail-brand/edit',
   productsCMSDetail: '/admin/detail-products/edit',
+  brandCategoryCMSDetail: '/admin/detail-brand-category/edit',
+
+  // add
+  brandCategoryAddCMS: '/admin/add-brand-category',
+  brandAddCMS: '/admin/add-brand',
   categoriesAddCMS: '/admin/add-categories',
   productsAddCMS: '/admin/add-products',
+
   error: '/404',
   products: '/san-pham',
   productDetail: '/chi-tiet/:slug',

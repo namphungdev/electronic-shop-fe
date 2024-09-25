@@ -12,3 +12,4 @@ export const AUTH_API_HHB = import.meta.env.VITE_AUTH_API_HHB;
 export const USER_API_HHB = import.meta.env.VITE_USER_API_HHB;
 export const PRODUCT_API_HHB = import.meta.env.VITE_PRODUCT_API_HHB;
 export const CATEGORY_API_HHB = import.meta.env.VITE_CATEGORY_API_HHB;
+export const CMS_API_HHB = import.meta.env.VITE_CMS_API_HHB;
