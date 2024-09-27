@@ -1,10 +1,122 @@
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light {
-    background: transparent;
+.mid-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
 }
 
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal {
-    border-bottom: none;
-    margin-right: 35px;
+.mid-bar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.mid-bar-content .logo-wrapper {
+    flex-shrink: 0;
+}
+
+#logo img {
+    width: 70px;
+    height: auto;
+    object-fit: cover;
+}
+
+.flex-class {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-modal-content input {
+    width: 450px;
+    height: 45px;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+
+.contact-phone,
+.contact-address {
+    font-size: 1.2rem;
+}
+
+.contact-phone svg,
+.contact-address svg {
+    margin-left: 10px;
+}
+
+
+.header-search {
+    position: relative;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-icon {
+    position: absolute;
+    /* Đặt vị trí tuyệt đối cho icon */
+    right: 10%;
+    /* Đặt khoảng cách từ bên trái */
+    top: 50%;
+    /* Đặt vị trí theo chiều dọc */
+    transform: translateY(-50%);
+    /* Căn giữa theo chiều dọc */
+    color: red;
+    /* Màu sắc cho biểu tượng */
+    pointer-events: none;
+    /* Để không gây cản trở cho sự kiện click vào ô input */
+}
+
+
+
+
+
+.sticky-bottom-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #ba9344; /* Màu nền của bottom-bar */
+}
+
+
+.bottom-bar {
+    background-color: #ba9344;
+    /* padding: 10px 20px; */
+
+    padding: 0px;
+}
+
+.bottom-bar .menu-item {
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.ant-menu-horizontal {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+}
+
+.svg-inline--fa {
+    color: black;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal .ant-menu-item, :where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal .ant-menu-submenu {
+    padding-inline: 20px;
 }
 
 :where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item::after,
@@ -17,165 +129,3 @@
     border-bottom-width: 0px;
     border-bottom-color: transparent;
 }
-
-:where(.css-dev-only-do-not-override-diro6f).ant-menu .ant-menu-title-content {
-    font-size: 1.2rem;
-}
-
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
-    color: white;
-}
-
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item a,
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item a:hover {
-    color: white;
-}
-
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item:hover::after,
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu:hover::after,
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item-active::after,
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-active::after,
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item-open::after,
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-open::after {
-    border-bottom-width: 0px;
-    border-bottom-color: transparent;
-}
-
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item-selected::after,
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-selected::after {
-    border-bottom-width: 0px;
-    border-bottom-color: transparent;
-}
-
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover,
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:active {
-    background-color: #ba9344;
-}
-
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item-selected {
-    background-color: #ba9344;
-}
-
-/* .ant-menu-item a.active {
-    color: #fff;
-}
-
-.ant-menu-item-selected {
-    color: #fff;
-} */
-
-.navbar-collapse {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.ant-menu-horizontal {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    background: transparent;
-    border: none;
-    font-size: 1.2rem;
-}
-
-/* Search Drawer */
-
-.content::before {
-    background-color: #ba9344;
-}
-
-.navbar {
-    background-color: #ba9344;
-    transition: background-color 0.3s ease;
-    position: relative;
-    width: 100%;
-}
-
-.navbar::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 90%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-bottom: 2px solid #ba9344;
-}
-
-.navbar.scrolled {
-    background-color: #ba9344;
-}
-
-.navbar.homepage {
-    background-color: transparent;
-}
-
-
-/*
-
-.ant-menu-item a.active {
-    color: #fff;
-}
-
-.ant-menu-item-selected {
-    color: #fff;
-}
-
-.ant-menu-submenu-popup {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.ant-menu-submenu-popup .ant-menu {
-    background-color: #ba9344;
-}
-
-
-.navbar {
-    transition: background-color 0.3s ease;
-}
-
-.scrolled {
-    background-color: white;
-}
-
-.white-bg {
-    background-color: white;
-}
-
-
-.search-modal {
-    position: relative;
-}
-
-.search-modal-overlay {
-    position: fixed; 
-    bottom: 0; 
-    right: 0; 
-    height: auto; 
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.search-modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 2;
-}
-
-.search-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.navbar {
-    z-index: 10;
-} */

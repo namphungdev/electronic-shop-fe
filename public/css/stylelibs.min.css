@@ -7023,7 +7023,7 @@ pre code {
   .container-lg,
   .container-md,
   .container-sm {
-    max-width: 960px;
+    max-width: 950px;
   }
 }
 @media (min-width: 1200px) {
@@ -7032,7 +7032,7 @@ pre code {
   .container-md,
   .container-sm,
   .container-xl {
-    max-width: 1140px;
+    max-width: 1040px;
   }
 }
 @media (min-width: 1500px) {
@@ -7041,7 +7041,7 @@ pre code {
   .container-md,
   .container-sm,
   .container-xl {
-    max-width: 1360px;
+    max-width: 1160px;
   }
 }
 @media (min-width: 1600px) {
@@ -7050,7 +7050,7 @@ pre code {
   .container-md,
   .container-sm,
   .container-xl {
-    max-width: 1440px;
+    max-width: 1240px;
   }
 }
 .row {

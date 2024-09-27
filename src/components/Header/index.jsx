@@ -10,11 +10,12 @@ const { SubMenu } = Menu;
 import 'antd/dist/reset.css';
 import useQuery from '@/hooks/useQuery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faLocationDot, faMagnifyingGlass, faPhoneVolume } from '@fortawesome/free-solid-svg-icons';
 import { productTiles } from '@/services/product.service';
 import axios from 'axios';
 import "./style.css"
-import SearchModal from '../SearchModal';
+// import SearchModal from '../SearchModal';
+// import HeaderSearch from './HeaderSearch';
 
 const HeaderNavs = [
   {
@@ -47,6 +48,10 @@ const HeaderNavs = [
 ];
 
 const Header = () => {
+  const [isSearchModalVisible, setSearchModalVisible] = useState(false);
+  const openSearchModal = () => setSearchModalVisible(true);
+  const closeSearchModal = () => setSearchModalVisible(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -60,7 +65,6 @@ const Header = () => {
   });
 
   const [activeNav, setActiveNav] = useState(location.pathname);
-  const [isSearchModalVisible, setSearchModalVisible] = useState(false);
 
   const toggleSearchModal = () => {
     setSearchModalVisible((prev) => !prev);
@@ -154,31 +158,31 @@ const Header = () => {
     fetchCategoryList(productCodes.tamOpNhuaCode, 'TẤM ỐP NHỰA');
   }, [productCodes]);
 
-  useEffect(() => {
-    if (isHomepage) {
-      const handleScroll = () => {
-        const header = document.querySelector('.navbar');
-        const submenus = document.querySelectorAll('.ant-menu-submenu-popup');
+  // useEffect(() => {
+  //   if (isHomepage) {
+  //     const handleScroll = () => {
+  //       const header = document.querySelector('.navbar');
+  //       const submenus = document.querySelectorAll('.ant-menu-submenu-popup');
 
-        submenus.forEach((submenu) => {
-          submenu.style.top = `${header.offsetHeight}px`;
-        });
+  //       submenus.forEach((submenu) => {
+  //         submenu.style.top = `${header.offsetHeight}px`;
+  //       });
 
-        if (window.scrollY > 0) {
-          setScrolled(true);
-        } else {
-          setScrolled(false);
-        }
-      };
+  //       if (window.scrollY > 0) {
+  //         setScrolled(true);
+  //       } else {
+  //         setScrolled(false);
+  //       }
+  //     };
 
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    } else {
-      setScrolled(false);
-    }
-  }, [isHomepage]);
+  //     window.addEventListener('scroll', handleScroll);
+  //     return () => {
+  //       window.removeEventListener('scroll', handleScroll);
+  //     };
+  //   } else {
+  //     setScrolled(false);
+  //   }
+  // }, [isHomepage]);
 
   const handleMenuClick = (item) => {
     setActiveNav(item.to);
@@ -225,57 +229,92 @@ const Header = () => {
     });
   };
 
+  // Scroll giữ lại bottom-bar
+
+  useEffect(() => {
+    const bottomBar = document.querySelector('.bottom-bar');
+
+    const handleScroll = () => {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const triggerHeight = 100; // Điều chỉnh chiều cao này theo ý bạn
+
+        if (scrollY > triggerHeight) {
+            bottomBar.classList.add('sticky-bottom-bar');
+        } else {
+            bottomBar.classList.remove('sticky-bottom-bar');
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+}, []);
+
+
   return (
     <>
-      <SearchModal
-        isVisible={isSearchModalVisible}
-        onClose={toggleSearchModal}
-      />
-      <CartDrawer />
-      <div>
-        <nav className={`navbar navbar-expand-lg fixed top-0 left-0 w-full z-10 mb-0 p-2 ${isHomepage ? (scrolled ? 'scrolled' : 'homepage') : ''}`}>
-          <div className="container">
-            <Link className="navbar-brand" to={PATH.home}>
-              <img
-                style={{ width: '75px', height: 'auto' }}
-                srcSet="/img/logo-vuong.jpg 2x"
-              />
-            </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarCollapse"
-              aria-controls="navbarCollapse"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div className="navbar-collapse flex justify-end" id="navbarCollapse">
-              <Menu mode="horizontal">
-                {renderMenuItems(headerNavs)}
-              </Menu>
-              <ul className="navbar-nav flex-row items-center">
-                <li className="nav-item">
-                  <span
-                    style={{
-                      cursor: 'pointer'
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleSearchModal();
-                    }}>
-                    <i className="fe fe-search" />
-                  </span>
-                </li>
-              </ul>
+      <header className='header-mega'>
+        <div className='header header-mege header-lg'>
+          <div className="top-bar navbar-nav">
+            <img src="/img/image-top.png" alt="" />
+          </div>
+
+          <div className="mid-bar navbar-nav">
+            <div className="container mid-bar-content">
+              <div class="desktop logo-wrapper">
+                <div id="logo">
+                  <a href="/">
+                    <img
+                      src="/img/image-special.png"
+                      alt="Logo"
+                    />
+                  </a>
+                </div>
+              </div>
+              <div className="header-right flex-class">
+                <div className="header-search">
+                  <div className="search-modal-overlay">
+                    <div className="container search-modal-container">
+                      <div
+                        className="search-modal-content"
+                      >
+                        <input
+                          type="text"
+                          className={`search-input`}
+                          placeholder="Tìm kiếm"
+                        // value={searchValue}
+                        // onChange={(e) => setSearchValue(e.target.value)}
+                        // onKeyDown={handleKeyDown}
+                        />
+                        <FontAwesomeIcon style={{ color: '#ba9344' }} className='search-icon' icon={faMagnifyingGlass} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className='contact-phone' style={{ marginRight: '15px' }}>
+                  <FontAwesomeIcon style={{ color: '#ba9344', marginRight: '8px' }} icon={faPhoneVolume} />
+                  <span>0911 315 315</span>
+                </div>
+
+                <div className='contact-address'>
+                  <FontAwesomeIcon style={{ color: '#ba9344', marginRight: '8px' }} icon={faLocationDot} />
+                  <span>1151 Lê Đức Thọ, P13, Quận Gò Vấp</span>
+                </div>
+              </div>
             </div>
           </div>
-        </nav>
 
-        <div style={{ marginTop: '100px' }}></div>
-      </div>
+          <div className='bottom-bar navbar-nav'>
+            <Menu mode="horizontal" className="menu-bar">
+              {renderMenuItems(headerNavs)}
+            </Menu>
+          </div>
+
+        </div>
+      </header>
     </>
   );
 };

@@ -2,20 +2,20 @@ import Carousel from '@/components/Carousel';
 import Slider from '@/components/Slider';
 import useScrollTop from '@/hooks/useScrollTop';
 import React, { useEffect, useState } from 'react';
-import './style.css'
 import { Link } from 'react-router-dom';
 import { PATH } from '@/config';
 import { productTiles } from '@/services/product.service';
 import useQuery from '@/hooks/useQuery';
 import { Spin } from 'antd';
+import './style.css'
 
 export const Home = () => {
   useScrollTop();
 
   const sliders = [
-    '/img/banner_1.jpg',
-    '/img/banner_2.jpg',
-    '/img/banner_3.jpg',
+    '/img/image-one.png',
+    '/img/image-two.png',
+    '/img/image-three.png',
   ]
 
   const branch = [
@@ -53,10 +53,10 @@ export const Home = () => {
     setActiveIndex(index)
   }
 
-  const param = {
+  const paramProductPrice = {
     keyword: '',
     pageIndex: 1,
-    pageSize: 10,
+    pageSize: 8,
     productType: productCode
   };
 
@@ -66,22 +66,84 @@ export const Home = () => {
     queryKey: `product-page-${JSON.stringify(productCode)}`,
     keepPreviousData: true,
     keepStorage: false,
-    queryFn: ({ signal }) => productTiles.productListDiscounted(param, signal),
+    queryFn: ({ signal }) => productTiles.productListDiscounted(paramProductPrice, signal),
+    enabled: !!productCode,
+  });
+
+  const paramGachOpLat = {
+    keyword: "",
+    pageIndex: 1,
+    pageSize: 8,
+    code: "gach-op-lat",
+    type: 1,
+    order: "id",
+    sort: "desc"
+  }
+
+  const {
+    data: { data: dataGachOpLat = [], loading: loadingDataGach } = {},
+  } = useQuery({
+    queryKey: `gach-page-${JSON.stringify(productCode)}`,
+    keepPreviousData: true,
+    keepStorage: false,
+    queryFn: ({ signal }) => productTiles.webGetProductList(paramGachOpLat, signal),
+    enabled: !!productCode,
+  });
+
+  const paramTBVS = {
+    keyword: "",
+    pageIndex: 1,
+    pageSize: 8,
+    code: "thiet-bi-ve-sinh",
+    type: 1,
+    order: "id",
+    sort: "desc"
+  }
+
+  const {
+    data: { data: dataTBVS = [], loading: loadingDataTBVS } = {},
+  } = useQuery({
+    queryKey: `tbvs-page-${JSON.stringify(productCode)}`,
+    keepPreviousData: true,
+    keepStorage: false,
+    queryFn: ({ signal }) => productTiles.webGetProductList(paramTBVS, signal),
+    enabled: !!productCode,
+  });
+
+  const paramTON = {
+    keyword: "",
+    pageIndex: 1,
+    pageSize: 8,
+    code: "thiet-bi-ve-sinh",
+    type: 1,
+    order: "id",
+    sort: "desc"
+  }
+
+  const {
+    data: { data: dataTON = [], loading: loadingDataTON } = {},
+  } = useQuery({
+    queryKey: `ton-page-${JSON.stringify(productCode)}`,
+    keepPreviousData: true,
+    keepStorage: false,
+    queryFn: ({ signal }) => productTiles.webGetProductList(paramTON, signal),
     enabled: !!productCode,
   });
 
   return (
     <>
       {/* SLIDERS */}
-      <section style={{ marginTop: '-100px' }}>
-        <Carousel autoSlide={true}>
-          {sliders.map((s, index) => (
-            <img key={index} src={s} alt={s} className="w-full" />
-          ))}
-        </Carousel>
+      <section>
+        <div className='container'>
+          <Carousel autoSlide={true} >
+            {sliders.map((s, index) => (
+              <img key={index} src={s} alt={s} className="w-full" />
+            ))}
+          </Carousel>
+        </div>
       </section>
       {/* TOP SELLERS */}
-      <section className="py-12">
+      <section className="py-10">
         <div className="container">
           <div className="flex">
             <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
@@ -112,6 +174,164 @@ export const Home = () => {
               <div className="product-row row">
                 {dataPrice && dataPrice.length > 0 ? (
                   dataPrice.map((product) => (
+                    <div key={product.id} className="product-card">
+                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                        <div className="sale-badge">SALE</div>
+                        <img
+                          style={{ height: 'auto' }}
+                          srcSet={product.images[0].base_url}
+                          alt={product.name}
+                        />
+                      </Link>
+                      <div className="product-card-content">
+                        <h3 className="product-card-title">{product.name}</h3>
+                        <div className="price-box">
+                          <span className="price">
+                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                          </span>
+                          <span className="compare-price">
+                            {Number(product.price).toLocaleString('vi-VN')}đ
+                          </span>
+                        </div>
+                        <div className="product-button">
+                          <Link to={PATH.contact} className="btn-sell-contact">
+                            Liên hệ
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>Không có sản phẩm nào.</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      {/* PRODUCT */}
+      <section className="py-10">
+        <div className="container">
+          <div className="flex">
+            <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+              <Link to={`${PATH.products}/gach-op-lat`} style={{ color: '#000' }}>
+                Gạch ốp lát
+              </Link>
+            </h2>
+          </div>
+          <div className="block-product-sell">
+            {loadingDataGach ? (
+              <div className="loading-container">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <div className="product-row row">
+                {dataGachOpLat && dataGachOpLat?.data?.length > 0 ? (
+                  dataGachOpLat?.data.map((product) => (
+                    <div key={product.id} className="product-card">
+                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                        <img
+                          style={{ height: 'auto' }}
+                          srcSet={product.images[0].base_url}
+                          alt={product.name}
+                        />
+                      </Link>
+                      <div className="product-card-content">
+                        <h3 className="product-card-title">{product.name}</h3>
+                        <div className="price-box">
+                          <span className="price">
+                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                          </span>
+                          <span className="compare-price">
+                            {Number(product.price).toLocaleString('vi-VN')}đ
+                          </span>
+                        </div>
+                        <div className="product-button">
+                          <Link to={PATH.contact} className="btn-sell-contact">
+                            Liên hệ
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>Không có sản phẩm nào.</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      <section className="py-10">
+        <div className="container">
+          <div className="flex">
+            <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+              <Link to={`${PATH.products}/thiet-bi-ve-sinh`} style={{ color: '#000' }}>
+                Thiết bị vệ sinh
+              </Link>
+            </h2>
+          </div>
+          <div className="block-product-sell">
+            {loadingDataTBVS ? (
+              <div className="loading-container">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <div className="product-row row">
+                {dataTBVS && dataTBVS?.data?.length > 0 ? (
+                  dataTBVS?.data.map((product) => (
+                    <div key={product.id} className="product-card">
+                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                        <img
+                          style={{ height: 'auto' }}
+                          srcSet={product.images[0].base_url}
+                          alt={product.name}
+                        />
+                      </Link>
+                      <div className="product-card-content">
+                        <h3 className="product-card-title">{product.name}</h3>
+                        <div className="price-box">
+                          <span className="price">
+                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                          </span>
+                          <span className="compare-price">
+                            {Number(product.price).toLocaleString('vi-VN')}đ
+                          </span>
+                        </div>
+                        <div className="product-button">
+                          <Link to={PATH.contact} className="btn-sell-contact">
+                            Liên hệ
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>Không có sản phẩm nào.</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      <section className="py-10">
+        <div className="container">
+          <div className="flex">
+            <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+              <Link to={`${PATH.products}/tam-op-nhua`} style={{ color: '#000' }}>
+                Tấm ốp nhựa
+              </Link>
+            </h2>
+          </div>
+          <div className="block-product-sell">
+            {loadingDataTON ? (
+              <div className="loading-container">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <div className="product-row row">
+                {dataTON && dataTON?.data?.length > 0 ? (
+                  dataTON?.data.map((product) => (
                     <div key={product.id} className="product-card">
                       <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
                         <img
@@ -147,7 +367,7 @@ export const Home = () => {
         </div>
       </section>
       {/* BRANCH */}
-      <section className="py-12">
+      <section className="py-10">
         <div className="container">
           <div className="row justify-content-center">
             <div className="text-center">
@@ -189,7 +409,6 @@ export const Home = () => {
           </div>
         </div>
       </section>
-
     </>
   );
 };

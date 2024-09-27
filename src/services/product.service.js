@@ -96,6 +96,11 @@ export const productTiles = {
 
   getBreakcumb: (breakcumb) =>
     http.post(`${CATEGORY_API_HHB}/categorys/get-web-breakcumb-list`, breakcumb),
+
+  webGetProductList: (paramList, signal) =>
+    http.post(`${PRODUCT_API_HHB}/web-get-product-list`, paramList, {
+      signal,
+    }),
 }
 
 export const cmsTitles = {

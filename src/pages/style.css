@@ -1,9 +1,5 @@
 /* CSS cho page Home -- tab of sản phẩm giảm giá */
 
-.group-slider {
-    height: 100vh;
-}
-
 .product-h2-custom::before {
     content: "";
     display: block;
@@ -55,7 +51,7 @@
 
 .product-row {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
 }
 
@@ -70,6 +66,21 @@
     overflow: hidden;
     transition: box-shadow 0.3s ease-in-out;
     box-sizing: border-box;
+
+    position: relative;
+}
+
+.sale-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 10;
 }
 
 .product-card:hover {
@@ -291,12 +302,12 @@
 }
 
 .swiper-pagination-bullet {
-    background-color: #000; 
-    opacity: 1; 
-  }
-  
-  .swiper-pagination-bullet-active {
-    background-color: #ffcc00; 
-  }
+    background-color: #000;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #ffcc00;
+}
 
 /* CSS cho logo branch */

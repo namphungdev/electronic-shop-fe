@@ -24,7 +24,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background-color: blue;
+  background-color: red;
   z-index: 0;
   transition: left 0.4s ease;
 }
@@ -33,16 +33,20 @@
   left: 0;
 }
 
-.content-footer:hover {
-  color: black;
-}
-
 .content-footer>* {
   position: relative;
   z-index: 1;
 }
 
+svg.svg-inline--fa.fa-house-chimney {
+  color: white;
+}
+
 /* footer-widget */
+
+.svg-inline--fa {
+  color: white;
+}
 
 .footer-widget {
   position: fixed;
@@ -84,7 +88,7 @@
 
 .def-content .def-header {
   text-align: center;
-  background: #005c77;
+  background: #ba9344;
   padding: 10px;
   border-radius: 8px 8px 0 0;
   color: #fff;
@@ -94,7 +98,7 @@
 .def-content .def-header .close-icon-popup {
   position: absolute;
   line-height: 1;
-  background: #005c77;
+  background: #ba9344;
   text-align: center;
   color: #fff;
   cursor: pointer;
@@ -158,7 +162,7 @@
 .out-circle {
   overflow: hidden;
   border-radius: 50% 50% 4px;
-  background: #005c77;
+  background: #ba9344;
   width: 54px;
   height: 54px;
   cursor: pointer;

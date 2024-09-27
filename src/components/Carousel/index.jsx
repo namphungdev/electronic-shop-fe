@@ -1,7 +1,7 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 
-const Carousel = ({ children: sliders, autoSlide = false, autoSlideInterval = 3000 }) => {
+const Carousel = ({ children: sliders, autoSlide = false, autoSlideInterval = 5000 }) => {
 
     const [curr, setCurr] = useState(0)
 
@@ -18,7 +18,6 @@ const Carousel = ({ children: sliders, autoSlide = false, autoSlideInterval = 30
         const slideInterval = setInterval(next, autoSlideInterval)
         return () => clearInterval(slideInterval)
     }, [autoSlide, autoSlideInterval, next])
-
 
     return (
         <div className="relative overflow-hidden group-slider">
@@ -44,16 +43,16 @@ const Carousel = ({ children: sliders, autoSlide = false, autoSlideInterval = 30
                 </button>
             </div>
 
-            <div className='absolute bottom-4 right-0 left-0'>
+            {/* <div className='absolute bottom-4 right-0 left-0'>
                 <div className='flex items-center justify-center gap-2'>
                     {sliders.map((_, i) => (
                         <div
                             key={i}
-                            className={`transition-all w-3 h-3 rounded-full ${curr === i ? "bg-white p-2" : "bg-gray-600"} `}
+                            className={`transition-all w-3 h-3 rounded-full ${curr === i ? "bg-white p-2" : "bg-orange-600"} `}
                         />
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
