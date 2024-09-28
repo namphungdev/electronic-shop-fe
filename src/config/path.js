@@ -27,6 +27,7 @@ export const PATH = {
 
   error: '/404',
   products: '/san-pham',
+  sale: '/sale',
   productDetail: '/chi-tiet/:slug',
   category: '/:slug/:id',
   viewCart: '/gio-hang',

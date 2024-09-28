@@ -82,8 +82,7 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
-            </div>
-            <div className="col-6 col-sm mb-4 mb-sm-0">
+
               {/* Heading */}
               <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">HƯỚNG DẪN</h6>
               {/* Links */}
@@ -104,6 +103,11 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
+            </div>
+            <div className="col-6 col-sm mb-4 mb-sm-0">
+              {/* Heading */}
+              <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">Fanpage</h6>
+              {/* Links */}
             </div>
           </div>
         </div>

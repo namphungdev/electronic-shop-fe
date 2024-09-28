@@ -13,6 +13,7 @@ const Slider = ({ children, className, ...props }) => {
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
       className={className}
+      style={{background: '#fff'}}
      
       {...props}
     >

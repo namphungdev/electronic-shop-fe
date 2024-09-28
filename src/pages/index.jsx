@@ -382,13 +382,13 @@ export const Home = () => {
           <div className="row">
             <div className="col-12">
               <Slider
-                className="select-none !pb-20"
+                className="select-none"
                 slidesPerView={6}
                 spaceBetween={10}
                 loop
                 grabCursor
                 speed={600}
-                autoplay={{ delay: 1000 }}
+                autoplay={{ delay: 3000 }}
                 breakpoints={{
                   320: { slidesPerView: 2 },
                   768: { slidesPerView: 4 },

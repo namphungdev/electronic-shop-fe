@@ -230,7 +230,6 @@ const Header = () => {
   };
 
   // Scroll giữ lại bottom-bar
-
   useEffect(() => {
     const bottomBar = document.querySelector('.bottom-bar');
 
