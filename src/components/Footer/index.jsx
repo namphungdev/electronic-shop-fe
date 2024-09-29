@@ -82,33 +82,24 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
-
-              {/* Heading */}
-              <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">HƯỚNG DẪN</h6>
-              {/* Links */}
-              <ul className="list-none pl-0 mb-0 my-4">
-                <li className='text-white'>
-                  <a className="text-black" href="#!">
-                    Chính sách bảo hành
-                  </a>
-                </li>
-                <li className='text-white'>
-                  <a className="text-black" href="#!">
-                    Chính sách đổi trả
-                  </a>
-                </li>
-                <li className='text-white'>
-                  <a className="text-black" href="#!">
-                    Cam kết mua hàng đảm bảo
-                  </a>
-                </li>
-              </ul>
             </div>
             <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
               <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">Fanpage</h6>
+
               {/* Links */}
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FGachMenGiaReSG&tabs&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                width="340"
+                height="130"
+                style={{ border: 'none', overflow: 'hidden' }}
+                scrolling="no"
+                frameBorder="0"
+                allowFullScreen={true}
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              ></iframe>
             </div>
+
           </div>
         </div>
       </div>
@@ -201,7 +192,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="out-circle" onClick={toggleIcon}>
+        <div className={`out-circle ${isOpen ? 'opened' : ''}`} onClick={toggleIcon}>
           {isOpen ? (
             <div className='close-icon element'>
               <FontAwesomeIcon className='icon-svg' icon={faXmark} />

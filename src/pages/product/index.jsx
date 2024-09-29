@@ -7,11 +7,11 @@ import { CATEGORY_API_HHB, PATH, PRODUCT_API_HHB } from '@/config';
 import { Pagination, Spin } from 'antd';
 import axios from 'axios';
 import useScrollTop from '@/hooks/useScrollTop';
-import './style.css';
 import Skeleton from '@/components/Skeleton';
 import createArray from '@/utils/createArray';
 import { productTiles } from '@/services/product.service';
 import useQuery from '@/hooks/useQuery';
+import './style.css';
 
 const optionSort = [
   {
@@ -99,8 +99,6 @@ const ProductPage = () => {
     enabled: false,
     queryFn: ({ param2 }) => productTiles.getBreakcumb(...param2),
   });
-
-  console.log('getBreakcumb', products)
 
   async function fetchBreadcrumb() {
     if (codeParam && typeParam) {
@@ -227,10 +225,10 @@ const ProductPage = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 className={`products-view my-5 col-sm-12 col-12 col-md-12 ${productList.length === 0 ? 'no-products' : ''}`}
               >
-                <div className="container row">
+                <div>
                   <div className="product-detail">
                     {productList && productList.length > 0 ? (
                       productList.map((product) => (
@@ -281,7 +279,44 @@ const ProductPage = () => {
                     />
                   )}
                 </div>
+              </div> */}
+
+<div className={`products-view my-5 col-sm-12 col-12 col-md-12 ${productList?.length === 0 ? 'no-products' : ''}`}>
+  {productList && productList.length > 0 ? (
+    <div className="product-grid">
+      {productList.map((product) => (
+        <div key={product.id} className="product-detail">
+          <div className="products-view-card">
+            <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+              <img style={{ height: 'auto' }} srcSet={product.images[0].base_url} alt={product.name} />
+            </Link>
+            <div className="product-card-content">
+              <h3 className="product-card-title">{product.name}</h3>
+              <div className="product-box">
+                <span className="product-box-price">
+                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                </span>
+                <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
               </div>
+              <div className="product-button">
+                <Link to={PATH.contact} className="btn-product-contact">
+                  Liên hệ
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div className="no-products-message">
+      {/* <FontAwesomeIcon icon={faBan} className="mr-2" />
+      Không có sản phẩm nào được tìm thấy */}
+
+      <img src="/img/not-found.png" alt="" />
+    </div>
+  )}
+</div>
             </div>
           )}
         </div>
@@ -347,6 +382,5 @@ const LoadingDetail = () => {
     </div>
   );
 };
-
 
 export default ProductPage;

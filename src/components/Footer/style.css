@@ -53,7 +53,7 @@ svg.svg-inline--fa.fa-house-chimney {
   z-index: 1000;
   bottom: 100px;
   top: auto !important;
-  right: 14px;
+  right: 22px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -121,6 +121,7 @@ svg.svg-inline--fa.fa-house-chimney {
   display: block;
 }
 
+
 .def-content .item:hover {
   background: #f1f1f1;
 }
@@ -161,11 +162,30 @@ svg.svg-inline--fa.fa-house-chimney {
 
 .out-circle {
   overflow: hidden;
-  border-radius: 50% 50% 4px;
+  /* border-radius: 50% 50% 4px; */
+  border-radius: 50%;
   background: #ba9344;
   width: 54px;
   height: 54px;
   cursor: pointer;
+}
+
+.out-circle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  border: 2px solid rgba(212, 0, 0, 0.582); 
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 1.5s infinite; 
+  z-index: 2;
+}
+
+.out-circle.opened::before {
+  display: none;
 }
 
 .out-circle .main-icon {
@@ -197,4 +217,19 @@ svg.svg-inline--fa.fa-house-chimney {
   font-size: 0.7rem;
   color: #fff;
   margin: 0;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
 }

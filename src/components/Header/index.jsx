@@ -1,11 +1,8 @@
 import { CATEGORY_API_HHB, PATH } from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { onOpenDrawer } from '@/stores/drawerReducer';
 import { Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import CartDrawer from '../CartDrawer';
 const { SubMenu } = Menu;
 import 'antd/dist/reset.css';
 import useQuery from '@/hooks/useQuery';
@@ -14,8 +11,6 @@ import { faChevronDown, faLocationDot, faMagnifyingGlass, faPhoneVolume } from '
 import { productTiles } from '@/services/product.service';
 import axios from 'axios';
 import "./style.css"
-// import SearchModal from '../SearchModal';
-// import HeaderSearch from './HeaderSearch';
 
 const HeaderNavs = [
   {
@@ -48,27 +43,21 @@ const HeaderNavs = [
 ];
 
 const Header = () => {
-  const [isSearchModalVisible, setSearchModalVisible] = useState(false);
-  const openSearchModal = () => setSearchModalVisible(true);
-  const closeSearchModal = () => setSearchModalVisible(false);
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [scrolled, setScrolled] = useState(false);
-  const isHomepage = location.pathname === '/';
   const [headerNavs, setHeaderNavs] = useState(HeaderNavs);
+  const [activeNav, setActiveNav] = useState(location.pathname);
   const [productCodes, setProductCodes] = useState({
     gachOpLatCode: null,
     thietBiVeSinhCode: null,
     tamOpNhuaCode: null,
   });
 
-  const [activeNav, setActiveNav] = useState(location.pathname);
+  const [searchValue, setSearchValue] = useState('');
+  const [dataSearch, setDataSearch] = useState('')
+  // console.log('dataSearch', dataSearch)
+  const [loading, setLoading] = useState(false);
 
-  const toggleSearchModal = () => {
-    setSearchModalVisible((prev) => !prev);
-  };
 
   const {
     data: { data: productTypeList = [] } = {}
@@ -158,32 +147,6 @@ const Header = () => {
     fetchCategoryList(productCodes.tamOpNhuaCode, 'TẤM ỐP NHỰA');
   }, [productCodes]);
 
-  // useEffect(() => {
-  //   if (isHomepage) {
-  //     const handleScroll = () => {
-  //       const header = document.querySelector('.navbar');
-  //       const submenus = document.querySelectorAll('.ant-menu-submenu-popup');
-
-  //       submenus.forEach((submenu) => {
-  //         submenu.style.top = `${header.offsetHeight}px`;
-  //       });
-
-  //       if (window.scrollY > 0) {
-  //         setScrolled(true);
-  //       } else {
-  //         setScrolled(false);
-  //       }
-  //     };
-
-  //     window.addEventListener('scroll', handleScroll);
-  //     return () => {
-  //       window.removeEventListener('scroll', handleScroll);
-  //     };
-  //   } else {
-  //     setScrolled(false);
-  //   }
-  // }, [isHomepage]);
-
   const handleMenuClick = (item) => {
     setActiveNav(item.to);
 
@@ -234,31 +197,62 @@ const Header = () => {
     const bottomBar = document.querySelector('.bottom-bar');
 
     const handleScroll = () => {
-        const scrollY = window.scrollY || window.pageYOffset;
-        const triggerHeight = 100; // Điều chỉnh chiều cao này theo ý bạn
+      const scrollY = window.scrollY || window.pageYOffset;
+      const triggerHeight = 100; // Điều chỉnh chiều cao này theo ý bạn
 
-        if (scrollY > triggerHeight) {
-            bottomBar.classList.add('sticky-bottom-bar');
-        } else {
-            bottomBar.classList.remove('sticky-bottom-bar');
-        }
+      if (scrollY > triggerHeight) {
+        bottomBar.classList.add('sticky-bottom-bar');
+      } else {
+        bottomBar.classList.remove('sticky-bottom-bar');
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
-    
+
     return () => {
-        window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
-}, []);
+  }, []);
+
+  // Search
+
+  const param = {
+    keyword: searchValue,
+    pageIndex: 1,
+    pageSize: 10,
+    code: null,
+    type: 0,
+    order: 'id',
+    sort: 'desc'
+  }
+
+  async function fetchSearchList() {
+    if (!searchValue) return;
+    setLoading(true)
+    try {
+      const response = await axios.post(`${PRODUCT_API_HHB}/web-get-product-list`, param);
+      await setDataSearch(response?.data?.data?.data)
+      // await setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error('There has been a problem with your axios request:', error);
+    }
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      fetchSearchList();
+    }
+  };
 
 
   return (
     <>
       <header className='header-mega'>
         <div className='header header-mege header-lg'>
-          <div className="top-bar navbar-nav">
+          <Link to={PATH.sale} className="top-bar navbar-nav">
             <img src="/img/image-top.png" alt="" />
-          </div>
+          </Link>
 
           <div className="mid-bar navbar-nav">
             <div className="container mid-bar-content">
@@ -283,9 +277,9 @@ const Header = () => {
                           type="text"
                           className={`search-input`}
                           placeholder="Tìm kiếm"
-                        // value={searchValue}
-                        // onChange={(e) => setSearchValue(e.target.value)}
-                        // onKeyDown={handleKeyDown}
+                          value={searchValue}
+                          onChange={(e) => setSearchValue(e.target.value)}
+                          onKeyDown={handleKeyDown}
                         />
                         <FontAwesomeIcon style={{ color: '#ba9344' }} className='search-icon' icon={faMagnifyingGlass} />
                       </div>

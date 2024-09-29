@@ -39,6 +39,7 @@ const ViewCartPage = lazy(() => delayFallback(import("@/pages/ViewCartPage")));
 
 const AboutPage = lazy(() => delayFallback(import("@/pages/AboutPage")));
 const ContactPage = lazy(() => delayFallback(import("@/pages/ContactPage")));
+const SalePage = lazy(() => delayFallback(import("@/pages/SalePage")));
 
 const CheckoutPage = lazy(() => delayFallback(import("@/pages/CheckoutPage")));
 const OrderCompletedPage = lazy(() =>
@@ -107,6 +108,10 @@ export const routers = [
       {
         element: <SearchPage />,
         path: PATH.search,
+      },
+      {
+        element: <SalePage />,
+        path: PATH.sale,
       },
       {
         element: <Page404 />,
