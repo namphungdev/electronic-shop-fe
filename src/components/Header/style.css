@@ -142,3 +142,15 @@
 :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item:hover::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu:hover::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-active::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-active::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-open::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-open::after { 
 	border-bottom-color: transparent
 }
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-submenu>.ant-menu {
+    background-color: #ba9344;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title {
+    color: black;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-item, :where(.css-dev-only-do-not-override-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-submenu-title {
+    background: #ba9344;
+}
