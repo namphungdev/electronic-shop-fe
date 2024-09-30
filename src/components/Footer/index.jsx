@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import "./style.css"
 
 const Footer = () => {
-
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIcon = () => {
@@ -26,7 +25,7 @@ const Footer = () => {
                 <Link className="navbar-brand" to={PATH.home}>
                   <img
                     style={{ width: '75px', height: 'auto' }}
-                    srcSet="/img/backup-logo.png 2x"
+                    srcSet="/img/logo-not-gach.png 2x"
                   />
                 </Link>
               </div>
@@ -43,10 +42,10 @@ const Footer = () => {
                   <b>Địa chỉ:</b> <span>1151 Lê Đức Thọ, Phường 13, Quận Gò Vấp, Thành phố Hồ Chí Minh</span>
                 </li>
                 <li className='text-black my-1'>
-                  <b>Số điện thoại:</b> <span>0911 315 315</span>
+                  <b>Số điện thoại:</b> <span>0911 315 315 - 0893 879 879</span>
                 </li>
                 <li className='text-black'>
-                  <b>Email:</b> gach315@gmail.com
+                  <b>Email:</b> gachmen315@gmail.com
                 </li>
               </ul>
               {/* Tags */}
@@ -61,28 +60,7 @@ const Footer = () => {
                 </div>
               </Link>
             </div>
-            <div className="col-6 col-sm mb-4 mb-sm-0">
-              {/* Heading */}
-              <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">CHÍNH SÁCH</h6>
-              {/* Links */}
-              <ul className="list-none pl-0 mb-0 my-4">
-                <li className='text-white'>
-                  <a className="text-black" href="#!">
-                    Chính sách bảo hành
-                  </a>
-                </li>
-                <li className='text-white'>
-                  <a className="text-black" href="#!">
-                    Chính sách đổi trả
-                  </a>
-                </li>
-                <li className='text-white'>
-                  <a className="text-black" href="#!">
-                    Cam kết mua hàng đảm bảo
-                  </a>
-                </li>
-              </ul>
-            </div>
+
             <div className="col-6 col-sm mb-4 mb-sm-0">
               {/* Heading */}
               <h6 className="leading-normal tracking-[0.5px] relative text-[1.8rem] font-bold uppercase m-0">Fanpage</h6>
@@ -99,7 +77,6 @@ const Footer = () => {
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
               ></iframe>
             </div>
-
           </div>
         </div>
       </div>

@@ -146,9 +146,16 @@ export const Home = () => {
       <section className="py-10">
         <div className="container">
           <div className="flex">
-            <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+            {/* <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+              <img src="/img/hot-sale.png" alt="" />
+              Sản phẩm giảm giá
+            </h2> */}
+
+            <h2 className="mb-4 inline-flex items-center font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+              <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-70px', top: '0px' }} src="/img/hot-sale.png" alt="" />
               Sản phẩm giảm giá
             </h2>
+
             <div className='h-auto flex justify-end flex-1 overflow-hidden'>
               <div className="relative max-w-full">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right pb-2 overflow-x-auto overflow-y-hidden list-none'>

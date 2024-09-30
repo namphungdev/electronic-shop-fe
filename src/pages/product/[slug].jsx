@@ -204,19 +204,28 @@ const ProductDetailPage = () => {
                         <div className='policy-item'>
                           <span className='marker-policy'>2</span>
                           <div className='icon-policy'>
-                            <img src="/img/product_policy_2.svg" alt="Bảo hành 12 tháng (click xem chi tiết)" />
+                            <img src="/img/product_policy_2.svg" alt="Bảo hành 12 tháng" />
                           </div>
                           <div className='info-policy'>
-                            Bảo hành 12 tháng (click xem chi tiết)
+                            Bảo hành 12 tháng
                           </div>
                         </div>
                         <div className='policy-item'>
                           <span className='marker-policy'>3</span>
                           <div className='icon-policy'>
-                            <img src="/img/product_policy_3.svg" alt="Đổi trả hàng trong 7 ngày (click xem chi tiết)" />
+                            <img src="/img/product_policy_3.svg" alt="Đổi trả hàng trong 7 ngày" />
                           </div>
                           <div className='info-policy'>
-                            Đổi trả hàng trong 7 ngày (click xem chi tiết)
+                            Đổi trả hàng trong 7 ngày
+                          </div>
+                        </div>
+                        <div className='policy-item'>
+                          <span className='marker-policy'>4</span>
+                          <div className='icon-policy'>
+                            <img style={{ marginTop: '-7px' }} src="/img/free-ship.png" alt="Miễn phí vận chuyển TPHCM" />
+                          </div>
+                          <div className='info-policy'>
+                            Miễn phí vận chuyển TPHCM
                           </div>
                         </div>
                       </div>
