@@ -130,3 +130,15 @@
     border-bottom-width: 0px;
     border-bottom-color: transparent;
 }
+
+:where(.css-diro6f).ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title {
+    color: black
+}
+
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-selected::after {
+	border-bottom-color: transparent
+}
+
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item:hover::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu:hover::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-active::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-active::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-open::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-open::after { 
+	border-bottom-color: transparent
+}
