@@ -196,9 +196,9 @@ const ProductPage = () => {
           ) : (
             <div className='row'>
               <div className='col-12 col-title'>
-                <h1>
+                <h2 className='mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h1-custom'>
                   {toTitleCase(breadcrumb[breadcrumb.length - 1]?.name)}
-                </h1>
+                </h2>
               </div>
               <div className='block-collection col-sm-12 col-12 col-md-12'>
                 <div className='col-list-cate'>

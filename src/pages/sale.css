@@ -196,3 +196,46 @@
 :where(.css-dev-only-do-not-override-diro6f).ant-pagination .ant-pagination-item-active {
     color: #ba9344;
 }
+
+
+
+
+.product-h2-custom::before {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #ba9344;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+}
+
+.li-current {
+    background: #ba9344;
+    color: white;
+    cursor: pointer;
+}
+
+.tab-cate:hover {
+    background: #ba9344;
+    color: white;
+    cursor: pointer;
+}
+
+.tab-cate {
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.tab-cate:first-child {
+    -webkit-clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.tab-cate:last-child {
+    -webkit-clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+

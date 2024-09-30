@@ -6,7 +6,7 @@ import useScrollTop from '@/hooks/useScrollTop';
 import { productTiles } from '@/services/product.service';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import './sale.css'
 
@@ -28,35 +28,41 @@ const optionSort = [
 const SalePage = () => {
   useScrollTop()
 
-  const [productType, setProductType] = useState('gach-op-lat')
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [productCode, setProductCode] = useState();
+
+  const idProduct = activeIndex + 1
+
+  useEffect(() => {
+    if (idProduct == 1) {
+      setProductCode('thiet-bi-ve-sinh')
+    } else if (idProduct == 2) {
+      setProductCode('gach-op-lat')
+    } else {
+      setProductCode('tam-op-nhua')
+    }
+  }, [idProduct])
+
+  const clickProductSell = (index) => {
+    setActiveIndex(index)
+  }
 
   const params = {
     keyword: '',
     pageIndex: 1,
     pageSize: 50,
-    productType: productType
+    productType: productCode
   }
 
   const {
     data: { data: listDiscount = [], loading: loadingListDiscount } = {},
   } = useQuery({
-    queryKey: `product-page-${JSON.stringify(productType)}`,
+    queryKey: `product-page-${JSON.stringify(productCode)}`,
     keepPreviousData: true,
     keepStorage: false,
     queryFn: ({ signal }) => productTiles.productListDiscounted(params, signal),
-    enabled: !!productType,
+    enabled: !!productCode,
   });
-
-  const handleSortChange = (e) => {
-    const selectedValue = Number(e.target.value)
-    if (selectedValue == 1) {
-      setProductType('gach-op-lat')
-    } else if (selectedValue == 2) {
-      setProductType('tam-op-nhua')
-    } else if (selectedValue == 3) {
-      setProductType('thiet-bi-ve-sinh')
-    }
-  }
 
   return (
     <>
@@ -83,7 +89,27 @@ const SalePage = () => {
             <LoadingDetail />
           ) : (
             <div className='row'>
-              <div className='col-12 col-title'>
+              <div className="flex col-12">
+                <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+                  Sản phẩm giảm giá
+                </h2>
+                <div className='h-auto flex justify-end flex-1 overflow-hidden'>
+                  <div className="relative max-w-full">
+                    <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right pb-2 overflow-x-auto overflow-y-hidden list-none'>
+                      {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
+                        <li
+                          key={index}
+                          className={`relative font-medium bg-gray-200 px-5 py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
+                          onClick={() => clickProductSell(index)}
+                        >
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              {/* <div className='col-12 col-title'>
                 <h1>
                   Sản phẩm giảm giá
                 </h1>
@@ -107,84 +133,40 @@ const SalePage = () => {
                     <FontAwesomeIcon icon={faFilter} className="select-icon" />
                   </div>
                 </div>
-              </div>
-              {/* <div
-                className={`products-view my-5 col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}
-              >
-                {listDiscount && listDiscount?.length > 0 ? (
-                  listDiscount?.map((product) => (
-                    <div className="product-detail">
-                      <div key={product.id} className='products-view-card'>
-                        <Link className='navbar-brand' to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          <img
-                            style={{ height: 'auto' }}
-                            srcSet={product.images[0].base_url}
-                            alt={product.name}
-                          />
-                        </Link>
-                        <div className="product-card-content">
-                          <h3 className="product-card-title">{product.name}</h3>
-                          <div className='product-box'>
-                            <span className='product-box-price'>
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className='product-compare-price'>
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
-                          </div>
-                          <div className='product-button'>
-                            <Link to={PATH.contact} className='btn-product-contact'>
-                              Liên hệ
-                            </Link>
+              </div> */}
+              <div className={`products-view my-5 col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}>
+                {listDiscount && listDiscount.length > 0 ? (
+                  <div className="product-grid">
+                    {listDiscount.map((product) => (
+                      <div key={product.id} className="product-detail">
+                        <div className="products-view-card">
+                          <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                            <img style={{ height: 'auto' }} srcSet={product.images[0].base_url} alt={product.name} />
+                          </Link>
+                          <div className="product-card-content">
+                            <h3 className="product-card-title">{product.name}</h3>
+                            <div className="product-box">
+                              <span className="product-box-price">
+                                {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                              </span>
+                              <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
+                            </div>
+                            <div className="product-button">
+                              <Link to={PATH.contact} className="btn-product-contact">
+                                Liên hệ
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ))}
+                  </div>
                 ) : (
                   <div className="no-products-message">
-                    <FontAwesomeIcon icon={faBan} className="mr-2" />
-                    Không có sản phẩm nào được tìm thấy
+                    <img src="/img/not-found.png" alt="" />
                   </div>
                 )}
-              </div> */}
-
-<div className={`products-view my-5 col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}>
-  {listDiscount && listDiscount.length > 0 ? (
-    <div className="product-grid">
-      {listDiscount.map((product) => (
-        <div key={product.id} className="product-detail">
-          <div className="products-view-card">
-            <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-              <img style={{ height: 'auto' }} srcSet={product.images[0].base_url} alt={product.name} />
-            </Link>
-            <div className="product-card-content">
-              <h3 className="product-card-title">{product.name}</h3>
-              <div className="product-box">
-                <span className="product-box-price">
-                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                </span>
-                <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
               </div>
-              <div className="product-button">
-                <Link to={PATH.contact} className="btn-product-contact">
-                  Liên hệ
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  ) : (
-    <div className="no-products-message">
-      {/* <FontAwesomeIcon icon={faBan} className="mr-2" />
-      Không có sản phẩm nào được tìm thấy */}
-
-      <img src="/img/not-found.png" alt="" />
-    </div>
-  )}
-</div>
 
             </div>
           )}
