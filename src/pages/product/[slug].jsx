@@ -204,10 +204,10 @@ const ProductDetailPage = () => {
                         <div className='policy-item'>
                           <span className='marker-policy'>2</span>
                           <div className='icon-policy'>
-                            <img src="/img/product_policy_2.svg" alt="Bảo hành 12 tháng" />
+                            <img src="/img/product_policy_2.svg" alt="Bảo hành chính hãng" />
                           </div>
                           <div className='info-policy'>
-                            Bảo hành 12 tháng
+                            Bảo hành chính hãng
                           </div>
                         </div>
                         <div className='policy-item'>

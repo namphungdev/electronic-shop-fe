@@ -147,7 +147,7 @@ export const Home = () => {
         <div className="container">
           <div className="flex header-sell">
             <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
-              {/* <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-70px', top: '0px', background: 'transparent' }} src="/img/hhh.jpg" alt="" /> */}
+              <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-15%', bottom: '10%', background: 'transparent' }} src="/img/hot-sale.png" alt="" />
               Sản phẩm giảm giá
             </div>
 
@@ -166,7 +166,6 @@ export const Home = () => {
                 </ul>
               </div>
             </div>
-
           </div>
 
           <div className="block-product-sell sell-content">

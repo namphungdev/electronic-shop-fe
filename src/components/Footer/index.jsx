@@ -42,7 +42,7 @@ const Footer = () => {
                   <b>Địa chỉ:</b> <span>1151 Lê Đức Thọ, Phường 13, Quận Gò Vấp, Thành phố Hồ Chí Minh</span>
                 </li>
                 <li className='text-black my-1'>
-                  <b>Số điện thoại:</b> <span>0911 315 315 - 0893 879 879</span>
+                  <b>Số điện thoại:</b> <span>0911 315 315 - 0839 879 879</span>
                 </li>
                 <li className='text-black'>
                   <b>Email:</b> gachmen315@gmail.com
