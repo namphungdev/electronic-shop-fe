@@ -14,8 +14,8 @@
 }
 
 .li-current {
-    background: #ba9344;
-    color: white;
+    background: #e81f15;
+    color: black;
     cursor: pointer;
 }
 
@@ -39,9 +39,38 @@
     clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
+.see-more-sale {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 10px;
+    background: white;
+}
+
+.see-more-container {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.btn-see-more {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ba9344;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-see-more:hover {
+    color: black;
+}
+
 /* CSS cho page Home -- tab of sản phẩm giảm giá */
-
-
 
 /* CSS cho page Home -- Sản phẩm giá sale */
 
@@ -61,7 +90,7 @@
 }
 
 .product-sale {
-    background-color: #fff; 
+    background-color: #fff;
     padding: 10px;
 }
 

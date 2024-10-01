@@ -4,26 +4,9 @@ import { PATH } from '@/config';
 import useQuery from '@/hooks/useQuery';
 import useScrollTop from '@/hooks/useScrollTop';
 import { productTiles } from '@/services/product.service';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import './sale.css'
-
-const optionSort = [
-  {
-    value: 1,
-    title: 'Gạch ốp lát',
-  },
-  {
-    value: 2,
-    title: 'Tấm ốp nhựa',
-  },
-  {
-    value: 3,
-    title: 'Thiết bị vệ sinh',
-  },
-];
 
 const SalePage = () => {
   useScrollTop()
@@ -88,14 +71,39 @@ const SalePage = () => {
           {loadingListDiscount ? (
             <LoadingDetail />
           ) : (
-            <div className='row'>
-              <div className="flex col-12">
-                <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
+            <div className=''>
+
+              <div className="flex header-sell">
+                <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
+                  <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-15%', bottom: '10%', background: 'transparent' }} src="/img/hot-sale.png" alt="" />
+                  Sản phẩm giảm giá
+                </div>
+
+                <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
+                  <div className="relative max-w-full text-white">
+                    <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
+                      {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
+                        <li
+                          key={index}
+                          className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 ${activeIndex === index ? 'li-current' : ''}`}
+                          onClick={() => clickProductSell(index)}
+                        >
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+              {/* <div className="flex col-12 header-sell">
+                <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative">
                   Sản phẩm giảm giá
                 </h2>
                 <div className='h-auto flex justify-end flex-1 overflow-hidden'>
                   <div className="relative max-w-full">
-                    <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right pb-2 overflow-x-auto overflow-y-hidden list-none'>
+                    <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
                       {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
                         <li
                           key={index}
@@ -108,35 +116,10 @@ const SalePage = () => {
                     </ul>
                   </div>
                 </div>
-              </div>
-              {/* <div className='col-12 col-title'>
-                <h1>
-                  Sản phẩm giảm giá
-                </h1>
-              </div>
-              <div className='block-collection col-sm-12 col-12 col-md-12'>
-                <div className='col-list-cate'>
-                  <div className="tab-ul">
-                    <div className="menu-list">
-                    </div>
-                  </div>
-                </div>
-                <div className="ml-3">
-                  <div className="select-container">
-                    <select className="custom-select custom-select-xs" onChange={handleSortChange}>
-                      {optionSort.map((e) => (
-                        <option value={e?.value} key={e.value}>
-                          {e.title}
-                        </option>
-                      ))}
-                    </select>
-                    <FontAwesomeIcon icon={faFilter} className="select-icon" />
-                  </div>
-                </div>
               </div> */}
-              <div className={`products-view my-5 col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}>
+              <div className={`products-view view-content col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}>
                 {listDiscount && listDiscount.length > 0 ? (
-                  <div className="product-grid">
+                  <div className="product-grid product-content-view">
                     {listDiscount.map((product) => (
                       <div key={product.id} className="product-detail">
                         <div className="products-view-card">
@@ -167,7 +150,6 @@ const SalePage = () => {
                   </div>
                 )}
               </div>
-
             </div>
           )}
         </div>

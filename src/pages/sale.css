@@ -28,7 +28,6 @@
 
 .product-grid {
     display: grid;
-    /* grid-template-columns: repeat(4, 1fr); */
     grid-template-columns: repeat(5, 1fr);
     gap: 16px;
 }
@@ -61,7 +60,6 @@
     text-align: center;
     margin: 1rem
 }
-
 
 .products-view-card {
     background-color: #fff;
@@ -198,45 +196,35 @@
     color: #ba9344;
 }
 
+.layout-collection {
+    margin-bottom: 40px;
+}
 
-
-
-.product-h2-custom::before {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 4px;
-    background: #ba9344;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    -webkit-clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+.header-sell {
+    padding: 10px 10px 0px 10px;
+    background: #e81f15;
+    align-items: center;
 }
 
 .li-current {
-    background: #ba9344;
-    color: white;
+    background: #e81f15;
+    color: black;
     cursor: pointer;
 }
 
 .tab-cate:hover {
-    background: #ba9344;
+    background: #e81f15;
     color: white;
     cursor: pointer;
 }
 
-.tab-cate {
-    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+.product-content-view {
+    background: white;
+    padding: 10px;
 }
 
-.tab-cate:first-child {
-    -webkit-clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-    clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-}
-
-.tab-cate:last-child {
-    -webkit-clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
-    clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
+.view-content {
+    background: #e81f15;
+    padding: 10px 
 }
 

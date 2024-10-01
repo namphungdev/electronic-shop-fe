@@ -143,7 +143,7 @@ export const Home = () => {
         </div>
       </section>
       {/* TOP SELLERS */}
-      <section className="py-10">
+      <section className="py-5">
         <div className="container">
           <div className="flex header-sell">
             <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
@@ -152,12 +152,12 @@ export const Home = () => {
             </div>
 
             <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
-              <div className="relative max-w-full">
+              <div className="relative max-w-full text-white">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
                   {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
                     <li
                       key={index}
-                      className={`relative font-medium bg-gray-200 px-5 py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
+                      className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 ${activeIndex === index ? 'li-current' : ''}`}
                       onClick={() => clickProductSell(index)}
                     >
                       <span>{item}</span>
@@ -167,54 +167,61 @@ export const Home = () => {
               </div>
             </div>
           </div>
-
           <div className="block-product-sell sell-content">
             {loadingDataPrice ? (
               <div className="loading-container">
                 <Spin size="large" />
               </div>
             ) : (
-              <div className="product-row product-sale">
-                {dataPrice && dataPrice.length > 0 ? (
-                  dataPrice.map((product) => (
-                    <div key={product.id} className="product-card">
-                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                        <div className="sale-badge">SALE</div>
-                        <img
-                          style={{ height: 'auto' }}
-                          srcSet={product.images[0].base_url}
-                          alt={product.name}
-                        />
-                      </Link>
-                      <div className="product-card-content">
-                        <h3 className="product-card-title">{product.name}</h3>
-                        <div className="price-box">
-                          <span className="price">
-                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                          </span>
-                          <span className="compare-price">
-                            {Number(product.price).toLocaleString('vi-VN')}đ
-                          </span>
-                        </div>
-                        <div className="product-button">
-                          <Link to={PATH.contact} className="btn-sell-contact">
-                            Liên hệ
-                          </Link>
+              <>
+                <div className="product-row product-sale">
+                  {dataPrice && dataPrice.length > 0 ? (
+                    dataPrice.map((product) => (
+                      <div key={product.id} className="product-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          <div className="sale-badge">SALE</div>
+                          <img
+                            style={{ height: 'auto' }}
+                            srcSet={product.images[0].base_url}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="price-box">
+                            <span className="price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="compare-price">
+                              {Number(product.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-sell-contact">
+                              Liên hệ
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
-                ) : (
-                  <p>Không có sản phẩm nào.</p>
-                )}
-              </div>
+                    ))
+                  ) : (
+                    <p>Không có sản phẩm nào.</p>
+                  )}
+                </div>
+                {dataPrice && dataPrice.length > 5 ? (
+                  <div className="see-more-sale">
+                    <Link className="btn-see-more" to={PATH.sale}>
+                      Xem thêm
+                    </Link>
+                  </div>
+                ) : null}
+              </>
             )}
           </div>
-
         </div>
       </section>
       {/* PRODUCT */}
-      <section className="py-10">
+      <section className="py-5">
         <div className="container">
           <div className="flex">
             <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
@@ -229,44 +236,53 @@ export const Home = () => {
                 <Spin size="large" />
               </div>
             ) : (
-              <div className="product-row row">
-                {dataGachOpLat && dataGachOpLat?.data?.length > 0 ? (
-                  dataGachOpLat?.data.map((product) => (
-                    <div key={product.id} className="product-card">
-                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                        <img
-                          style={{ height: 'auto' }}
-                          srcSet={product.images[0].base_url}
-                          alt={product.name}
-                        />
-                      </Link>
-                      <div className="product-card-content">
-                        <h3 className="product-card-title">{product.name}</h3>
-                        <div className="price-box">
-                          <span className="price">
-                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                          </span>
-                          <span className="compare-price">
-                            {Number(product.price).toLocaleString('vi-VN')}đ
-                          </span>
-                        </div>
-                        <div className="product-button">
-                          <Link to={PATH.contact} className="btn-sell-contact">
-                            Liên hệ
-                          </Link>
+              <>
+                <div className="product-row row">
+                  {dataGachOpLat && dataGachOpLat?.data?.length > 0 ? (
+                    dataGachOpLat?.data.map((product) => (
+                      <div key={product.id} className="product-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          <img
+                            style={{ height: 'auto' }}
+                            srcSet={product.images[0].base_url}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="price-box">
+                            <span className="price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="compare-price">
+                              {Number(product.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-sell-contact">
+                              Liên hệ
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
-                ) : (
-                  <p>Không có sản phẩm nào.</p>
-                )}
-              </div>
+                    ))
+                  ) : (
+                    <p>Không có sản phẩm nào.</p>
+                  )}
+                </div>
+                {dataGachOpLat && dataPrice.length > 10 ? (
+                  <div className="see-more-container">
+                    <Link className="btn-see-more" to={`${PATH.products}/gach-op-lat`}>
+                      Xem thêm
+                    </Link>
+                  </div>
+                ) : null}
+              </>
             )}
           </div>
         </div>
       </section>
-      <section className="py-10">
+      <section className="py-5">
         <div className="container">
           <div className="flex">
             <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
@@ -281,44 +297,53 @@ export const Home = () => {
                 <Spin size="large" />
               </div>
             ) : (
-              <div className="product-row row">
-                {dataTBVS && dataTBVS?.data?.length > 0 ? (
-                  dataTBVS?.data.map((product) => (
-                    <div key={product.id} className="product-card">
-                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                        <img
-                          style={{ height: 'auto' }}
-                          srcSet={product.images[0].base_url}
-                          alt={product.name}
-                        />
-                      </Link>
-                      <div className="product-card-content">
-                        <h3 className="product-card-title">{product.name}</h3>
-                        <div className="price-box">
-                          <span className="price">
-                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                          </span>
-                          <span className="compare-price">
-                            {Number(product.price).toLocaleString('vi-VN')}đ
-                          </span>
-                        </div>
-                        <div className="product-button">
-                          <Link to={PATH.contact} className="btn-sell-contact">
-                            Liên hệ
-                          </Link>
+              <>
+                <div className="product-row row">
+                  {dataTBVS && dataTBVS?.data?.length > 0 ? (
+                    dataTBVS?.data.map((product) => (
+                      <div key={product.id} className="product-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          <img
+                            style={{ height: 'auto' }}
+                            srcSet={product.images[0].base_url}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="price-box">
+                            <span className="price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="compare-price">
+                              {Number(product.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-sell-contact">
+                              Liên hệ
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
-                ) : (
-                  <p>Không có sản phẩm nào.</p>
-                )}
-              </div>
+                    ))
+                  ) : (
+                    <p>Không có sản phẩm nào.</p>
+                  )}
+                </div>
+                {dataTBVS && dataTBVS?.data?.length > 10 ? (
+                  <div className="see-more-container">
+                    <Link className="btn-see-more" to={`${PATH.products}/thiet-bi-ve-sinh`}>
+                      Xem thêm
+                    </Link>
+                  </div>
+                ) : null}
+              </>
             )}
           </div>
         </div>
       </section>
-      <section className="py-10">
+      <section className="py-5">
         <div className="container">
           <div className="flex">
             <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
@@ -333,45 +358,54 @@ export const Home = () => {
                 <Spin size="large" />
               </div>
             ) : (
-              <div className="product-row row">
-                {dataTON && dataTON?.data?.length > 0 ? (
-                  dataTON?.data.map((product) => (
-                    <div key={product.id} className="product-card">
-                      <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                        <img
-                          style={{ height: 'auto' }}
-                          srcSet={product.images[0].base_url}
-                          alt={product.name}
-                        />
-                      </Link>
-                      <div className="product-card-content">
-                        <h3 className="product-card-title">{product.name}</h3>
-                        <div className="price-box">
-                          <span className="price">
-                            {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                          </span>
-                          <span className="compare-price">
-                            {Number(product.price).toLocaleString('vi-VN')}đ
-                          </span>
-                        </div>
-                        <div className="product-button">
-                          <Link to={PATH.contact} className="btn-sell-contact">
-                            Liên hệ
-                          </Link>
+              <>
+                <div className="product-row row">
+                  {dataTON && dataTON?.data?.length > 0 ? (
+                    dataTON?.data.map((product) => (
+                      <div key={product.id} className="product-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          <img
+                            style={{ height: 'auto' }}
+                            srcSet={product.images[0].base_url}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="price-box">
+                            <span className="price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="compare-price">
+                              {Number(product.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-sell-contact">
+                              Liên hệ
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
-                ) : (
-                  <p>Không có sản phẩm nào.</p>
-                )}
-              </div>
+                    ))
+                  ) : (
+                    <p>Không có sản phẩm nào.</p>
+                  )}
+                </div>
+                {dataTON && dataTON?.data?.length > 10 ? (
+                  <div className="see-more-container">
+                    <Link className="btn-see-more" to={`${PATH.products}/tam-op-nhua`}>
+                      Xem thêm
+                    </Link>
+                  </div>
+                ) : null}
+              </>
             )}
           </div>
         </div>
       </section>
       {/* BRANCH */}
-      <section className="py-10">
+      <section className="py-5">
         <div className="container">
           <div className="row justify-content-center">
             <div className="text-center">
