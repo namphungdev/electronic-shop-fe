@@ -145,20 +145,15 @@ export const Home = () => {
       {/* TOP SELLERS */}
       <section className="py-10">
         <div className="container">
-          <div className="flex">
-            {/* <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
-              <img src="/img/hot-sale.png" alt="" />
+          <div className="flex header-sell">
+            <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
+              {/* <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-70px', top: '0px', background: 'transparent' }} src="/img/hhh.jpg" alt="" /> */}
               Sản phẩm giảm giá
-            </h2> */}
+            </div>
 
-            <h2 className="mb-4 inline-flex items-center font-bold text-3xl uppercase font-oswald relative pb-2 product-h2-custom">
-              <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-70px', top: '0px' }} src="/img/hot-sale.png" alt="" />
-              Sản phẩm giảm giá
-            </h2>
-
-            <div className='h-auto flex justify-end flex-1 overflow-hidden'>
+            <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
               <div className="relative max-w-full">
-                <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right pb-2 overflow-x-auto overflow-y-hidden list-none'>
+                <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
                   {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
                     <li
                       key={index}
@@ -171,14 +166,16 @@ export const Home = () => {
                 </ul>
               </div>
             </div>
+
           </div>
-          <div className="block-product-sell">
+
+          <div className="block-product-sell sell-content">
             {loadingDataPrice ? (
               <div className="loading-container">
                 <Spin size="large" />
               </div>
             ) : (
-              <div className="product-row row">
+              <div className="product-row product-sale">
                 {dataPrice && dataPrice.length > 0 ? (
                   dataPrice.map((product) => (
                     <div key={product.id} className="product-card">
@@ -214,6 +211,7 @@ export const Home = () => {
               </div>
             )}
           </div>
+
         </div>
       </section>
       {/* PRODUCT */}
