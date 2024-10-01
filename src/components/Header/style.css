@@ -76,10 +76,6 @@
     /* Để không gây cản trở cho sự kiện click vào ô input */
 }
 
-
-
-
-
 .sticky-bottom-bar {
     position: fixed;
     top: 0;

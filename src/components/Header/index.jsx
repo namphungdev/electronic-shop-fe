@@ -1,6 +1,6 @@
-import { CATEGORY_API_HHB, PATH } from '@/config';
+import { CATEGORY_API_HHB, PATH, PRODUCT_API_HHB } from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu } from 'antd';
+import { Menu, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 const { SubMenu } = Menu;
@@ -54,10 +54,6 @@ const Header = () => {
   });
 
   const [searchValue, setSearchValue] = useState('');
-  const [dataSearch, setDataSearch] = useState('')
-  // console.log('dataSearch', dataSearch)
-  const [loading, setLoading] = useState(false);
-
 
   const {
     data: { data: productTypeList = [] } = {}
@@ -214,37 +210,11 @@ const Header = () => {
     };
   }, []);
 
-  // Search
-
-  const param = {
-    keyword: searchValue,
-    pageIndex: 1,
-    pageSize: 10,
-    code: null,
-    type: 0,
-    order: 'id',
-    sort: 'desc'
-  }
-
-  async function fetchSearchList() {
-    if (!searchValue) return;
-    setLoading(true)
-    try {
-      const response = await axios.post(`${PRODUCT_API_HHB}/web-get-product-list`, param);
-      await setDataSearch(response?.data?.data?.data)
-      // await setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('There has been a problem with your axios request:', error);
-    }
-  }
-
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      fetchSearchList();
+      navigate(`${PATH.search}?keyword=${searchValue}`);
     }
   };
-
 
   return (
     <>
