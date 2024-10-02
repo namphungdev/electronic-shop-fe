@@ -85,7 +85,7 @@ const SalePage = () => {
                       {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
                         <li
                           key={index}
-                          className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 ${activeIndex === index ? 'li-current' : ''}`}
+                          className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
                           onClick={() => clickProductSell(index)}
                         >
                           <span>{item}</span>
@@ -95,28 +95,6 @@ const SalePage = () => {
                   </div>
                 </div>
               </div>
-
-
-              {/* <div className="flex col-12 header-sell">
-                <h2 className="mb-4 inline-block font-bold text-3xl uppercase font-oswald relative">
-                  Sản phẩm giảm giá
-                </h2>
-                <div className='h-auto flex justify-end flex-1 overflow-hidden'>
-                  <div className="relative max-w-full">
-                    <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
-                      {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
-                        <li
-                          key={index}
-                          className={`relative font-medium bg-gray-200 px-5 py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
-                          onClick={() => clickProductSell(index)}
-                        >
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div> */}
               <div className={`products-view view-content col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}>
                 {listDiscount && listDiscount.length > 0 ? (
                   <div className="product-grid product-content-view">

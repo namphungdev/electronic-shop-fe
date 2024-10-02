@@ -16,12 +16,11 @@
 .li-current {
     background: #e81f15;
     color: black;
-    cursor: pointer;
 }
 
 .tab-cate:hover {
-    background: #ba9344;
-    color: white;
+    /* background: #ba9344; */
+    color: black;
     cursor: pointer;
 }
 
@@ -68,6 +67,7 @@
 
 .btn-see-more:hover {
     color: black;
+    cursor: pointer;
 }
 
 /* CSS cho page Home -- tab of sản phẩm giảm giá */

@@ -157,7 +157,7 @@ export const Home = () => {
                   {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
                     <li
                       key={index}
-                      className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 ${activeIndex === index ? 'li-current' : ''}`}
+                      className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
                       onClick={() => clickProductSell(index)}
                     >
                       <span>{item}</span>
