@@ -52,6 +52,12 @@ const CustomButton = styled(Button)`
 const StyledTable = styled(Table)`
     height: 55vh;
     overflow: auto;
+        .ant-table-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #fff;
+    }
 `;
 
 const locale = {
@@ -323,6 +329,8 @@ const CategoryManagement = () => {
                     loading={loadingProductCategoryList}
                     locale={{ emptyText: 'Không có kết quả hiển thị' }}
                     pagination={false}
+                    scroll={{ y: 300 }}  // Set a fixed height for the table body
+                    sticky   // Enable sticky header
                 />
 
                 <Pagination
@@ -332,7 +340,7 @@ const CategoryManagement = () => {
                     onChange={handleTableChange}
                     showSizeChanger
                     onShowSizeChange={handleTableChange}
-                    locale={locale} 
+                    locale={locale}
                 />
             </div>
 

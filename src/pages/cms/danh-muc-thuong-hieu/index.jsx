@@ -100,7 +100,7 @@ const BrandCategoryManagement = () => {
         keepPreviousData: true,
         keepStorage: false,
         queryFn: () =>
-            cmsTitles.getDropdownProductCategory(),
+            cmsTitles.getDropdownProductCategory('thiet-bi-ve-sinh'),
     });
 
     const columns = [
@@ -111,25 +111,13 @@ const BrandCategoryManagement = () => {
         },
         {
             title: 'Danh mục sản phẩm',
-            dataIndex: 'productCategoryCode',
-            key: 'productCategoryCode',
-            render: (productCategoryCode) => {
-                const name = dropdownProductCategory.find(
-                    (type) => type.code === productCategoryCode
-                )?.name || 'N/A';
-                return name;
-            },
+            dataIndex: 'productCategoryName',
+            key: 'productCategoryName',
         },
         {
             title: 'Thương hiệu',
-            dataIndex: 'brandCode',
-            key: 'brandCode',
-            render: (brandCode) => {
-                const name = dropdownBrand.find(
-                    (type) => type.code === brandCode
-                )?.name || 'N/A';
-                return name;
-            },
+            dataIndex: 'brandName',
+            key: 'brandName',
         },
 
         {

@@ -15,15 +15,21 @@ import BranchManagement from "@/pages/cms/quan-ly-thuong-hieu";
 import CategoryManagement from "@/pages/cms/quan-ly-danh-muc";
 import AddCategories from "@/pages/cms/quan-ly-danh-muc/create";
 import EditCategories from "@/pages/cms/quan-ly-danh-muc/edit";
-import ProductManagement from "@/pages/cms/quan-ly-san-pham";
-import AddProducts from "@/pages/cms/quan-ly-san-pham/create";
-import EditProducts from "@/pages/cms/quan-ly-san-pham/edit";
+import TypeProductManagement from "@/pages/cms/quan-ly-loai-san-pham";
+import AddTypeProducts from "@/pages/cms/quan-ly-loai-san-pham/create";
+import EditTypeProducts from "@/pages/cms/quan-ly-loai-san-pham/edit";
 import SearchPage from "@/pages/SearchPage";
 import AddBrand from "@/pages/cms/quan-ly-thuong-hieu/create";
 import EditBrand from "@/pages/cms/quan-ly-thuong-hieu/edit";
 import BrandCategoryManagement from "@/pages/cms/danh-muc-thuong-hieu";
 import EditBrandCategory from "@/pages/cms/danh-muc-thuong-hieu/edit";
 import AddBrandCategory from "@/pages/cms/danh-muc-thuong-hieu/create";
+import SubProductCategoryList from "@/pages/cms/danh-muc-san-pham-phu";
+import AddSubProductCategoryList from "@/pages/cms/danh-muc-san-pham-phu/create";
+import EditSubProductCategoryList from "@/pages/cms/danh-muc-san-pham-phu/edit";
+import ProductListCMS from "@/pages/cms/danh-sach-san-pham";
+import AddProductListCMS from "@/pages/cms/danh-sach-san-pham/create";
+import EditProductListCMS from "@/pages/cms/danh-sach-san-pham/edit";
 const Home = lazy(() => delayFallback(import("@/pages")));
 const Page404 = lazy(() => delayFallback(import("@/pages/404")));
 const ProductPage = lazy(() => delayFallback(import("@/pages/product")));
@@ -142,9 +148,17 @@ export const routers = [
       { element: <AddBrandCategory />, path: PATH.brandCategoryAddCMS },
       { element: <EditBrandCategory />, path: PATH.brandCategoryCMSDetail },
       
-      { element: <ProductManagement />, path: PATH.productsManagement },
-      { element: <AddProducts />, path: PATH.productsAddCMS },
-      { element: <EditProducts />, path: PATH.productsCMSDetail },
+      { element: <TypeProductManagement />, path: PATH.typeProductsManagement },
+      { element: <AddTypeProducts />, path: PATH.typeProductsAddCMS },
+      { element: <EditTypeProducts />, path: PATH.typeProductsCMSDetail },
+
+      { element: <SubProductCategoryList />, path: PATH.subProductCategoryList },
+      { element: <AddSubProductCategoryList />, path: PATH.subProductCategoryAddCMS },
+      { element: <EditSubProductCategoryList />, path: PATH.subProductCategoryDetail },
+
+      { element: <ProductListCMS />, path: PATH.productList },
+      { element: <AddProductListCMS />, path: PATH.productListAddCMS },
+      { element: <EditProductListCMS />, path: PATH.productListDetail },
     ]
   },
 

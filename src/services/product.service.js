@@ -114,8 +114,8 @@ export const cmsTitles = {
   getDropdownProductType: () =>
     http.get(`${CMS_API_HHB}/get-dropdown-product-type`),
 
-  getDropdownProductCategory: () =>
-    http.get(`${CMS_API_HHB}/get-dropdown-product-category`),
+  getDropdownProductCategory: (code) =>
+    http.get(`${CMS_API_HHB}/get-dropdown-product-category?code=${code}`),
 
   // Branch
   getBranchList: (branch, signal) =>
@@ -187,25 +187,37 @@ export const cmsTitles = {
 
   // Loại sản phẩm
 
-  getProductList: (param, signal) =>
+  getTypeProductList: (param, signal) =>
     http.post(`${CMS_API_HHB}/get-product-type-list`, param, {
       signal,
     }),
 
-  insertProducts: (param, signal) =>
+  insertTypeProducts: (param, signal) =>
     http.post(`${CMS_API_HHB}/insert-product-type`, param, {
       signal,
     }),
 
-  deleteProduct: (id) =>
+  deleteTypeProduct: (id) =>
     http.delete(`${CMS_API_HHB}/delete-product-type/${id}`),
 
-  getProductsDetail: (slug) =>
+  getTypeProductsDetail: (slug) =>
     http.get(`${CMS_API_HHB}/get-product-type-detail/${slug}`),
 
-  updateProducts: (param, signal) =>
+  updateTypeProducts: (param, signal) =>
     http.put(`${CMS_API_HHB}/update-product-type`, param, {
       signal,
     }),
 
+  // Danh mục sản phẩm phụ 
+
+  getSubProductCategoryList: (param, signal) =>
+    http.post(`${CMS_API_HHB}/get-sub-product-category-list`, param, {
+      signal,
+    }),
+
+  // Danh sách sản phẩm
+  getProductList: (param, signal) =>
+    http.post(`${CMS_API_HHB}/get-sub-product-category-list`, param, {
+      signal,
+    }),
 }

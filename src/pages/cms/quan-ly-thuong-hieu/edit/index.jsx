@@ -78,9 +78,12 @@ const EditBrand = () => {
             if (res && res.result && res.code == 200) {
                 navigate(PATH.branchManagement)
                 toast.success('Chỉnh sửa thương hiệu thành công')
+            } else {
+                throw new Error(res.message);
             }
         } catch (error) {
-            toast.error(res.message)
+            toast.error('Chỉnh sửa thương hiệu thất bại');
+            toast.error(error.message);
         }
     };
 
@@ -136,7 +139,7 @@ const EditBrand = () => {
                                                 onChange={handleInputChange('brandName')}
                                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                                             />
-                                        {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
+                                            {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
                                         </div>
                                     </div>
                                 </div>

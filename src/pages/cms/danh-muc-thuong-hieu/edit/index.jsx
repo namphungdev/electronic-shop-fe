@@ -36,7 +36,7 @@ const EditBrandCategory = () => {
     keepPreviousData: true,
     keepStorage: false,
     queryFn: () =>
-      cmsTitles.getDropdownProductCategory(),
+      cmsTitles.getDropdownProductCategory('thiet-bi-ve-sinh'),
   });
 
   useEffect(() => {
@@ -126,11 +126,14 @@ const EditBrandCategory = () => {
     try {
       const res = await cmsTitles.updateBrandCategory(params)
       if (res && res.result && res.code == 200) {
-        await navigate(PATH.branchCategory)
-        await toast.success('Chỉnh sửa danh mục sản phẩm thành công')
+        navigate(PATH.branchCategory)
+        toast.success('Chỉnh sửa danh mục sản phẩm thành công')
+      }else {
+        throw new Error(res.message); 
       }
     } catch (error) {
-      toast.error(res.message)
+      toast.error('Chỉnh sửa danh mục sản phẩm thất bại');
+      toast.error(error.message); 
     }
   };
 

@@ -4,26 +4,29 @@ export const PATH = {
   home: '/',
   admin: '/admin',
 
-  // usersManagement: '/admin/user-cms-management',
-  // permissionUsers: '/admin/permission-cms-users',
-
   // list
   branchManagement: '/admin/branch-cms-management',
   branchCategory: '/admin/branch-category-cms-management',
   categoriesManagement: '/admin/category-cms-management',
-  productsManagement: '/admin/product-cms-management',
+  typeProductsManagement: '/admin/type-product-cms-management',
+  subProductCategoryList: '/admin/sub-product-category-cms-management',
+  productList: '/admin/product-list-cms-management',
 
   // edit
   categoriesCMSDetail: '/admin/detail-categories/edit',
   brandCMSDetail: '/admin/detail-brand/edit',
-  productsCMSDetail: '/admin/detail-products/edit',
+  typeProductsCMSDetail: '/admin/detail-type-products/edit',
   brandCategoryCMSDetail: '/admin/detail-brand-category/edit',
+  subProductCategoryDetail: '/admin/sub-product-category-cms-management/edit',
+  productListDetail: '/admin/product-list-cms-management/edit',
 
   // add
   brandCategoryAddCMS: '/admin/add-brand-category',
   brandAddCMS: '/admin/add-brand',
   categoriesAddCMS: '/admin/add-categories',
-  productsAddCMS: '/admin/add-products',
+  typeProductsAddCMS: '/admin/add-type-products',
+  subProductCategoryAddCMS: '/admin/add-sub-product-category',
+  productListAddCMS: '/admin/add-product-list',
 
   error: '/404',
   products: '/san-pham',

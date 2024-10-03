@@ -107,10 +107,13 @@ const EditCategories = () => {
             if (res && res.result && res.code == 200) {
                 await navigate(PATH.categoriesManagement)
                 await toast.success('Chỉnh sửa danh mục sản phẩm thành công')
+            } else {
+                throw new Error(res.message);
             }
         } catch (error) {
-            toast.error(res.message)
-        }
+            toast.error('Chỉnh sửa danh mục sản phẩm thất bại');
+            toast.error(error.message); 
+          }
     };
 
     return (

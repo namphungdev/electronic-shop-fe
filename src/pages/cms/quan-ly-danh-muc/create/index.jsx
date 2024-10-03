@@ -78,9 +78,12 @@ const AddCategories = () => {
             if (res.result && res.code == 200) {
                 navigate(PATH.categoriesManagement)
                 toast.success('Thêm danh mục sản phẩm thành công')
+            } else {
+                throw new Error(res.message);
             }
         } catch (error) {
-            toast.error(res.message)
+            toast.error('Thêm danh mục sản phẩm thất bại');
+            toast.error(error.message);
         }
     };
 

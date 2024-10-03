@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
 
-const EditProducts = () => {
+const EditTypeProducts = () => {
   const navigate = useNavigate()
   const [productId, setProductId] = useState('');
   const [inputProductCode, setInputProductCode] = useState('');
@@ -30,7 +30,7 @@ const EditProducts = () => {
     keepPreviousData: true,
     keepStorage: false,
     queryFn: ({ signal }) =>
-      cmsTitles.getProductsDetail(productId, signal),
+      cmsTitles.getTypeProductsDetail(productId, signal),
   });
 
   useEffect(() => {
@@ -71,13 +71,16 @@ const EditProducts = () => {
       status: productStatus
     }
     try {
-      const res = await cmsTitles.updateProducts(params)
+      const res = await cmsTitles.updateTypeProducts(params)
       if (res && res.result && res.code == 200) {
-        navigate(PATH.productsManagement)
+        navigate(PATH.typeProductsManagement)
         toast.success('Chỉnh sửa loại sản phẩm thành công')
+      }else {
+        throw new Error(res.message); 
       }
     } catch (error) {
-      toast.error(res.message)
+      toast.error('Chỉnh sửa loại sản phẩm thất bại');
+      toast.error(error.message); 
     }
   };
 
@@ -158,7 +161,7 @@ const EditProducts = () => {
 
                 <div className="col-12 d-flex justify-center">
                   <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>
-                  <Button danger htmlType="button" onClick={() => navigate(PATH.productsManagement)}>HỦY</Button>
+                  <Button danger htmlType="button" onClick={() => navigate(PATH.typeProductsManagement)}>HỦY</Button>
                 </div>
               </div>
             </div>
@@ -169,4 +172,4 @@ const EditProducts = () => {
   )
 }
 
-export default EditProducts
+export default EditTypeProducts

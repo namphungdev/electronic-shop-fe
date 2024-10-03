@@ -36,7 +36,7 @@ const convertVietnameseToNonAccented = (str) => {
     .replace(/ /g, '-');
 };
 
-const AddProducts = () => {
+const AddTypeProducts = () => {
   const navigate = useNavigate()
   const [inputProductCode, setInputProductCode] = useState('');
   const [inputProductName, setInputProductName] = useState('');
@@ -55,13 +55,16 @@ const AddProducts = () => {
       status: productStatus
     }
     try {
-      const res = await cmsTitles.insertProducts(params)
+      const res = await cmsTitles.insertTypeProducts(params)
       if (res.result && res.code == 200) {
-        navigate(PATH.productsManagement)
+        navigate(PATH.typeProductsManagement)
         toast.success('Thêm loại sản phẩm thành công')
+      }else {
+        throw new Error(res.message); 
       }
     } catch (error) {
-      toast.error(res.message)
+      toast.error('Thêm loại sản phẩm thất bại');
+      toast.error(error.message); 
     }
   };
 
@@ -155,7 +158,7 @@ const AddProducts = () => {
 
               <div className="col-12 d-flex justify-center">
                 <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>
-                <Button danger htmlType="button" onClick={() => navigate(PATH.productsManagement)}>HỦY</Button>
+                <Button danger htmlType="button" onClick={() => navigate(PATH.typeProductsManagement)}>HỦY</Button>
               </div>
             </div>
           </div>
@@ -165,4 +168,4 @@ const AddProducts = () => {
   )
 }
 
-export default AddProducts
+export default AddTypeProducts

@@ -64,7 +64,7 @@ const AddBrandCategory = () => {
     keepPreviousData: true,
     keepStorage: false,
     queryFn: () =>
-      cmsTitles.getDropdownProductCategory(),
+      cmsTitles.getDropdownProductCategory('thiet-bi-ve-sinh'),
   });
 
   const onSubmit = async (e) => {
@@ -93,13 +93,17 @@ const AddBrandCategory = () => {
       status: brandCategoryStatus
     }
     try {
-      const res = await cmsTitles.insertBrandCategory(params)
-      if (res.result && res.code == 200) {
-        navigate(PATH.branchCategory)
-        toast.success('Thêm danh mục thương hiệu thành công')
+      const res = await cmsTitles.insertBrandCategory(params);
+
+      if (res.result && res.code === 200) {
+        navigate(PATH.branchCategory);
+        toast.success('Thêm danh mục thương hiệu thành công');
+      } else {
+        throw new Error(res.message); 
       }
     } catch (error) {
-      toast.error(res.message)
+      toast.error('Thêm danh mục thương hiệu thất bại');
+      toast.error(error.message); 
     }
   };
 

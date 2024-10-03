@@ -45,7 +45,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item-selected {
-    color: #fff
+    color: #fff;
+    background-color: #ba9344
   }
 `;
 
@@ -89,15 +90,27 @@ const TabCMS = () => {
     },
 
     {
+      key: '/admin/sub-product-category-cms-management',
+      icon: <FileTextOutlined />,
+      label: 'Danh mục sản phẩm phụ',
+    },
+
+    {
       key: '/admin/branch-category-cms-management',
       icon: <UserSwitchOutlined />,
       label: 'Danh mục thương hiệu',
     },
 
     {
-      key: '/admin/product-cms-management',
+      key: '/admin/type-product-cms-management',
       icon: <ShoppingCartOutlined />,
       label: 'Quản lý loại sản phẩm',
+    },
+
+    {
+      key: '/admin/product-list-cms-management',
+      icon: <ShoppingCartOutlined />,
+      label: 'Danh sách sản phẩm',
     },
   ];
 

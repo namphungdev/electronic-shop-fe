@@ -51,6 +51,12 @@ const CustomButton = styled(Button)`
 const StyledTable = styled(Table)`
     height: 400px;
     overflow: auto;
+        .ant-table-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #fff;
+    }
 `;
 
 const locale = {
@@ -66,7 +72,7 @@ const locale = {
   next_3: '3 trang sau',
 };
 
-const ProductManagement = () => {
+const TypeProductManagement = () => {
   const navigate = useNavigate()
   const [dataListProduct, setDataListProduct] = useState([]);
   const [filterStatus, setFilterStatus] = useState(null);
@@ -108,7 +114,7 @@ const ProductManagement = () => {
         <>
           <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
             localStorage.setItem('product-type-slug', record.id)
-            navigate(`${PATH.productsCMSDetail}`)
+            navigate(`${PATH.typeProductsCMSDetail}`)
            }} />
           <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
         </>
@@ -143,7 +149,7 @@ const ProductManagement = () => {
     keepPreviousData: true,
     keepStorage: false,
     queryFn: ({ signal }) =>
-      cmsTitles.getProductList(params, signal),
+      cmsTitles.getTypeProductList(params, signal),
   });
 
   useEffect(() => {
@@ -204,7 +210,7 @@ const ProductManagement = () => {
   const handleDeleteProduct = async () => {
     setIsModalOpen(false);
     try {
-      const res = await cmsTitles.deleteProduct(selectedProductSlug);
+      const res = await cmsTitles.deleteTypeProduct(selectedProductSlug);
 
       if (res.result && res.code === 200) {
         toast.success('Xóa loại sản phẩm thành công');
@@ -251,7 +257,7 @@ const ProductManagement = () => {
                 <Option value="INACTIVE">Không hoạt động</Option>
               </CustomSelect>
             </FilterContainer>
-            <CustomButton onClick={() => navigate(PATH.productsAddCMS)} type="primary">
+            <CustomButton onClick={() => navigate(PATH.typeProductsAddCMS)} type="primary">
               <span style={{
                 'color': '#fff',
                 'font-weight': '500'
@@ -267,6 +273,8 @@ const ProductManagement = () => {
             loading={loadingProductsList}
             locale={{ emptyText: 'Không có kết quả hiển thị' }}
             pagination={false}
+            scroll={{ y: 300 }}  // Set a fixed height for the table body
+            sticky   // Enable sticky header
           />
 
           <Pagination
@@ -301,8 +309,7 @@ const ProductManagement = () => {
         </Modal>
       </ContentContainer>
     </>
-
   )
 }
 
-export default ProductManagement
+export default TypeProductManagement

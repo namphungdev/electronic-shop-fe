@@ -58,9 +58,12 @@ const AddBrand = () => {
             if (res.result && res.code == 200) {
                 navigate(PATH.branchManagement)
                 toast.success('Thêm thương hiệu thành công')
+            } else {
+                throw new Error(res.message);
             }
         } catch (error) {
-            toast.error(res.message)
+            toast.error('Thêm thương hiệu thất bại');
+            toast.error(error.message);
         }
     };
 

@@ -71,12 +71,6 @@
     color: #333;
 }
 
-/* .product-detail {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-} */
-
 .product-grid {
     display: grid;
     /* grid-template-columns: repeat(4, 1fr); */
@@ -178,7 +172,31 @@
     text-overflow: ellipsis;
 }
 
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .product-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-top: auto;
+    padding: 20px 0px;
+}
+
+.price-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Hoặc bạn có thể dùng center */
+    flex-grow: 1;
+}
+
+
+/* .product-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -186,7 +204,7 @@
     gap: 2px;
     margin-top: auto;
     padding: 20px 0px;
-}
+} */
 
 .product-box .product-box-price {
     color: red;
