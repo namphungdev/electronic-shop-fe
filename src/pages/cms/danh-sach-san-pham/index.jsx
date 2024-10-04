@@ -187,7 +187,7 @@ const ProductListCMS = () => {
       pageIndex: pagination.current,
       pageSize: pagination.pageSize,
       status: filterStatus,
-      productType: selectedProductType,
+      productType: null,
       productCategoryCode: null,
       subProductCategoryCode: null
     }),
@@ -206,6 +206,8 @@ const ProductListCMS = () => {
     queryFn: ({ signal }) =>
       cmsTitles.getProductList(params, signal),
   });
+
+  console.log('getDataProductList', getDataProductList)
 
   useEffect(() => {
     if (getDataProductList?.data?.length) {
@@ -295,7 +297,6 @@ const ProductListCMS = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
 
   return (
     <>

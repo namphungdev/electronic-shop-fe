@@ -178,7 +178,7 @@ const AddBrandCategory = () => {
                   </label>
                   <div className="mt-2">
                     <input
-                      placeholder='Tên danh mục sản phẩm'
+                      placeholder='Tên danh mục thương hiệu'
                       type="text"
                       name="brandCategoryName"
                       id="brandCategoryName"

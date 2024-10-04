@@ -215,9 +215,26 @@ export const cmsTitles = {
       signal,
     }),
 
+  insertSubProductCategory: (param, signal) =>
+    http.post(`${CMS_API_HHB}/insert-sub-product-category`, param, {
+      signal,
+    }),
+
+  deleteSubProductCategory: (id) =>
+    http.delete(`${CMS_API_HHB}/delete-sub-product-category/${id}`),
+
+  getSubProductCategoryDetail: (slug) =>
+    http.get(`${CMS_API_HHB}/get-sub-product-category-detail/${slug}`),
+
+  updateSubProductCategory: (param, signal) =>
+    http.put(`${CMS_API_HHB}/update-sub-product-category`, param, {
+      signal,
+    }),
+
   // Danh sách sản phẩm
+
   getProductList: (param, signal) =>
-    http.post(`${CMS_API_HHB}/get-sub-product-category-list`, param, {
+    http.post(`${CMS_API_HHB}/get-product-list`, param, {
       signal,
     }),
 }

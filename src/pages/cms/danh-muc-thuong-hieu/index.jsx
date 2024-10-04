@@ -190,8 +190,8 @@ const BrandCategoryManagement = () => {
                 id: item.id,
                 code: item.code,
                 name: item.name,
-                brandCode: item.brandCode,
-                productCategoryCode: item.productCategoryCode,
+                brandName: item.brandName,
+                productCategoryName: item.productCategoryName,
                 status: item.status,
             }));
             setDataBrandCategory(formattedData);

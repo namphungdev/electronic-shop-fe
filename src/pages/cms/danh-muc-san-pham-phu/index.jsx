@@ -81,7 +81,6 @@ const SubProductCategoryList = () => {
     const [selectedProductCategoryType, setSelectedProductCategoryType] = useState(null);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [selectedSubProductCategorySlug, setSubProductCategorySlug] = useState(null);
     const [selectedId, setSelectedId] = useState(null);
     const [pagination, setPagination] = useState({
         current: 1,
@@ -89,28 +88,15 @@ const SubProductCategoryList = () => {
         total: 0,
     });
 
-    // console.log('selectedId', selectedId)
-
-    const paramProductCategory = {
-        keyword: "",
-        pageIndex: 1,
-        pageSize: 100,
-        status: null,
-        productType: null
-    };
-
     const {
-        data: { data: getProductCategoryList = [] } = {},
-        loading: loadingProductCategoryList,
+        data: { data: dropdownProductCategory = [] } = {}
     } = useQuery({
-        queryKey: `product-page-${JSON.stringify(paramProductCategory)}`,
+        queryKey: `get-dropdown-product-category`,
         keepPreviousData: true,
         keepStorage: false,
-        queryFn: ({ signal }) =>
-            cmsTitles.getProductCategoryList(paramProductCategory, signal),
+        queryFn: () =>
+            cmsTitles.getDropdownProductCategory('gach-op-lat'), // có thể là tam-op-nhua
     });
-
-    console.log('getProductCategoryList', getProductCategoryList)
 
     const columns = [
         {
@@ -143,7 +129,7 @@ const SubProductCategoryList = () => {
             (
                 <>
                     <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-                        localStorage.setItem('product-type-slug', record.id)
+                        localStorage.setItem('sub-product-category-slug', record.id)
                         navigate(`${PATH.subProductCategoryDetail}`)
                     }} />
                     <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
@@ -191,7 +177,7 @@ const SubProductCategoryList = () => {
                 id: item.id,
                 code: item.code,
                 name: item.name,
-                productCategoryCode: item.productCategoryCode,
+                productCategoryName: item.productCategoryName,
                 status: item.status,
             }));
             setDataListProductCategory(formattedData);
@@ -251,15 +237,18 @@ const SubProductCategoryList = () => {
 
     const handleDeleteSubProductCategory = async () => {
         setIsModalOpen(false);
-        // const res = await cmsTitles.deleteBrandCategory(selectedId)
-        // try {
-        //     if (res.result && res.code == 200) {
-        //         await window.location.reload()
-        //         await toast.success('Xóa danh mục thương hiệu thành công')
-        //     }
-        // } catch (error) {
-        //     toast.error(res.message)
-        // }
+        const res = await cmsTitles.deleteSubProductCategory(selectedId)
+        try {
+            if (res.result && res.code == 200) {
+                await window.location.reload()
+                await toast.success('Xóa danh mục sản phẩm phụ thành công')
+            } else {
+                throw new Error(res.message);
+            }
+        } catch (error) {
+            toast.error('Xóa danh mục sản phẩm phụ thất bại');
+            toast.error(error.message);
+        }
     }
 
     const closeModal = () => {
@@ -285,6 +274,7 @@ const SubProductCategoryList = () => {
                                 style={{ maxWidth: '500px', flex: '1' }}
                                 onSearch={handleSearch}
                             />
+
                             <CustomSelect
                                 placeholder="Trạng thái"
                                 style={{ width: 200 }}
@@ -295,6 +285,20 @@ const SubProductCategoryList = () => {
                                 <Option value={null}>Tất cả</Option>
                                 <Option value="ACTIVE">Hoạt động</Option>
                                 <Option value="INACTIVE">Không hoạt động</Option>
+                            </CustomSelect>
+
+                            <CustomSelect
+                                placeholder="Danh mục sản phẩm"
+                                style={{ width: 200 }}
+                                onChange={handleProductCategoryTypeChange}
+                                allowClear
+                            >
+                                <Option value={null}>Tất cả</Option>
+                                {dropdownProductCategory.map((item) => (
+                                    <Option key={item.id} value={item.code}>
+                                        {item.name}
+                                    </Option>
+                                ))}
                             </CustomSelect>
                         </FilterContainer>
                         <CustomButton onClick={() => navigate(PATH.subProductCategoryAddCMS)} type="primary">
@@ -313,7 +317,7 @@ const SubProductCategoryList = () => {
                         loading={loadingSubProductCategory}
                         locale={{ emptyText: 'Không có kết quả hiển thị' }}
                         pagination={false}
-                        scroll={{ y: 300 }}  
+                        scroll={{ y: 300 }}
                         sticky
                     />
 
@@ -338,7 +342,7 @@ const SubProductCategoryList = () => {
                         <svg className="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa danh mục thương hiệu này không?</h3>
+                        <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa danh mục sản phẩm phụ này không?</h3>
                         <Button type="primary" danger onClick={handleDeleteSubProductCategory}>
                             Đồng ý
                         </Button>
