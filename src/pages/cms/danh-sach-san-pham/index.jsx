@@ -77,6 +77,11 @@ const ProductListCMS = () => {
   const [filterStatus, setFilterStatus] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedProductType, setSelectedProductType] = useState(null);
+  console.log('selectedProductType', selectedProductType)
+  const [dropdownProductCategory, setDropdownProductCategory] = useState(null);
+  const [dropdownSubProCate, setDropdownSubProCate] = useState(null);
+  const [dropdownProCate, setDropdownProCate] = useState(null);
+
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBranchSlug, setSelectedBranchSlug] = useState(null);
@@ -95,6 +100,18 @@ const ProductListCMS = () => {
     queryFn: () =>
       cmsTitles.getDropdownProductType(),
   });
+
+  useEffect(() => {
+    if (selectedProductType) {
+      cmsTitles.getDropdownProductCategory2(selectedProductType, true).then((response) => {
+        setDropdownProductCategory(response?.data || []);
+      }).catch((error) => {
+        console.error("Failed to fetch product categories:", error);
+      });
+    } else {
+      setDropdownProductCategory([]);
+    }
+  }, [selectedProductType]);
 
   const columns = [
     {
@@ -162,8 +179,8 @@ const ProductListCMS = () => {
       (
         <>
           <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-            localStorage.setItem('brand-slug', record.id)
-            navigate(`${PATH.brandCMSDetail}`)
+            localStorage.setItem('product-edit-slug', record.id)
+            navigate(`${PATH.productListDetail}`)
           }} />
           <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
         </>
@@ -187,11 +204,11 @@ const ProductListCMS = () => {
       pageIndex: pagination.current,
       pageSize: pagination.pageSize,
       status: filterStatus,
-      productType: null,
-      productCategoryCode: null,
-      subProductCategoryCode: null
+      productType: selectedProductType,
+      productCategoryCode: dropdownProCate,
+      subProductCategoryCode: dropdownSubProCate
     }),
-    [searchKeyword, filterStatus, pagination.current, pagination.pageSize, selectedProductType]
+    [searchKeyword, filterStatus, pagination.current, pagination.pageSize, selectedProductType, dropdownProCate, dropdownSubProCate]
   );
 
   const params = isFirstLoad ? initialParams : productListParam;
@@ -206,8 +223,6 @@ const ProductListCMS = () => {
     queryFn: ({ signal }) =>
       cmsTitles.getProductList(params, signal),
   });
-
-  console.log('getDataProductList', getDataProductList)
 
   useEffect(() => {
     if (getDataProductList?.data?.length) {
@@ -263,6 +278,22 @@ const ProductListCMS = () => {
       current: 1,
     }));
   };
+
+  const handleProCateChange = (value) => {
+    setDropdownProCate(value)
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+  }
+
+  const handleSubProCate = (value) => {
+    setDropdownSubProCate(value)
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+  }
 
   const handleTableChange = (page, pageSize) => {
     setPagination((prev) => ({
@@ -333,9 +364,7 @@ const ProductListCMS = () => {
                 placeholder="Loại sản phẩm"
                 style={{ width: 200 }}
                 onChange={handleProductTypeChange}
-                allowClear
               >
-                <Option value={null}>Tất cả</Option>
                 {productTypeList.map((productType) => (
                   <Option key={productType.id} value={productType.code}>
                     {productType.name}
@@ -343,11 +372,48 @@ const ProductListCMS = () => {
                 ))}
               </CustomSelect>
 
+              <CustomSelect
+                placeholder="Danh mục sản phẩm"
+                style={{ width: 200 }}
+                onChange={handleProCateChange}
+                allowClear
+              >
+                {dropdownProductCategory && dropdownProductCategory.length === 0 ? (
+                  <Option value={null} disabled>Chưa có dữ liệu nào</Option>
+                ) : (
+                  <>
+                    {dropdownProductCategory && dropdownProductCategory.map((item) => (
+                      <Option key={item.id} value={item.code}>
+                        {item.name}
+                      </Option>
+                    ))}
+                  </>
+                )}
+              </CustomSelect>
+
+              {dropdownProductCategory && dropdownProductCategory.find((item) => item.isSub == true) ?
+                (
+                  <CustomSelect
+                    placeholder="Danh mục sản phẩm phụ"
+                    style={{ width: 200 }}
+                    onChange={handleSubProCate}
+                    allowClear
+                  >
+                    <Option value={null}>Tất cả</Option>
+                    {productTypeList.map((productType) => (
+                      <Option key={productType.id} value={productType.code}>
+                        {productType.name}
+                      </Option>
+                    ))}
+                  </CustomSelect>
+                ) : null
+              }
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.productListAddCMS)} type="primary">
               <span style={{
                 'color': '#fff',
-                'font-weight': '500'
+                'font-weight': '500',
+                'margin-left': '5px'
               }}>
                 Thêm
               </span>
@@ -360,8 +426,8 @@ const ProductListCMS = () => {
             loading={loadingProductList}
             locale={{ emptyText: 'Không có kết quả hiển thị' }}
             pagination={false}
-            scroll={{ y: 300 }}  // Set a fixed height for the table body
-            sticky   // Enable sticky header
+            scroll={{ y: 300 }}
+            sticky
           />
 
           <Pagination
@@ -371,7 +437,8 @@ const ProductListCMS = () => {
             onChange={handleTableChange}
             showSizeChanger
             onShowSizeChange={handleTableChange}
-            locale={locale} // Thêm thuộc tính locale vào Pagination
+            locale={locale}
+            showTotal={(total) => `Tổng ${total} sản phẩm`}
           />
         </div>
 

@@ -117,6 +117,12 @@ export const cmsTitles = {
   getDropdownProductCategory: (code) =>
     http.get(`${CMS_API_HHB}/get-dropdown-product-category?code=${code}`),
 
+  getDropdownProductCategory2: (code, boolean) =>
+    http.get(`${CMS_API_HHB}/get-dropdown-product-category?code=${code}&isPageProduct=${boolean}`),
+
+  getDropdownSubProductCategory: (code, boolean) =>
+    http.get(`${CMS_API_HHB}/get-dropdown-sub-product-category?code=${code}`),
+
   // Branch
   getBranchList: (branch, signal) =>
     http.post(`${CMS_API_HHB}/get-brand-list`, branch, {
@@ -237,4 +243,13 @@ export const cmsTitles = {
     http.post(`${CMS_API_HHB}/get-product-list`, param, {
       signal,
     }),
+
+  insertAddProduct: (param, signal) =>
+    http.post(`${CMS_API_HHB}/insert-product`, param, {
+      signal,
+    }),
+
+  getProductListDetail: (slug) =>
+    http.get(`${CMS_API_HHB}/get-product-detail/${slug}`),
+
 }
