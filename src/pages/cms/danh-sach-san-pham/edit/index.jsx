@@ -6,6 +6,17 @@ import Loading from '@/components/Loading';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
+import CustomQuillEditor from '@/components/ReactQuill';
+import { createGlobalStyle } from 'styled-components';
+import ImageUploaderComponent from '@/components/ImageUpload';
+
+const GlobalStyle = createGlobalStyle`
+.form-container {
+    max-height: 75vh;
+    overflow-x: hidden !important;
+    overflow: auto !important;
+}
+`
 
 const EditProductListCMS = () => {
   const navigate = useNavigate()
@@ -16,13 +27,17 @@ const EditProductListCMS = () => {
   const [productCategory, setProductCategory] = useState('');
   const [subProductCategory, setSubProductCategory] = useState(null);
   const [isPublished, setIsPublished] = useState(true);
+  const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [percentDiscount, setPercentDiscount] = useState(null);
+  console.log('percentDiscount', percentDiscount)
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [dropdownProductCategory, setDropdownProductCategory] = useState([]);
   const [dropdownSubProductCategory, setDropdownSubProductCategory] = useState([]);
 
   const [productStatus, setProductStatus] = useState('ACTIVE');
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 69;
 
   const [nameError, setNameError] = useState('');
   const [productTypeError, setProductTypeError] = useState('');
@@ -50,7 +65,15 @@ const EditProductListCMS = () => {
   useEffect(() => {
     if (getProductDetail?.name || getProductDetail?.code) {
       setProductCode(getProductDetail.code);
+      setIsPublished(getProductDetail.isPublished || true);
+      setProductType(getProductDetail.productType);
       setProductName(getProductDetail.name);
+      setProductCategory(getProductDetail.productCategoryCode)
+      setSubProductCategory(getProductDetail.subProductCategoryCode || null)
+      setDescription(getProductDetail.description)
+      setPrice(getProductDetail.price)
+      setPercentDiscount(getProductDetail.percentDiscount)
+      setDiscountedPrice(getProductDetail.discountedPrice)
       setProductStatus(getProductDetail.status || 'ACTIVE');
     }
   }, [getProductDetail]);
@@ -65,6 +88,33 @@ const EditProductListCMS = () => {
       cmsTitles.getDropdownProductType(),
   });
 
+  useEffect(() => {
+    if (productType) {
+      cmsTitles.getDropdownProductCategory2(productType, true).then((response) => {
+        setDropdownProductCategory(response?.data || []);
+      }).catch((error) => {
+        console.error("Failed to fetch product categories:", error);
+      });
+    } else {
+      setDropdownProductCategory([]);
+    }
+  }, [productType]);
+
+  useEffect(() => {
+    if (productCategory) {
+      cmsTitles.getDropdownSubProductCategory(productCategory).then((response) => {
+        setDropdownSubProductCategory(response?.data || []);
+      }).catch((error) => {
+        console.error("Failed to fetch product categories:", error);
+      });
+    } else {
+      setDropdownSubProductCategory([]);
+    }
+  }, [productCategory]);
+
+  const handleDescriptionChange = (value) => {
+    setDescription(value);
+  };
 
   const handleInputChange = (fieldName) => (e) => {
     const { value } = e.target;
@@ -74,6 +124,60 @@ const EditProductListCMS = () => {
           setNameError('');
         }
         setProductName(value);
+        const codeConvert = convertVietnameseToNonAccented(value);
+        setProductCode(codeConvert);
+        break;
+      case 'price':
+        if (priceError) {
+          setPriceError('');
+        }
+
+        const priceRegex = /^\d*\.?\d*$/;
+        if (priceRegex.test(value)) {
+          setPrice(value);
+
+          // Cập nhật giá trị discountedPrice khi giá thay đổi
+          if (percentDiscount) {
+            const discountedPriceValue = value - (value * (percentDiscount / 100));
+            setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
+          }
+        }
+        break;
+      case 'percentDiscount':
+        const percentValue = parseInt(value, 10);
+        if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
+          setPercentDiscount(percentValue);
+
+          // Tính toán giá trị discountedPrice dựa trên percentDiscount và giá hiện tại
+          if (price) {
+            const discountedPriceValue = price - (price * (percentValue / 100));
+            setDiscountedPrice(discountedPriceValue);
+          }
+        } else {
+          setPercentDiscount('');
+          toast.error('Giảm giá phải là số nguyên từ 0 đến 100');
+        }
+        break;
+      case 'discountedPrice':
+        setDiscountedPrice(value);
+        break;
+      case 'isPublished':
+        setIsPublished(value === 'true')
+        break;
+      case 'productType':
+        if (productTypeError) {
+          setProductTypeError('');
+        }
+        setProductType(value);
+        break;
+      case 'productCategory':
+        if (productCategoryError) {
+          setProductCategoryError('');
+        }
+        setProductCategory(value);
+        break;
+      case 'subProductCategory':
+        setSubProductCategory(value);
         break;
       case 'productStatus':
         setProductStatus(value);
@@ -86,41 +190,68 @@ const EditProductListCMS = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!productCategoryName) {
-    //   setNameError('Tên danh mục sản phẩm không được để trống');
-    //   return;
-    // }
-    // if (!productType) {
-    //   setProductTypeError('Loại sản phẩm không được để trống');
-    //   return;
-    // }
+    if (!productName) {
+      setNameError('Tên sản phẩm không được để trống');
+      return;
+    }
 
-    // const params = {
-    //   id: productCategoryId,
-    //   code: productCategoryCode,
-    //   name: productCategoryName,
-    //   productType: productType,
-    //   isSub: isSub,
-    //   status: productCategoryStatus
-    // }
-    // try {
-    //   const res = await cmsTitles.updateProductCategory(params)
-    //   if (res && res.result && res.code == 200) {
-    //     await navigate(PATH.categoriesManagement)
-    //     await toast.success('Chỉnh sửa danh mục sản phẩm thành công')
-    //   } else {
-    //     throw new Error(res.message);
-    //   }
-    // } catch (error) {
-    //   toast.error('Chỉnh sửa danh mục sản phẩm thất bại');
-    //   toast.error(error.message);
-    // }
+    if (!productType) {
+      setProductTypeError('Loại sản phẩm không được để trống');
+      return;
+    }
+
+    if (!productCategory) {
+      setProductCategoryError('Danh mục sản phẩm không được để trống');
+      return;
+    }
+
+    // Kiểm tra giá niêm yết
+    if (!price) {
+      setPriceError('Giá niêm yết không được để trống');
+      return;
+    }
+
+    // Kiểm tra giá trị của `price` chỉ là số
+    const regex = /^\d*\.?\d*$/;
+    if (!regex.test(price)) {
+      setPriceError('Giá niêm yết phải là một số hợp lệ');
+      return;
+    }
+
+    const params = {
+      id: productId,
+      code: productCode,
+      name: productName,
+      productCategoryCode: productCategory,
+      subProductCategoryCode: subProductCategory,
+      status: productStatus,
+      isPublished: isPublished,
+      description: description,
+      price: price,
+      discountedPrice: discountedPrice,
+      percentDiscount: percentDiscount,
+      images: []
+    }
+    try {
+      const res = await cmsTitles.updateProductList(params)
+      if (res && res.result && res.code == 200) {
+        await navigate(PATH.productList)
+        await toast.success('Chỉnh sửa sản phẩm thành công')
+      } else {
+        throw new Error(res.message);
+      }
+    } catch (error) {
+      toast.error('Chỉnh sửa sản phẩm thất bại');
+      toast.error(error.message);
+    }
   };
 
   return (
-    <><Space className='my-3'>
-      <h3>Chỉnh sửa sản phẩm</h3>
-    </Space>
+    <>
+      <GlobalStyle />
+      <Space className='my-3'>
+        <h3>Chỉnh sửa sản phẩm</h3>
+      </Space>
       {loadingProductDetail ?
         (
           <div className="loading-spin">
@@ -132,10 +263,10 @@ const EditProductListCMS = () => {
           autoComplete="off"
           className="select-none"
         >
-          <div className="mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
+          <div className="form-container mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
             <div className="p-6">
               <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Mã sản phẩm *
@@ -154,7 +285,7 @@ const EditProductListCMS = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Tên sản phẩm *
@@ -173,7 +304,7 @@ const EditProductListCMS = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label htmlFor="isPublished" className="block text-sm font-medium leading-6 text-gray-900">Xuất bản</label>
                     <select
@@ -187,7 +318,7 @@ const EditProductListCMS = () => {
                     </select>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label htmlFor="productType" className="block text-sm font-medium leading-6 text-gray-900">Loại sản phẩm</label>
                     <select
@@ -206,7 +337,7 @@ const EditProductListCMS = () => {
                     {productTypeError && <p className="text-red-500 text-sm mt-1">{productTypeError}</p>}
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label htmlFor="productCategory" className="block text-sm font-medium leading-6 text-gray-900">Danh mục sản phẩm</label>
                     <select
@@ -225,10 +356,9 @@ const EditProductListCMS = () => {
                     {productCategoryError && <p className="text-red-500 text-sm mt-1">{productCategoryError}</p>}
                   </div>
                 </div>
-                {/* 
                 {dropdownProductCategory && dropdownProductCategory?.find((item) => item.isSub == true) ?
                   (
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                       <div className="form-group">
                         <label htmlFor="subProductCategory" className="block text-sm font-medium leading-6 text-gray-900">Danh mục sản phẩm phụ</label>
                         <select
@@ -237,24 +367,18 @@ const EditProductListCMS = () => {
                           value={subProductCategory}
                           onChange={handleInputChange('subProductCategory')}
                         >
-                          {dropdownSubProductCategory && dropdownSubProductCategory.length === 0 ? (
-                            <option value={null} disabled>Chưa có dữ liệu nào</option>
-                          ) : (
-                            <>
-                              <option value="">Danh mục sản phẩm phụ</option>
-                              {dropdownSubProductCategory && dropdownSubProductCategory.map((item) => (
-                                <option key={item.id} value={item.code}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </>
-                          )}
+                          <option value="">Danh mục sản phẩm phụ</option>
+                          {dropdownSubProductCategory && dropdownSubProductCategory.map((item) => (
+                            <option key={item.id} value={item.code}>
+                              {item.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
                   ) : null
                 }
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Giá niêm yết
@@ -273,7 +397,7 @@ const EditProductListCMS = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Phần trăm giảm giá
@@ -291,7 +415,7 @@ const EditProductListCMS = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Giá sau khi giảm
@@ -310,7 +434,7 @@ const EditProductListCMS = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="form-group">
                     <label htmlFor="productStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
                     <select
@@ -327,11 +451,22 @@ const EditProductListCMS = () => {
                 <div className='col-md-12'>
                   <div className="form-group">
                     <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Mô tả</label>
+                    <CustomQuillEditor value={description} onChange={handleDescriptionChange} />
                   </div>
-                </div> */}
+                </div>
                 <div className="col-12 d-flex justify-center">
                   <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>
                   <Button danger htmlType="button" onClick={() => navigate(PATH.productList)}>HỦY</Button>
+                </div>
+                <div className='col-md-12'>
+                  <div className="form-group">
+                    <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Upload hình ảnh</label>
+                    <ImageUploaderComponent
+                      images={images}
+                      setImages={setImages}
+                      maxNumber={maxNumber}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

@@ -5,6 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import { cmsTitles } from '@/services/product.service';
 import { PATH } from '@/config';
 import useQuery from '@/hooks/useQuery';
+import CustomQuillEditor from '@/components/ReactQuill';
+import { createGlobalStyle } from 'styled-components';
+import ImageUploaderComponent from '@/components/ImageUpload';
+
+const GlobalStyle = createGlobalStyle`
+.form-container {
+    max-height: 75vh;
+    overflow-x: hidden !important;
+    overflow: auto !important;
+}
+`
 
 // Character map for converting Vietnamese characters to non-accented equivalents
 const characterMap = {
@@ -45,12 +56,15 @@ const AddProductListCMS = () => {
   const [subProductCategory, setSubProductCategory] = useState(null);
   const [isPublished, setIsPublished] = useState(true);
   const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
   const [percentDiscount, setPercentDiscount] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [dropdownProductCategory, setDropdownProductCategory] = useState([]);
   const [dropdownSubProductCategory, setDropdownSubProductCategory] = useState([]);
 
   const [productStatus, setProductStatus] = useState('ACTIVE');
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 69;
 
   const [nameError, setNameError] = useState('');
   const [productTypeError, setProductTypeError] = useState('');
@@ -129,7 +143,7 @@ const AddProductListCMS = () => {
       subProductCategoryCode: subProductCategory,
       status: productStatus,
       isPublished: isPublished,
-      description: '',
+      description: description,
       price: price,
       discountedPrice: discountedPrice,
       percentDiscount: percentDiscount,
@@ -174,7 +188,7 @@ const AddProductListCMS = () => {
           // Cập nhật giá trị discountedPrice khi giá thay đổi
           if (percentDiscount) {
             const discountedPriceValue = value - (value * (percentDiscount / 100));
-            setDiscountedPrice(discountedPriceValue.toFixed(2)); // Lưu ý đến việc làm tròn
+            setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
           }
         }
         break;
@@ -186,7 +200,7 @@ const AddProductListCMS = () => {
           // Tính toán giá trị discountedPrice dựa trên percentDiscount và giá hiện tại
           if (price) {
             const discountedPriceValue = price - (price * (percentValue / 100));
-            setDiscountedPrice(discountedPriceValue.toFixed(2));
+            setDiscountedPrice(discountedPriceValue);
           }
         } else {
           setPercentDiscount('');
@@ -197,7 +211,7 @@ const AddProductListCMS = () => {
         setDiscountedPrice(value);
         break;
       case 'isPublished':
-        setIsPublished(value === 'true')
+        setIsPublished(value === true)
         break;
       case 'productType':
         if (productTypeError) {
@@ -222,8 +236,15 @@ const AddProductListCMS = () => {
     }
   };
 
+  const handleDescriptionChange = (value) => {
+    setDescription(value);
+  };
+
+  console.log('descriptiom', description)
+
   return (
     <>
+      <GlobalStyle />
       <Space className='my-3'>
         <h3>Thêm sản phẩm</h3>
       </Space>
@@ -232,10 +253,10 @@ const AddProductListCMS = () => {
         autoComplete="off"
         className="select-none"
       >
-        <div className="mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
+        <div className="form-container mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
           <div className="p-6">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Mã sản phẩm *
@@ -254,7 +275,7 @@ const AddProductListCMS = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Tên sản phẩm *
@@ -273,7 +294,7 @@ const AddProductListCMS = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label htmlFor="isPublished" className="block text-sm font-medium leading-6 text-gray-900">Xuất bản</label>
                   <select
@@ -287,7 +308,7 @@ const AddProductListCMS = () => {
                   </select>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label htmlFor="productType" className="block text-sm font-medium leading-6 text-gray-900">Loại sản phẩm</label>
                   <select
@@ -306,7 +327,7 @@ const AddProductListCMS = () => {
                   {productTypeError && <p className="text-red-500 text-sm mt-1">{productTypeError}</p>}
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label htmlFor="productCategory" className="block text-sm font-medium leading-6 text-gray-900">Danh mục sản phẩm</label>
                   <select
@@ -333,7 +354,7 @@ const AddProductListCMS = () => {
               </div>
               {dropdownProductCategory && dropdownProductCategory?.find((item) => item.isSub == true) ?
                 (
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <div className="form-group">
                       <label htmlFor="subProductCategory" className="block text-sm font-medium leading-6 text-gray-900">Danh mục sản phẩm phụ</label>
                       <select
@@ -359,7 +380,7 @@ const AddProductListCMS = () => {
                   </div>
                 ) : null
               }
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Giá niêm yết
@@ -378,7 +399,7 @@ const AddProductListCMS = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Phần trăm giảm giá
@@ -396,7 +417,7 @@ const AddProductListCMS = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Giá sau khi giảm
@@ -415,7 +436,7 @@ const AddProductListCMS = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="form-group">
                   <label htmlFor="productStatus" className="block text-sm font-medium leading-6 text-gray-900">Trạng thái</label>
                   <select
@@ -432,6 +453,17 @@ const AddProductListCMS = () => {
               <div className='col-md-12'>
                 <div className="form-group">
                   <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Mô tả</label>
+                  <CustomQuillEditor value={description} onChange={handleDescriptionChange} />
+                </div>
+              </div>
+              <div className='col-md-12'>
+                <div className="form-group">
+                  <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Upload hình ảnh</label>
+                  <ImageUploaderComponent
+                    images={images}
+                    setImages={setImages}
+                    maxNumber={maxNumber}
+                  />
                 </div>
               </div>
               <div className="col-12 d-flex justify-center">

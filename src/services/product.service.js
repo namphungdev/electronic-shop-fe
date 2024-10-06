@@ -252,4 +252,12 @@ export const cmsTitles = {
   getProductListDetail: (slug) =>
     http.get(`${CMS_API_HHB}/get-product-detail/${slug}`),
 
+  updateProductList: (param, signal) =>
+    http.put(`${CMS_API_HHB}/update-product`, param, {
+      signal,
+    }),
+
+  deleteProductList: (id) =>
+    http.delete(`${CMS_API_HHB}/delete-product/${id}`),
+
 }

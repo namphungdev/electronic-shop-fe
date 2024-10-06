@@ -77,14 +77,13 @@ const ProductListCMS = () => {
   const [filterStatus, setFilterStatus] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedProductType, setSelectedProductType] = useState(null);
-  console.log('selectedProductType', selectedProductType)
   const [dropdownProductCategory, setDropdownProductCategory] = useState(null);
   const [dropdownSubProCate, setDropdownSubProCate] = useState(null);
   const [dropdownProCate, setDropdownProCate] = useState(null);
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBranchSlug, setSelectedBranchSlug] = useState(null);
+  const [selectedProductSlug, setSelectedProductSlug] = useState(null);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -130,22 +129,32 @@ const ProductListCMS = () => {
       key: 'subProductCategoryName',
     },
     {
-      title: 'Giá được giảm',
-      dataIndex: 'discountedPrice',
-      key: 'discountedPrice',
-      render: (discountedPrice) => (
-        <span>
-          {discountedPrice ? discountedPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', '') : '-'}
-        </span>
-      ),
-    },
-    {
       title: 'Giá niêm yết',
       dataIndex: 'price',
       key: 'price',
       render: (price) => (
         <span>
-          {price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', '') : '-'}
+          {price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', '') : ''}
+        </span>
+      ),
+    },
+    {
+      title: 'Phần trăm giảm giá',
+      dataIndex: 'percentDiscount',
+      key: 'percentDiscount',
+      render: (percentDiscount) => (
+        <span>
+          {percentDiscount !== null ? `${percentDiscount}%` : ''}
+        </span>
+      ),
+    },
+    {
+      title: 'Giá được giảm',
+      dataIndex: 'discountedPrice',
+      key: 'discountedPrice',
+      render: (discountedPrice) => (
+        <span>
+          {discountedPrice ? discountedPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', '') : ''}
         </span>
       ),
     },
@@ -233,6 +242,7 @@ const ProductListCMS = () => {
         name: item.name,
         status: item.status,
         price: item.price,
+        percentDiscount: item.percentDiscount,
         discountedPrice: item.discountedPrice,
         productCategoryName: item.productCategoryName,
         subProductCategoryName: item.subProductCategoryName
@@ -304,25 +314,26 @@ const ProductListCMS = () => {
   };
 
   const showDeleteConfirm = (slug) => {
-    setSelectedBranchSlug(slug);
+    setSelectedProductSlug(slug);
     setIsModalOpen(true);
   };
 
 
   const handleDeleteProduct = async () => {
     setIsModalOpen(false);
-    // try {
-    //   const res = await cmsTitles.deleteBranch(selectedBranchSlug);
+    try {
+      const res = await cmsTitles.deleteProductList(selectedProductSlug);
 
-    //   if (res.result && res.code === 200) {
-    //     toast.success('Xóa thương hiệu thành công');
-    //     window.location.reload();
-    //   } else {
-    //     toast.error(res.message || 'Đã có lỗi xảy ra');
-    //   }
-    // } catch (error) {
-    //   toast.error('Đã có lỗi xảy ra khi xóa thương hiệu');
-    // }
+      if (res.result && res.code === 200) {
+        toast.success('Xóa sản phẩm thành công');
+        window.location.reload();
+      } else {
+        throw new Error(res.message);
+      }
+    } catch (error) {
+      toast.error('Xóa sản phẩm thất bại');
+      toast.error(error.message);
+    }
   };
 
   const closeModal = () => {
@@ -452,7 +463,7 @@ const ProductListCMS = () => {
             <svg className="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa thương hiệu này không?</h3>
+            <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Bạn có muốn xóa sản phẩm này không?</h3>
             <Button type="primary" danger onClick={handleDeleteProduct}>
               Đồng ý
             </Button>
