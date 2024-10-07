@@ -69,13 +69,13 @@ const SalePage = () => {
       <section className="py-5">
         <div className="container">
           <div className="flex header-sell">
-            <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
-              <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-15%', bottom: '10%', background: 'transparent' }} src="/img/hot-sale.png" alt="" />
+            <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald sale-header">
+              <img className='img-hot-sale' src="/img/hot-sale.png" alt="" />
               Sản phẩm giảm giá
             </div>
 
             <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
-              <div className="relative max-w-full text-white">
+              <div className="relative max-w-full text-white text-nav-sale">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
                   {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
                     <li

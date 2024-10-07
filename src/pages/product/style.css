@@ -11,6 +11,7 @@
     display: inline-block;
     position: relative;
     font-weight: 600;
+    color: #000;
     background: #e3e3e3;
     -webkit-clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
     clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
@@ -53,7 +54,7 @@
 .select-container .custom-select {
     appearance: none;
     width: 100%;
-    margin-right: 15px;
+    margin-right: 20px;
     height: auto;
     padding: 4px 20px;
     font-weight: 600;
@@ -73,7 +74,6 @@
 
 .product-grid {
     display: grid;
-    /* grid-template-columns: repeat(4, 1fr); */
     grid-template-columns: repeat(5, 1fr);
     gap: 16px;
 }
@@ -160,10 +160,9 @@
 }
 
 .product-card-title {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     margin: 0;
-    /* margin-bottom: 30px; */
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -179,7 +178,8 @@
 
 .product-box {
     display: flex;
-    flex-direction: column;
+    font-size: 0.9rem;
+    justify-content: space-between;
     height: 100%;
     flex-wrap: wrap;
     gap: 2px;
@@ -195,23 +195,11 @@
     flex-grow: 1;
 }
 
-
-/* .product-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 2px;
-    margin-top: auto;
-    padding: 20px 0px;
-} */
-
 .product-box .product-box-price {
     color: red;
     font-weight: 800;
     display: block;
     width: auto;
-    font-size: 1.5rem;
     line-height: initial;
 }
 
@@ -219,7 +207,6 @@
     display: block;
     width: auto;
     color: #7b7b7b;
-    font-size: 1.5rem;
     text-decoration: line-through;
     line-height: initial;
     margin-left: 8px;
@@ -266,6 +253,91 @@
 :where(.css-dev-only-do-not-override-diro6f).ant-pagination .ant-pagination-item-active {
     color: #ba9344;
 }
+
+/* Responsive cho page product */
+
+@media (max-width: 1800px) {
+    .layout-collection .col-list-cate .tab-ul .menu-list {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .layout-collection .col-list-cate .tab-ul .menu-list .cate-item {
+        flex: 0 0 auto;
+        margin-right: 0px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .select-container .custom-select {
+        margin-right: 55px;
+        padding: 5px 15px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .product-h1-custom {
+        font-size: 1.5rem;
+    }
+
+    .select-container .custom-select {
+        margin-right: 77px;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 991px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .layout-collection .block-collection {
+        flex-direction: column;
+        align-items: end;
+    }
+
+    .select-container .custom-select {
+        margin-right: 20px;
+    }
+
+    .col-list-cate {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .col-list-cate {
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .ml-3 {
+        margin-top: -10px;
+    } 
+
+    .product-view {
+        padding-top: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    .product-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* Responsive cho page product */
+
 
 
 /* product - slug */

@@ -6653,11 +6653,11 @@ sup {
   top: -0.5em;
 }
 a {
-  color: #ff6f61;
+  color: #000;
   background-color: transparent;
 }
 a:hover {
-  color: #ff2915;
+  color: #fff;
 }
 a:not([href]),
 a:not([href]):hover {

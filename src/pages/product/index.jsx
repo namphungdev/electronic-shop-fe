@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownAZ, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownAZ, faBan, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { CATEGORY_API_HHB, PATH, PRODUCT_API_HHB } from '@/config';
 import { Pagination, Spin } from 'antd';
@@ -43,6 +43,14 @@ const ProductPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showNoProductsMessage, setShowNoProductsMessage] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (location.pathname) {
@@ -168,6 +176,14 @@ const ProductPage = () => {
       .join(' ');
   };
 
+  console.log('itemPro', itemPro)
+
+  if (itemPro && itemPro.find((item) => item.type == 1)) {
+    console.log('phải là /2-item.code')
+  } else {
+    console.log('phải là /3-item.code')
+  }
+
   return (
     <>
       <nav className="py-3 bg-[#f5f5f5] mb-5">
@@ -201,14 +217,19 @@ const ProductPage = () => {
                 </h2>
               </div>
               <div className='block-collection col-sm-12 col-12 col-md-12'>
-                <div className='col-list-cate'>
+                <div className={`col-list-cate ${isMobile ? 'col-sm-12 col-12 col-md-12' : ''}`}>
                   <div className="tab-ul">
                     <div className="menu-list">
-                      {itemPro && itemPro.map((item, id) => (
-                        <div className='cate-item' key={id}>
-                          {toTitleCase(item?.name)}
-                        </div>
-                      ))}
+                      {itemPro && itemPro.map((item, id) => {
+                        const url = item.type === 1
+                          ? `${PATH.products}/2-${item.code}`
+                          : `${PATH.products}/3-${item.code}`;
+                        return (
+                          <Link key={id} to={url} className='cate-item'>
+                            {toTitleCase(item?.name)}
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -221,7 +242,7 @@ const ProductPage = () => {
                         </option>
                       ))}
                     </select>
-                    <FontAwesomeIcon icon={faArrowDownAZ} className="select-icon" />
+                    <FontAwesomeIcon icon={faFilter} className="select-icon" />
                   </div>
                 </div>
               </div>
@@ -258,8 +279,6 @@ const ProductPage = () => {
                   </div>
                 ) : (
                   <div className="no-products-message">
-                    {/* <FontAwesomeIcon icon={faBan} className="mr-2" />
-      Không có sản phẩm nào được tìm thấy */}
                     <img src="/img/not-found.png" alt="" />
                   </div>
                 )}
@@ -284,7 +303,7 @@ const LoadingDetail = () => {
 
           {/* Categories Skeleton */}
           <div className="block-collection col-sm-12 col-12 col-md-12">
-            <div className="col-list-cate">
+            <div className="col-list-cate col-sm-12 col-12 col-md-12">
               <div className="tab-ul">
                 <div className="menu-list">
                   {createArray(4).map((_, id) => (
