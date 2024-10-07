@@ -63,17 +63,11 @@
 
 .search-icon {
     position: absolute;
-    /* Đặt vị trí tuyệt đối cho icon */
     right: 10%;
-    /* Đặt khoảng cách từ bên trái */
     top: 50%;
-    /* Đặt vị trí theo chiều dọc */
     transform: translateY(-50%);
-    /* Căn giữa theo chiều dọc */
     color: red;
-    /* Màu sắc cho biểu tượng */
     pointer-events: none;
-    /* Để không gây cản trở cho sự kiện click vào ô input */
 }
 
 .sticky-bottom-bar {
@@ -82,14 +76,13 @@
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: #ba9344; /* Màu nền của bottom-bar */
+    background-color: #ba9344;
 }
 
 
 .bottom-bar {
     background-color: #ba9344;
     /* padding: 10px 20px; */
-
     padding: 0px;
 }
 
@@ -112,7 +105,8 @@
     color: black;
 }
 
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal .ant-menu-item, :where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal .ant-menu-submenu {
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal .ant-menu-item,
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-horizontal .ant-menu-submenu {
     padding-inline: 20px;
 }
 
@@ -127,27 +121,34 @@
     border-bottom-color: transparent;
 }
 
-:where(.css-diro6f).ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title {
+:where(.css-diro6f).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
     color: black
 }
 
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-selected::after {
-	border-bottom-color: transparent
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item-selected::after,
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-selected::after {
+    border-bottom-color: transparent
 }
 
-:where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item:hover::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu:hover::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-active::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-active::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-item-open::after, :where(.css-diro6f).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-open::after { 
-	border-bottom-color: transparent
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item:hover::after,
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu:hover::after,
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item-active::after,
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-active::after,
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-item-open::after,
+:where(.css-diro6f).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-open::after {
+    border-bottom-color: transparent
 }
 
 :where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-submenu>.ant-menu {
     background-color: #ba9344;
 }
 
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title {
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title {
     color: black;
 }
 
-:where(.css-dev-only-do-not-override-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-item, :where(.css-dev-only-do-not-override-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-submenu-title {
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-item,
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-submenu-title {
     background: #ba9344;
 }
 
@@ -156,10 +157,119 @@
     background-color: #ba9344;
 }
 
-:where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical >.ant-menu-item, :where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical >.ant-menu-submenu>.ant-menu-submenu-title {
+:where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical>.ant-menu-item,
+:where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical>.ant-menu-submenu>.ant-menu-submenu-title {
     background: #ba9344;
 }
 
-:where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-item, :where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-submenu-title {
+:where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-item,
+:where(.css-diro6f).ant-menu-submenu-popup .ant-menu-vertical .ant-menu-submenu-title {
     background: #ba9344;
+}
+
+/* .menu-bar {
+    display: none;
+} */
+
+.menu-bars {
+    display: none;
+}
+
+/* Khi màn hình nhỏ hơn 1500px */
+@media (max-width: 1500px) {
+    .search-modal-content input {
+        width: 300px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .search-modal-content input {
+        width: 270px;
+        font-size: 1rem;
+    }
+
+    .ant-menu-horizontal {
+        font-size: 1rem;
+    }
+
+    .contact-phone,
+    .contact-address {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 991px) {
+    .search-modal-content input {
+        width: 200px;
+        font-size: 0.8rem;
+    }
+
+    .contact-phone,
+    .contact-address {
+        font-size: 0.8rem;
+    }
+
+    .ant-menu-horizontal {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-modal-container {
+        padding: 0;
+    }
+    .search-modal-content input {
+        width: 350px;
+    }
+
+    .contact-phone,
+    .contact-address {
+        display: none
+    }
+
+    .search-icon {
+        right: 5%;
+    }
+
+    .menu-bar {
+        display: none;
+    }
+
+    .menu-bars {
+        display: inline-block;
+    }
+
+    button.ant-btn.css-dev-only-do-not-override-diro6f.ant-btn-primary.menu-bars {
+        background-color: #ba9344;
+        display: flex;
+        align-items: center;
+    }
+
+    :where(.css-dev-only-do-not-override-diro6f).ant-drawer .ant-drawer-body {
+        padding: 0;
+    }
+
+    svg.svg-inline--fa.fa-chevron-down.fa-xs {
+        display: none
+    }
+
+    :where(.css-dev-only-do-not-override-diro6f).ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover {
+        background-color: #ba9344;
+    }
+
+    :where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item-selected {
+        background-color: #ba9344;
+    }
+}
+
+@media (max-width: 768px) { 
+    .search-modal-content input {
+        width: 280px;
+    }
+}
+
+@media (max-width: 400px) { 
+    .search-modal-content input {
+        width: 230px;
+    }
 }

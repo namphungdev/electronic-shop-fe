@@ -66,39 +66,43 @@ const SearchPage = () => {
       <div className="layout-collection">
         <div className="container">
           <div className='row'>
-          <div className={`products-view my-5 col-sm-12 col-12 col-md-12 ${dataSearch?.length === 0 ? 'no-products' : ''}`}>
-                {dataSearch && dataSearch.length > 0 ? (
-                  <div className="product-grid">
-                    {dataSearch.map((product) => (
-                      <div key={product.id} className="product-detail">
-                        <div className="products-view-card">
-                          <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                            <img style={{ height: 'auto' }} srcSet={product.images[0].base_url} alt={product.name} />
-                          </Link>
-                          <div className="product-card-content">
-                            <h3 className="product-card-title">{product.name}</h3>
-                            <div className="product-box">
-                              <span className="product-box-price">
-                                {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                              </span>
-                              <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
-                            </div>
-                            <div className="product-button">
-                              <Link to={PATH.contact} className="btn-product-contact">
-                                Liên hệ
-                              </Link>
-                            </div>
+            <div className={`products-view my-5 col-sm-12 col-12 col-md-12 ${dataSearch?.length === 0 ? 'no-products' : ''}`}>
+              {dataSearch && dataSearch.length > 0 ? (
+                <div className="product-grid">
+                  {dataSearch.map((product) => (
+                    <div key={product.id} className="product-detail">
+                      <div className="products-view-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          <img
+                            style={{ height: 'auto' }}
+                            srcSet={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="product-box">
+                            <span className="product-box-price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-product-contact">
+                              Liên hệ
+                            </Link>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="no-products-message">
-                    <img src="/img/not-found.png" alt="" />
-                  </div>
-                )}
-              </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="no-products-message">
+                  <img src="/img/not-found.png" alt="" />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

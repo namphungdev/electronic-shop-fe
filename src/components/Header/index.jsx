@@ -1,13 +1,13 @@
-import { CATEGORY_API_HHB, PATH, PRODUCT_API_HHB } from '@/config';
+import { CATEGORY_API_HHB, PATH } from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu, Spin } from 'antd';
+import { Menu, Drawer, Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 const { SubMenu } = Menu;
 import 'antd/dist/reset.css';
 import useQuery from '@/hooks/useQuery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faLocationDot, faMagnifyingGlass, faPhoneVolume } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faLocationDot, faMagnifyingGlass, faPhoneVolume, faBars } from '@fortawesome/free-solid-svg-icons';
 import { productTiles } from '@/services/product.service';
 import axios from 'axios';
 import "./style.css"
@@ -54,6 +54,15 @@ const Header = () => {
   });
 
   const [searchValue, setSearchValue] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
 
   const {
     data: { data: productTypeList = [] } = {}
@@ -143,8 +152,31 @@ const Header = () => {
     fetchCategoryList(productCodes.tamOpNhuaCode, 'TẤM ỐP NHỰA');
   }, [productCodes]);
 
+  // const handleMenuClick = (item) => {
+  //   setActiveNav(item.to);
+
+  //   const matchingProduct = productTypeList.find(
+  //     (product) => product.productTypeName === item.nav
+  //   );
+
+  //   if (matchingProduct) {
+  //     navigate(`${PATH.products}/${matchingProduct.productTypeCode}`);
+  //   } else {
+  //     navigate(item.to);
+  //   }
+  // };
+
   const handleMenuClick = (item) => {
+    const screenWidth = window.innerWidth;
+    const isMobile = screenWidth < 768; // Kiểm tra màn hình nhỏ hơn 768px
+
     setActiveNav(item.to);
+
+    // Kiểm tra nếu có submenu và ở màn hình nhỏ
+    if (isMobile && item.submenu) {
+      // Ngăn điều hướng và mở submenu
+      return;
+    }
 
     const matchingProduct = productTypeList.find(
       (product) => product.productTypeName === item.nav
@@ -156,6 +188,7 @@ const Header = () => {
       navigate(item.to);
     }
   };
+
 
   const renderMenuItems = (items) => {
     return items.map((item) => {
@@ -271,10 +304,27 @@ const Header = () => {
           </div>
 
           <div className='bottom-bar navbar-nav'>
-            <Menu mode="horizontal" className="menu-bar">
+            <div className='container' style={{ padding: 0 }}>
+              <Menu mode="horizontal" className="menu-bar">
+                {renderMenuItems(headerNavs)}
+              </Menu>
+              <Button className="menu-bars" type="primary" onClick={showDrawer}>
+                <span style={{ paddingRight: '10px' }}>MENU</span>
+                <FontAwesomeIcon style={{ color: '#fff' }} icon={faBars} />
+              </Button>
+            </div>
+          </div>
+
+          <Drawer
+            title="Menu"
+            placement="right"
+            onClose={onClose}
+            visible={visible}
+          >
+            <Menu mode="inline">
               {renderMenuItems(headerNavs)}
             </Menu>
-          </div>
+          </Drawer>
 
         </div>
       </header>

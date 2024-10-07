@@ -177,10 +177,10 @@ svg.svg-inline--fa.fa-house-chimney {
   left: 50%;
   width: 150%;
   height: 150%;
-  border: 2px solid rgba(212, 0, 0, 0.582); 
+  border: 2px solid rgba(212, 0, 0, 0.582);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  animation: pulse 1.5s infinite; 
+  animation: pulse 1.5s infinite;
   z-index: 2;
 }
 
@@ -224,12 +224,32 @@ svg.svg-inline--fa.fa-house-chimney {
     transform: translate(-50%, -50%) scale(1);
     opacity: 0.8;
   }
+
   50% {
     transform: translate(-50%, -50%) scale(1.2);
     opacity: 0.4;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 0.8;
   }
+}
+
+@media (max-width: 991px) {
+  .bottom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .link-store-footer {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 578) {
+
 }

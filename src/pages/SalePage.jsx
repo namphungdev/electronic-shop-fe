@@ -38,7 +38,7 @@ const SalePage = () => {
   }
 
   const {
-    data: { data: listDiscount = [], loading: loadingListDiscount } = {},
+    data: { data: dataPrice = [], loading: loadingDataPrice } = {},
   } = useQuery({
     queryKey: `product-page-${JSON.stringify(productCode)}`,
     keepPreviousData: true,
@@ -53,7 +53,7 @@ const SalePage = () => {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              {!loadingListDiscount ? (
+              {!loadingDataPrice ? (
                 <Breadcrumb>
                   <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
                   <Breadcrumb.Item>Sản phẩm giảm giá</Breadcrumb.Item>
@@ -66,72 +66,88 @@ const SalePage = () => {
         </div>
       </nav>
 
-      <div className="layout-collection">
+      <section className="py-5">
         <div className="container">
-          {loadingListDiscount ? (
-            <LoadingDetail />
-          ) : (
-            <div className=''>
+          <div className="flex header-sell">
+            <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
+              <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-15%', bottom: '10%', background: 'transparent' }} src="/img/hot-sale.png" alt="" />
+              Sản phẩm giảm giá
+            </div>
 
-              <div className="flex header-sell">
-                <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
-                  <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-15%', bottom: '10%', background: 'transparent' }} src="/img/hot-sale.png" alt="" />
-                  Sản phẩm giảm giá
-                </div>
-
-                <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
-                  <div className="relative max-w-full text-white">
-                    <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
-                      {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
-                        <li
-                          key={index}
-                          className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
-                          onClick={() => clickProductSell(index)}
-                        >
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+            <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
+              <div className="relative max-w-full text-white">
+                <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
+                  {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
+                    <li
+                      key={index}
+                      className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
+                      onClick={() => clickProductSell(index)}
+                    >
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className={`products-view view-content col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}>
-                {listDiscount && listDiscount.length > 0 ? (
-                  <div className="product-grid product-content-view">
-                    {listDiscount.map((product) => (
-                      <div key={product.id} className="product-detail">
-                        <div className="products-view-card">
-                          <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                            <img style={{ height: 'auto' }} srcSet={product.images[0].base_url} alt={product.name} />
-                          </Link>
-                          <div className="product-card-content">
-                            <h3 className="product-card-title">{product.name}</h3>
-                            <div className="product-box">
-                              <span className="product-box-price">
-                                {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                              </span>
-                              <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
-                            </div>
-                            <div className="product-button">
-                              <Link to={PATH.contact} className="btn-product-contact">
-                                Liên hệ
-                              </Link>
-                            </div>
+            </div>
+          </div>
+          <div className="block-product-sell sell-content">
+            {loadingDataPrice ? (
+              <div className="loading-container">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <>
+                <div className="product-row product-sale">
+                  {dataPrice && dataPrice.length > 0 ? (
+                    dataPrice.map((product) => (
+                      <div key={product.id} className="product-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          {product?.percentDiscount == null ?
+                            <div className="sale-badge">SALE</div>
+                            :
+                            <div className="sale-badge">Giảm {product?.percentDiscount}%</div>
+                          }
+                          <img
+                            style={{ height: 'auto' }}
+                            src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="price-box">
+                            <span className="price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="compare-price">
+                              {Number(product.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-sell-contact">
+                              Liên hệ
+                            </Link>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    ))
+                  ) : (
+                    <p>Không có sản phẩm nào.</p>
+                  )}
+                </div>
+                {dataPrice && dataPrice.length > 5 ? (
+                  <div className="see-more-sale">
+                    <Link className="btn-see-more" to={PATH.sale}>
+                      Xem thêm
+                    </Link>
                   </div>
-                ) : (
-                  <div className="no-products-message">
-                    <img src="/img/not-found.png" alt="" />
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+                ) : null}
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
+
     </>
   )
 }
@@ -195,3 +211,117 @@ const LoadingDetail = () => {
 };
 
 export default SalePage
+
+{/* <div className="layout-collection">
+        <div className="container">
+          {loadingListDiscount ? (
+            <LoadingDetail />
+          ) : (
+            <div className="product-row product-sale">
+              {listDiscount && listDiscount.length > 0 ? (
+                listDiscount.map((product) => (
+                  <div key={product.id} className="product-card">
+                    <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                      {product?.percentDiscount == null ?
+                        <div className="sale-badge">SALE</div>
+                        :
+                        <div className="sale-badge">Giảm {product?.percentDiscount}%</div>
+                      }
+                      <img
+                        style={{ height: 'auto' }}
+                        src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+                        alt={product.name}
+                      />
+                    </Link>
+                    <div className="product-card-content">
+                      <h3 className="product-card-title">{product.name}</h3>
+                      <div className="price-box">
+                        <span className="price">
+                          {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                        </span>
+                        <span className="compare-price">
+                          {Number(product.price).toLocaleString('vi-VN')}đ
+                        </span>
+                      </div>
+                      <div className="product-button">
+                        <Link to={PATH.contact} className="btn-sell-contact">
+                          Liên hệ
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>Không có sản phẩm nào.</p>
+              )}
+            </div>
+          )}
+        </div>
+      </div> */}
+
+// <div className=''>
+//   <div className="flex header-sell">
+//     <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald">
+//       <img style={{ objectFit: 'contain', width: '50px', height: 'auto', position: 'absolute', right: '-15%', bottom: '10%', background: 'transparent' }} src="/img/hot-sale.png" alt="" />
+//       Sản phẩm giảm giá
+//     </div>
+
+//     <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
+//       <div className="relative max-w-full text-white">
+//         <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
+//           {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
+//             <li
+//               key={index}
+//               className={`relative font-bold text-xl px-5 color[#e81f15] py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
+//               onClick={() => clickProductSell(index)}
+//             >
+//               <span>{item}</span>
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+//     </div>
+//   </div>
+//   <div className={`products-view view-content col-sm-12 col-12 col-md-12 ${listDiscount?.length === 0 ? 'no-products' : ''}`}>
+//     {listDiscount && listDiscount.length > 0 ? (
+//       <div className="product-grid product-content-view">
+//         {listDiscount.map((product) => (
+//           <div key={product.id} className="product-detail">
+//             <div className="products-view-card">
+//               <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+//                 {/* {product?.percentDiscount == null ?
+//                   <div className="sale-badge">SALE</div>
+//                   :
+//                   <div className="sale-badge">Giảm {product?.percentDiscount}%</div>
+//                 } */}
+//                 <img
+//                   style={{ height: 'auto' }}
+//                   src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+//                   alt={product.name}
+//                 />
+//               </Link>
+//               <div className="product-card-content">
+//                 <h3 className="product-card-title">{product.name}</h3>
+//                 <div className="product-box">
+//                   <span className="product-box-price">
+//                     {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+//                   </span>
+//                   <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
+//                 </div>
+//                 <div className="product-button">
+//                   <Link to={PATH.contact} className="btn-product-contact">
+//                     Liên hệ
+//                   </Link>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     ) : (
+//       <div className="no-products-message">
+//         <img src="/img/not-found.png" alt="" />
+//       </div>
+//     )}
+//   </div>
+// </div>

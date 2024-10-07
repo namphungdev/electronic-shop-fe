@@ -75,9 +75,24 @@
 /* CSS cho page Home -- Sản phẩm giá sale */
 
 .header-sell {
+    display: flex;
     padding: 10px 10px 0px 10px;
     background: #e81f15;
     align-items: center;
+}
+
+.text-nav-sale {
+    font-size: 1.4rem;
+}
+
+.img-hot-sale {
+    object-fit: contain;
+    width: 50px;
+    height: auto;
+    position: absolute;
+    right: -15%;
+    bottom: 10%;
+    background: transparent;
 }
 
 .sell-content {
@@ -112,21 +127,21 @@
     overflow: hidden;
     transition: box-shadow 0.3s ease-in-out;
     box-sizing: border-box;
-
     position: relative;
+    z-index: 1;
 }
 
 .sale-badge {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0;
+    right: 0;
     background-color: #ff0000;
     color: #ffffff;
     padding: 5px 10px;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
     border-radius: 10px;
-    z-index: 10;
+    z-index: 20;
 }
 
 .product-card:hover {
@@ -156,7 +171,7 @@
 }
 
 .product-card-content {
-    padding: 16px;
+    padding: 10px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -164,7 +179,7 @@
 }
 
 .product-card-title {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     margin: 0;
     overflow: hidden;
@@ -195,7 +210,7 @@
     font-weight: 800;
     display: block;
     width: auto;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     line-height: initial;
 }
 
@@ -203,10 +218,9 @@
     display: block;
     width: auto;
     color: #7b7b7b;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     text-decoration: line-through;
     line-height: initial;
-    margin-left: 8px;
 }
 
 .btn-sell-contact {
@@ -362,3 +376,63 @@
 }
 
 /* CSS cho logo branch */
+
+
+/* Khi màn hình nhỏ hơn 1500px */
+@media (max-width: 1500px) {
+    .product-row {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .sale-header {
+        font-size: 1.5rem;
+    }
+
+    .text-nav-sale {
+        font-size: 1.2rem;
+    }
+
+    .img-hot-sale {
+        right: -20%;
+    }
+
+    .product-h2-custom {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 991px) {
+    .header-sell {
+        flex-direction: column;
+    }       
+
+    .sale-header {
+        font-size: 1.2rem;
+    }
+
+    .text-nav-sale {
+        font-size: 1rem;
+    }
+
+    .img-hot-sale {
+        right: -25%;
+    }
+
+    .product-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .product-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .product-row {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

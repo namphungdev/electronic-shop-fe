@@ -1,4 +1,4 @@
-/* product */
+/* product
 
 .select-container {
     position: relative;
@@ -86,7 +86,6 @@
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     transition: transform 0.3s ease-in-out;
-
     width: 100%;
     height: 200px;
     object-fit: cover;
@@ -225,4 +224,236 @@
     background: #e81f15;
     padding: 10px 
 }
+ */
 
+
+/* CSS cho page Home -- tab of sản phẩm giảm giá */
+
+.product-h2-custom::before {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #ba9344;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+}
+
+.li-current {
+    background: #e81f15;
+    color: black;
+}
+
+.tab-cate:hover {
+    /* background: #ba9344; */
+    color: black;
+    cursor: pointer;
+}
+
+.tab-cate {
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.tab-cate:first-child {
+    -webkit-clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    clip-path: polygon(0 0, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.tab-cate:last-child {
+    -webkit-clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.see-more-sale {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 10px;
+    background: white;
+}
+
+.see-more-container {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.btn-see-more {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ba9344;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-see-more:hover {
+    color: black;
+    cursor: pointer;
+}
+
+/* CSS cho page Home -- tab of sản phẩm giảm giá */
+
+/* CSS cho page Home -- Sản phẩm giá sale */
+
+.header-sell {
+    padding: 10px 10px 0px 10px;
+    background: #e81f15;
+    align-items: center;
+}
+
+.sell-content {
+    padding: 10px !important;
+    background: #e81f15;
+}
+
+.block-product-sell {
+    padding: 16px;
+}
+
+.product-sale {
+    background-color: #fff;
+    padding: 10px;
+}
+
+.product-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 300px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
+.sale-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 20;
+}
+
+.product-card:hover {
+    box-shadow: rgba(60, 64, 67, 0.1) 0 1px 2px 0,
+        rgba(60, 64, 67, 0.15) 0 2px 6px 2px;
+}
+
+.product-card .navbar-brand {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    /* height: 260px; */
+    height: auto;
+}
+
+.product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.product-card-content {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.product-card-price {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.price-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-top: auto;
+    padding: 20px 0px;
+}
+
+.price {
+    color: red;
+    font-weight: 800;
+    display: block;
+    width: auto;
+    font-size: 1.2rem;
+    line-height: initial;
+}
+
+.compare-price {
+    display: block;
+    width: auto;
+    color: #7b7b7b;
+    font-size: 1.2rem;
+    text-decoration: line-through;
+    line-height: initial;
+    margin-left: 8px;
+}
+
+.btn-sell-contact {
+    width: 100%;
+    clip-path: inherit;
+    color: white;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 0.3s;
+    border: 0;
+    position: relative;
+    padding: 0;
+    background: #ba9344;
+    cursor: pointer;
+}
+
+.btn-sell-contact:hover {
+    color: white;
+}

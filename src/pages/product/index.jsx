@@ -232,7 +232,11 @@ const ProductPage = () => {
                       <div key={product.id} className="product-detail">
                         <div className="products-view-card">
                           <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                            <img style={{ height: 'auto' }} srcSet={product.images[0].base_url} alt={product.name} />
+                            <img
+                              style={{ height: 'auto' }}
+                              srcSet={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+                              alt={product.name}
+                            />
                           </Link>
                           <div className="product-card-content">
                             <h3 className="product-card-title">{product.name}</h3>

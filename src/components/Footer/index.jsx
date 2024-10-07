@@ -19,7 +19,7 @@ const Footer = () => {
     >
       <div className="py-6 border-bottom">
         <div className="container">
-          <div className="row">
+          <div className="row bottom-content">
             <div className="col-6 col-sm mb-4 mb-sm-0">
               <div className="logo-footer flex justify-center">
                 <Link className="navbar-brand" to={PATH.home}>
