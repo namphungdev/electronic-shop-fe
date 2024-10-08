@@ -103,10 +103,10 @@ const ProductPage = () => {
     type: typeParam
   }
 
-  const { data: { data: products = [] } = {} } = useQuery({
-    enabled: false,
-    queryFn: ({ param2 }) => productTiles.getBreakcumb(...param2),
-  });
+  // const { data: { data: products = [] } = {} } = useQuery({
+  //   enabled: false,
+  //   queryFn: ({ param2 }) => productTiles.getBreakcumb(...param2),
+  // });
 
   async function fetchBreadcrumb() {
     if (codeParam && typeParam) {
@@ -139,13 +139,13 @@ const ProductPage = () => {
     if (!loading && productList.length === 0) {
       timeoutId = setTimeout(() => {
         setShowNoProductsMessage(true);
-      }, 2000); // 2-second delay before showing "no products" message
+      }, 2000);
     } else {
-      setShowNoProductsMessage(false); // Reset when productList is populated
+      setShowNoProductsMessage(false);
     }
 
     return () => {
-      clearTimeout(timeoutId); // Clear timeout when component unmounts or productList updates
+      clearTimeout(timeoutId);
     };
   }, [loading, productList]);
 
@@ -176,14 +176,6 @@ const ProductPage = () => {
       .join(' ');
   };
 
-  console.log('itemPro', itemPro)
-
-  if (itemPro && itemPro.find((item) => item.type == 1)) {
-    console.log('phải là /2-item.code')
-  } else {
-    console.log('phải là /3-item.code')
-  }
-
   return (
     <>
       <nav className="py-3 bg-[#f5f5f5] mb-5">
@@ -205,88 +197,97 @@ const ProductPage = () => {
         </div>
       </nav>
 
-      <div className="layout-collection">
+      <section className="py-5 layout-collection">
         <div className="container">
-          {loading ? (
-            <LoadingDetail />
-          ) : (
-            <div className='row'>
-              <div className='col-12 col-title'>
-                <h2 className='mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h1-custom'>
-                  {toTitleCase(breadcrumb[breadcrumb.length - 1]?.name)}
-                </h2>
+          <div className="">
+            {loading ? (
+              <div className="loading-container">
+                <Spin size="large" />
               </div>
-              <div className='block-collection col-sm-12 col-12 col-md-12'>
-                <div className={`col-list-cate ${isMobile ? 'col-sm-12 col-12 col-md-12' : ''}`}>
-                  <div className="tab-ul">
-                    <div className="menu-list">
-                      {itemPro && itemPro.map((item, id) => {
-                        const url = item.type === 1
-                          ? `${PATH.products}/2-${item.code}`
-                          : `${PATH.products}/3-${item.code}`;
-                        return (
-                          <Link key={id} to={url} className='cate-item'>
-                            {toTitleCase(item?.name)}
-                          </Link>
-                        );
-                      })}
+            ) : (
+              <>
+                <div style={{ padding: 0 }} className='col-12 col-title'>
+                  <h2 className='mb-4 inline-block font-bold text-3xl uppercase font-oswald relative pb-2 product-h1-custom'>
+                    {toTitleCase(breadcrumb[breadcrumb.length - 1]?.name)}
+                  </h2>
+                </div>
+
+
+                <div style={{ padding: 0 }} className='block-collection col-sm-12 col-12 col-md-12'>
+                  <div className={`col-list-cate ${isMobile ? 'col-sm-12 col-12 col-md-12' : ''}`}>
+                    <div className="tab-ul">
+                      <div className="menu-list">
+                        {itemPro && itemPro.map((item, id) => {
+                          const url = item.type === 1
+                            ? `${PATH.products}/2-${item.code}`
+                            : `${PATH.products}/3-${item.code}`;
+                          return (
+                            <Link key={id} to={url} className='cate-item'>
+                              {toTitleCase(item?.name)}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ml-3">
+                    <div className="select-container">
+                      <select className="custom-select custom-select-xs" onChange={handleSortChange}>
+                        {optionSort.map((e) => (
+                          <option value={e?.value} key={e.value}>
+                            {e.title}
+                          </option>
+                        ))}
+                      </select>
+                      <FontAwesomeIcon icon={faFilter} className="select-icon" />
                     </div>
                   </div>
                 </div>
-                <div className="ml-3">
-                  <div className="select-container">
-                    <select className="custom-select custom-select-xs" onChange={handleSortChange}>
-                      {optionSort.map((e) => (
-                        <option value={e?.value} key={e.value}>
-                          {e.title}
-                        </option>
-                      ))}
-                    </select>
-                    <FontAwesomeIcon icon={faFilter} className="select-icon" />
-                  </div>
-                </div>
-              </div>
-              <div className={`products-view my-5 col-sm-12 col-12 col-md-12 ${productList?.length === 0 ? 'no-products' : ''}`}>
-                {productList && productList.length > 0 ? (
-                  <div className="product-grid">
-                    {productList.map((product) => (
-                      <div key={product.id} className="product-detail">
-                        <div className="products-view-card">
-                          <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                            <img
-                              style={{ height: 'auto' }}
-                              srcSet={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
-                              alt={product.name}
-                            />
-                          </Link>
-                          <div className="product-card-content">
-                            <h3 className="product-card-title">{product.name}</h3>
-                            <div className="product-box">
-                              <span className="product-box-price">
-                                {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                              </span>
-                              <span className="product-compare-price">{Number(product.price).toLocaleString('vi-VN')}đ</span>
-                            </div>
-                            <div className="product-button">
-                              <Link to={PATH.contact} className="btn-product-contact">
-                                Liên hệ
-                              </Link>
-                            </div>
+
+
+                <div className="product-row">
+                  {productList && productList.length > 0 ? (
+                    productList.map((product) => (
+                      <div key={product.id} className="product-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          {product?.percentDiscount == null ?
+                            <div className="sale-badge">SALE</div>
+                            :
+                            <div className="sale-badge">Giảm {product?.percentDiscount}%</div>
+                          }
+                          <img
+                            style={{ height: 'auto' }}
+                            src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="price-box">
+                            <span className="price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="compare-price">
+                              {Number(product.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-sell-contact">
+                              Liên hệ
+                            </Link>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="no-products-message">
-                    <img src="/img/not-found.png" alt="" />
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+                    ))
+                  ) : (
+                    <p>Không có sản phẩm nào.</p>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

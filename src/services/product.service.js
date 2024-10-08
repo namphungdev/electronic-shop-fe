@@ -261,3 +261,32 @@ export const cmsTitles = {
     http.delete(`${CMS_API_HHB}/delete-product/${id}`),
 
 }
+
+export const setImageRoom = async (imageFile) => {
+  const formData = new FormData();
+  formData.append('file', imageFile);
+
+  try {
+    const response = await http.post('https://nhumaidao.somee.com/api/upload/upload-imagae', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
+    if (response.status === 204) {
+      console.error('File uploaded successfully, but no content returned.');
+      return null;
+    }
+
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.error('Error uploading image:', error.response.data);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error setting up the request:', error.message);
+    }
+    throw error;
+  }
+};

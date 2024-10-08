@@ -1,8 +1,9 @@
-import React from "react";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import ImageUploading from "react-images-uploading";
 import { createGlobalStyle } from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhoneVolume, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { setImageRoom } from "@/services/product.service";
 
 const GlobalStyle = createGlobalStyle`
 .upload__image-wrapper {
@@ -53,11 +54,25 @@ button {
 }
 `
 
-const ImageUploaderComponent = ({ images, setImages, maxNumber }) => {
-    const onChange = (imageList, addUpdateIndex) => {
-        console.log(imageList, addUpdateIndex);
-        setImages(imageList);
-    };
+const ImageUploaderComponent = ({ images, setImages, maxNumber, onUploadComplete }) => {
+    const onChange = async (imageList, addUpdateIndex) => {
+        for (let image of imageList) {
+            if (!image.uploaded) {
+                try {
+                    const response = await setImageRoom(image.file);
+                    image.url = response.url; // Assuming the response contains the URL of the uploaded image
+                    image.uploaded = true; // Mark as uploaded
+                    if (onUploadComplete) {
+                        onUploadComplete(response); // Call the callback with the response
+                    }
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    // Handle error appropriately (e.g., show an error message)
+                }
+            }
+        }
+        setImages([...imageList]);
+    };  
 
     return (
         <>

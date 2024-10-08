@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Button } from 'antd';
+import { Space, Button, Table, Modal } from 'antd';
 import { cmsTitles, productTiles } from '@/services/product.service';
 import useQuery from '@/hooks/useQuery';
 import Loading from '@/components/Loading';
@@ -30,19 +30,20 @@ const EditProductListCMS = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [percentDiscount, setPercentDiscount] = useState(null);
-  console.log('percentDiscount', percentDiscount)
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [dropdownProductCategory, setDropdownProductCategory] = useState([]);
   const [dropdownSubProductCategory, setDropdownSubProductCategory] = useState([]);
 
   const [productStatus, setProductStatus] = useState('ACTIVE');
-  const [images, setImages] = React.useState([]);
-  const maxNumber = 69;
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [dataImg, setDataImg] = useState([]);
+  const [editingUrl, setEditingUrl] = useState(null);
 
   const [nameError, setNameError] = useState('');
   const [productTypeError, setProductTypeError] = useState('');
   const [productCategoryError, setProductCategoryError] = useState('');
   const [priceError, setPriceError] = useState('');
+  const [imageError, setImageError] = useState('');
 
   useEffect(() => {
     const idFromStorage = localStorage.getItem('product-edit-slug');
@@ -75,6 +76,7 @@ const EditProductListCMS = () => {
       setPercentDiscount(getProductDetail.percentDiscount)
       setDiscountedPrice(getProductDetail.discountedPrice)
       setProductStatus(getProductDetail.status || 'ACTIVE');
+      setDataImg(getProductDetail?.images?.map(item => item.base_url))
     }
   }, [getProductDetail]);
 
@@ -218,6 +220,12 @@ const EditProductListCMS = () => {
       return;
     }
 
+    // Kiểm tra hình ảnh
+    if (dataImg.length === 0) {
+      setImageError('Bạn phải thêm ít nhất một hình ảnh');
+      return;
+    }
+
     const params = {
       id: productId,
       code: productCode,
@@ -230,8 +238,9 @@ const EditProductListCMS = () => {
       price: price,
       discountedPrice: discountedPrice,
       percentDiscount: percentDiscount,
-      images: []
+      images: transformedDataImg
     }
+
     try {
       const res = await cmsTitles.updateProductList(params)
       if (res && res.result && res.code == 200) {
@@ -245,6 +254,65 @@ const EditProductListCMS = () => {
       toast.error(error.message);
     }
   };
+
+  const handleUploadComplete = (response) => {
+    if (response?.url) {
+      if (editingUrl) {
+        setDataImg((prevData) =>
+          prevData.map((url) => (url === editingUrl ? response.url : url))
+        );
+      } else {
+        setDataImg((prevData) => [...prevData, response.url]);
+      }
+    }
+    handleCloseModal();
+  };
+
+  const showModal = (url) => {
+    setIsModalVisible(true);
+    setEditingUrl(url);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setEditingUrl(null);
+  };
+
+  const handleDeleteImage = (urlToDelete) => {
+    setDataImg((prevData) => prevData.filter((url) => url !== urlToDelete));
+  };
+
+  const columns = [
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'url',
+      key: 'url',
+      render: (url) => <img src={url} alt="Uploaded" width="100" />,
+    },
+    {
+      title: 'Hành động',
+      key: 'actions',
+      render: (_, record) => (
+        <>
+          <Button onClick={() => showModal(record.url)} style={{ marginRight: '10px' }}>
+            Chỉnh sửa
+          </Button>
+          <Button onClick={() => handleDeleteImage(record.url)} danger>
+            Xóa
+          </Button>
+        </>
+      ),
+    },
+  ];
+
+  const tableData = dataImg.map((url, index) => ({
+    key: index,
+    url: url,
+  }));
+
+  const transformedDataImg = dataImg.map(url => ({
+    base_url: url
+  }));
 
   return (
     <>
@@ -454,19 +522,17 @@ const EditProductListCMS = () => {
                     <CustomQuillEditor value={description} onChange={handleDescriptionChange} />
                   </div>
                 </div>
-                <div className="col-12 d-flex justify-center">
-                  <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>
-                  <Button danger htmlType="button" onClick={() => navigate(PATH.productList)}>HỦY</Button>
-                </div>
                 <div className='col-md-12'>
                   <div className="form-group">
                     <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Upload hình ảnh</label>
-                    <ImageUploaderComponent
-                      images={images}
-                      setImages={setImages}
-                      maxNumber={maxNumber}
-                    />
+                    <Button style={{ marginBottom: '10px ' }} onClick={() => showModal()}>+ Thêm</Button>
+                    {imageError && <p className="text-red-500 text-sm mt-1">{imageError}</p>}
+                    <Table dataSource={tableData} columns={columns} pagination={false} />
                   </div>
+                </div>
+                <div className="col-12 d-flex justify-center">
+                  <Button type="primary" htmlType="submit" className="mr-6">LƯU</Button>
+                  <Button danger htmlType="button" onClick={() => navigate(PATH.productList)}>HỦY</Button>
                 </div>
               </div>
             </div>
@@ -474,6 +540,17 @@ const EditProductListCMS = () => {
         </form>
       }
 
+      <Modal
+        title={editingUrl ? "Chỉnh sửa hình ảnh" : "Upload hình ảnh "}
+        visible={isModalVisible}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <ImageUploaderComponent
+          onUploadComplete={handleUploadComplete}
+          initialImage={editingUrl}
+        />
+      </Modal>
     </>
   )
 }

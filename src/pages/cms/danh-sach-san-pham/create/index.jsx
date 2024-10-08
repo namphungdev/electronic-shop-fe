@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Button } from 'antd';
+import { Space, Button, Modal, Table } from 'antd';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { cmsTitles } from '@/services/product.service';
+import { cmsTitles, setImageRoom } from '@/services/product.service';
 import { PATH } from '@/config';
 import useQuery from '@/hooks/useQuery';
 import CustomQuillEditor from '@/components/ReactQuill';
@@ -14,6 +14,9 @@ const GlobalStyle = createGlobalStyle`
     max-height: 75vh;
     overflow-x: hidden !important;
     overflow: auto !important;
+}
+
+.image-upload-container {
 }
 `
 
@@ -63,13 +66,15 @@ const AddProductListCMS = () => {
   const [dropdownSubProductCategory, setDropdownSubProductCategory] = useState([]);
 
   const [productStatus, setProductStatus] = useState('ACTIVE');
-  const [images, setImages] = React.useState([]);
-  const maxNumber = 69;
+  const [dataImg, setDataImg] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editingUrl, setEditingUrl] = useState(null);
 
   const [nameError, setNameError] = useState('');
   const [productTypeError, setProductTypeError] = useState('');
   const [productCategoryError, setProductCategoryError] = useState('');
   const [priceError, setPriceError] = useState('');
+  const [imageError, setImageError] = useState('');
 
   const {
     data: { data: productTypeList = [] } = {}
@@ -136,6 +141,12 @@ const AddProductListCMS = () => {
       return;
     }
 
+    // Kiểm tra hình ảnh
+    if (dataImg.length === 0) {
+      setImageError('Bạn phải thêm ít nhất một hình ảnh');
+      return;
+    }
+
     const params = {
       code: productCode,
       name: productName,
@@ -147,7 +158,7 @@ const AddProductListCMS = () => {
       price: price,
       discountedPrice: discountedPrice,
       percentDiscount: percentDiscount,
-      images: []
+      images: transformedDataImg 
     }
 
     try {
@@ -240,7 +251,61 @@ const AddProductListCMS = () => {
     setDescription(value);
   };
 
-  console.log('descriptiom', description)
+  const handleUploadComplete = (response) => {
+    if (response?.url) {
+      if (editingUrl) {
+        setDataImg((prevData) =>
+          prevData.map((url) => (url === editingUrl ? response.url : url))
+        );
+      } else {
+        setDataImg((prevData) => [...prevData, response.url]);
+      }
+    }
+    handleCloseModal();
+  };
+
+  const showModal = (url) => {
+    setIsModalVisible(true);
+    setEditingUrl(url);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setEditingUrl(null);
+  };
+
+  const handleDeleteImage = (urlToDelete) => {
+    setDataImg((prevData) => prevData.filter((url) => url !== urlToDelete));
+  };
+
+  const columns = [
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'url',
+      key: 'url',
+      render: (url) => <img src={url} alt="Uploaded" width="100" />, // Render the image
+    },
+    {
+      title: 'Hành động',
+      key: 'actions',
+      render: (_, record) => (
+        <>
+          <Button onClick={() => showModal(record.url)} style={{ marginRight: '10px' }}>
+            Chỉnh sửa
+          </Button>
+          <Button onClick={() => handleDeleteImage(record.url)} danger>
+            Xóa
+          </Button>
+        </>
+      ),
+    },
+  ];
+
+  const tableData = dataImg && dataImg.length > 0 && dataImg?.map((url) => ({ key: url, url }));
+
+  const transformedDataImg = dataImg.map(url => ({
+    base_url: url
+  }));
 
   return (
     <>
@@ -459,11 +524,9 @@ const AddProductListCMS = () => {
               <div className='col-md-12'>
                 <div className="form-group">
                   <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Upload hình ảnh</label>
-                  <ImageUploaderComponent
-                    images={images}
-                    setImages={setImages}
-                    maxNumber={maxNumber}
-                  />
+                  <Button style={{ marginBottom: '10px ' }} onClick={() => showModal()}>+ Thêm</Button>
+                  {imageError && <p className="text-red-500 text-sm mt-1">{imageError}</p>}
+                  <Table dataSource={tableData} columns={columns} pagination={false} />
                 </div>
               </div>
               <div className="col-12 d-flex justify-center">
@@ -474,6 +537,18 @@ const AddProductListCMS = () => {
           </div>
         </div>
       </form>
+
+      <Modal
+        title={editingUrl ? "Chỉnh sửa hình ảnh" : "Upload hình ảnh "}
+        visible={isModalVisible}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <ImageUploaderComponent
+          onUploadComplete={handleUploadComplete} 
+          initialImage={editingUrl}
+        />
+      </Modal>
     </>
   )
 }
