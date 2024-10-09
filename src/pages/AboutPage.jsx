@@ -13,7 +13,7 @@ const AboutPage = () => {
           <div className="row">
             <div className="col-12" style={{ color: 'red' }}>
               <Breadcrumb>
-                <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+                <Breadcrumb.Item to='/'>Trang chủ</Breadcrumb.Item>
                 <Breadcrumb.Item>Giới thiệu</Breadcrumb.Item>
               </Breadcrumb>
             </div>

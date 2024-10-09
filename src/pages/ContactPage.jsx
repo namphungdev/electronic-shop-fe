@@ -34,7 +34,7 @@ const ContactPage = () => {
           <div className="row">
             <div className="col-12">
               <Breadcrumb>
-                <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+                <Breadcrumb.Item to="/">Trang chủ</Breadcrumb.Item>
                 <Breadcrumb.Item>Liên hệ với chúng tôi</Breadcrumb.Item>
               </Breadcrumb>
             </div>

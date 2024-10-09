@@ -1,28 +1,3 @@
-.header-sell {
-    padding: 10px 10px 0px 10px;
-    background: #e81f15;
-    align-items: center;
-}
-
-.text-nav-sale {
-    font-size: 1.4rem;
-}
-
-.img-hot-sale {
-    object-fit: contain;
-    width: 50px;
-    height: auto;
-    position: absolute;
-    right: -15%;
-    bottom: 10%;
-    background: transparent;
-}
-
-.product-sale {
-    background-color: #fff;
-    padding: 10px;
-}
-
 .product-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -67,8 +42,7 @@
     display: block;
     overflow: hidden;
     width: 100%;
-    /* height: 260px; */
-    height: auto;
+    height: 240px;
 }
 
 .product-card img {
@@ -102,11 +76,6 @@
     line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-}
-
-.product-card-price {
-    font-size: 18px;
-    font-weight: bold;
 }
 
 .price-box {
@@ -182,7 +151,7 @@
 @media (max-width: 991px) {
     .header-sell {
         flex-direction: column;
-    }       
+    }
 
     .sale-header {
         font-size: 1.2rem;
@@ -546,7 +515,7 @@
 
     .ml-3 {
         margin-top: -10px;
-    } 
+    }
 
     .product-view {
         padding-top: 15px;
@@ -565,31 +534,42 @@
 
 /* product - slug */
 
+.product-detail-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
 .inventory_quantity {
     border-bottom: 1px solid rgb(221, 225, 239);
     padding-bottom: 10px;
     margin-bottom: 15px;
 }
 
+.title-product {
+    font-size: 2rem;
+    margin: 0;
+    margin-bottom: 5px;
+    line-height: 1.2;
+    font-weight: bold;
+    padding-bottom: 2px
+}
+
 .product-price {
-    padding: 4px 60px 4px 10px;
     background: rgb(245, 245, 245);
     margin-bottom: 20px;
     position: relative;
     display: flex;
     justify-content: space-between;
+    font-size: 1.6rem;
+    font-weight: bold;
 }
 
 .product-price .special-price {
-    font-size: 1.6rem;
-    font-weight: bold;
     color: #c30000;
 }
 
-.product-price .compare-price {
-    font-size: 1.6rem;
-    font-weight: bold;
-
+.product-price .basic-price {
     color: #7b7b7b;
     text-decoration: line-through;
     line-height: initial;
@@ -621,6 +601,30 @@
     width: 50%;
     border: none !important;
     outline: none !important;
+}
+
+:where(.css-diro6f).ant-tabs .ant-tabs-ink-bar {
+    color: #ba9344;
+}
+
+@media (max-width: 1200px) {
+    .title-product {
+        font-size: 1.7rem;
+    }
+
+    .product-price {
+        font-size: 1.4rem;
+    }
+
+    .product-btn .btn_base {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 991px) {
+    .product-detail-content {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 /* policy */

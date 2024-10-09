@@ -76,7 +76,7 @@ const ProductDetailPage = () => {
                 <LoadingDetail />
               ) :
                 (
-                  <div className='grid grid-cols-3 gap-3'>
+                  <div className='product-detail-content'>
                     <div className="product-image">
                       <div className="card">
                         <ZoomImage timesIncrease={2}>
@@ -161,7 +161,7 @@ const ProductDetailPage = () => {
                       />
                     </div>
                     <div className='product-description'>
-                      <h1 className='title-product text-[2rem] m-0 mb-[5px] leading-none font-bold pb-2'>{listDetail.name}</h1>
+                      <h1 className='title-product'>{listDetail.name}</h1>
                       <div className="inventory_quantity text-[1rem] flex mr-[15px]">
                         <span className='mb-break'>
                           <div className='stock-brand-title'>
@@ -180,7 +180,7 @@ const ProductDetailPage = () => {
                           <span>{listDetail.discountedPrice}đ</span>
                         </div>
 
-                        <div className='compare-price'>
+                        <div className='basic-price'>
                           <span>{listDetail.price}đ</span>
                         </div>
                       </div>

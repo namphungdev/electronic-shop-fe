@@ -179,11 +179,13 @@ export const Home = () => {
                     dataPrice.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product?.percentDiscount == null ?
-                            <div className="sale-badge">SALE</div>
-                            :
-                            <div className="sale-badge">Giảm {product?.percentDiscount}%</div>
-                          }
+                          {product.discountedPrice == null ? null : (
+                            product.percentDiscount ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : (
+                              <div className="sale-badge">SALE</div>
+                            )
+                          )}
                           <img
                             style={{ height: 'auto' }}
                             src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
@@ -246,6 +248,13 @@ export const Home = () => {
                     dataGachOpLat?.data.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          {product.discountedPrice == null ? null : (
+                            product.percentDiscount ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : (
+                              <div className="sale-badge">SALE</div>
+                            )
+                          )}
                           <img
                             style={{ height: 'auto' }}
                             srcSet={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
@@ -255,12 +264,21 @@ export const Home = () => {
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
                           <div className="price-box">
-                            <span className="price">
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className="compare-price">
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
+                            {product && product.discountedPrice == null && product.percentDiscount == null
+                              ?
+                              <span className="price">
+                                {Number(product.price).toLocaleString('vi-VN')}đ
+                              </span>
+                              :
+                              <>
+                                <span className="price">
+                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                </span>
+                                <span className="compare-price">
+                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                </span>
+                              </>
+                            }
                           </div>
                           <div className="product-button">
                             <Link to={PATH.contact} className="btn-sell-contact">
@@ -307,6 +325,13 @@ export const Home = () => {
                     dataTBVS?.data.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          {product.discountedPrice == null ? null : (
+                            product.percentDiscount ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : (
+                              <div className="sale-badge">SALE</div>
+                            )
+                          )}
                           <img
                             style={{ height: 'auto' }}
                             src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
@@ -316,12 +341,21 @@ export const Home = () => {
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
                           <div className="price-box">
-                            <span className="price">
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className="compare-price">
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
+                            {product && product.discountedPrice == null && product.percentDiscount == null
+                              ?
+                              <span className="price">
+                                {Number(product.price).toLocaleString('vi-VN')}đ
+                              </span>
+                              :
+                              <>
+                                <span className="price">
+                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                </span>
+                                <span className="compare-price">
+                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                </span>
+                              </>
+                            }
                           </div>
                           <div className="product-button">
                             <Link to={PATH.contact} className="btn-sell-contact">
@@ -368,6 +402,13 @@ export const Home = () => {
                     dataTON?.data.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          {product.discountedPrice == null ? null : (
+                            product.percentDiscount ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : (
+                              <div className="sale-badge">SALE</div>
+                            )
+                          )}
                           <img
                             style={{ height: 'auto' }}
                             src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
@@ -377,12 +418,21 @@ export const Home = () => {
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
                           <div className="price-box">
-                            <span className="price">
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className="compare-price">
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
+                            {product && product.discountedPrice == null && product.percentDiscount == null
+                              ?
+                              <span className="price">
+                                {Number(product.price).toLocaleString('vi-VN')}đ
+                              </span>
+                              :
+                              <>
+                                <span className="price">
+                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                </span>
+                                <span className="compare-price">
+                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                </span>
+                              </>
+                            }
                           </div>
                           <div className="product-button">
                             <Link to={PATH.contact} className="btn-sell-contact">

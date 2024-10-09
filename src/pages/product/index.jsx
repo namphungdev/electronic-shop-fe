@@ -116,6 +116,7 @@ const ProductPage = () => {
         setBreadcrumb(response.data.data.breakCumb || []);
         setItemPro(response.data.data.productCategory || []);
       } catch (error) {
+        setLoading(false);
         console.error('There has been a problem with your axios request:', error);
       } finally {
         setLoading(false);
@@ -202,7 +203,7 @@ const ProductPage = () => {
           <div className="">
             {loading ? (
               <div className="loading-container">
-                <Spin size="large" />
+                <Spin size='large' />
               </div>
             ) : (
               <>
@@ -211,7 +212,6 @@ const ProductPage = () => {
                     {toTitleCase(breadcrumb[breadcrumb.length - 1]?.name)}
                   </h2>
                 </div>
-
 
                 <div style={{ padding: 0 }} className='block-collection col-sm-12 col-12 col-md-12'>
                   <div className={`col-list-cate ${isMobile ? 'col-sm-12 col-12 col-md-12' : ''}`}>
@@ -244,17 +244,18 @@ const ProductPage = () => {
                   </div>
                 </div>
 
-
                 <div className="product-row">
                   {productList && productList.length > 0 ? (
                     productList.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product?.percentDiscount == null ?
-                            <div className="sale-badge">SALE</div>
-                            :
-                            <div className="sale-badge">Giảm {product?.percentDiscount}%</div>
-                          }
+                          {product.discountedPrice == null ? null : (
+                            product.percentDiscount ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : (
+                              <div className="sale-badge">SALE</div>
+                            )
+                          )}
                           <img
                             style={{ height: 'auto' }}
                             src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
@@ -264,12 +265,21 @@ const ProductPage = () => {
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
                           <div className="price-box">
-                            <span className="price">
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className="compare-price">
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
+                            {product && product.discountedPrice == null && product.percentDiscount == null
+                              ?
+                              <span className="price">
+                                {Number(product.price).toLocaleString('vi-VN')}đ
+                              </span>
+                              :
+                              <>
+                                <span className="price">
+                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                </span>
+                                <span className="compare-price">
+                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                </span>
+                              </>
+                            }
                           </div>
                           <div className="product-button">
                             <Link to={PATH.contact} className="btn-sell-contact">
@@ -289,64 +299,6 @@ const ProductPage = () => {
         </div>
       </section>
     </>
-  );
-};
-
-const LoadingDetail = () => {
-  return (
-    <div className="layout-collection">
-      <div className="container">
-        <div className="row">
-          {/* Title Skeleton */}
-          <div className="col-12 col-title">
-            <Skeleton width={200} height={30} className="mb-3" />
-          </div>
-
-          {/* Categories Skeleton */}
-          <div className="block-collection col-sm-12 col-12 col-md-12">
-            <div className="col-list-cate col-sm-12 col-12 col-md-12">
-              <div className="tab-ul">
-                <div className="menu-list">
-                  {createArray(4).map((_, id) => (
-                    <Skeleton key={id} width={100} height={30} className="cate-item mb-3" />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Sort Select Skeleton */}
-            <div className="ml-3">
-              <div className="select-container">
-                <Skeleton width={150} height={40} />
-              </div>
-            </div>
-          </div>
-
-          {/* Product List Skeleton */}
-          <div className="products-view my-5 col-sm-12 col-12 col-md-12">
-            <div className="container row">
-              <div className="product-detail">
-                {createArray(6).map((_, id) => (
-                  <div key={id} className="products-view-card mb-5">
-                    <Skeleton width={200} height={250} className="mb-3" />
-
-                    {/* Product Info Skeleton */}
-                    <div className="product-card-content">
-                      <Skeleton width={150} height={30} className="mb-2" />
-                      <div className="product-box mb-2">
-                        <Skeleton width={80} height={20} />
-                        <Skeleton width={80} height={20} className="ml-3" />
-                      </div>
-                      <Skeleton width={100} height={30} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 
