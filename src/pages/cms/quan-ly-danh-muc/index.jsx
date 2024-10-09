@@ -107,8 +107,8 @@ const CategoryManagement = () => {
         },
         {
             title: 'Loại sản phẩm',
-            dataIndex: 'productName',
-            key: 'productName',
+            dataIndex: 'productTypeName',
+            key: 'productTypeName',
         },
         {
             title: 'Danh mục con',

@@ -64,11 +64,14 @@ const TabCMS = () => {
   const [selectedKey, setSelectedKey] = useState('1-1');
 
   useEffect(() => {
-    if (user?.roleName === 'Admin') {
+    if (!user) {
+      navigate(PATH.authCMS);  // Chuyển hướng đến trang đăng nhập nếu không có user
+    } else if (user.roleName === 'Admin') {
       navigate(PATH.tabCMS);
     } else {
       navigate(PATH.authCMS);
     }
+
   }, [user, navigate]);
 
   const handleMenuClick = ({ key }) => {
@@ -113,6 +116,8 @@ const TabCMS = () => {
       label: 'Danh sách sản phẩm',
     },
   ];
+
+  console.log('user', user)
 
   return (
     <>
