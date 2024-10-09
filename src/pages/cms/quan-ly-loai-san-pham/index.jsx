@@ -80,6 +80,7 @@ const TypeProductManagement = () => {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProductSlug, setSelectedProductSlug] = useState(null);
+  const [total, setTotal] = useState(null);
   const [pagination, setPagination] = useState({
       current: 1,
       pageSize: 10,
@@ -160,6 +161,7 @@ const TypeProductManagement = () => {
         name: product.name,
         status: product.status,
       }));
+      setTotal(getProductsList?.totalRecords)
       setDataListProduct(formattedData);
       setPagination((prev) => ({
         ...prev,
@@ -280,7 +282,8 @@ const TypeProductManagement = () => {
           <Pagination
             current={pagination.current}
             pageSize={pagination.pageSize}
-            total={pagination.total}
+            total={total}
+            showTotal={(total) => `Tổng ${total} loại sản phẩm`}
             onChange={handleTableChange}
             showSizeChanger
             onShowSizeChange={handleTableChange}

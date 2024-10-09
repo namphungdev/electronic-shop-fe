@@ -82,6 +82,7 @@ const CategoryManagement = () => {
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
+    const [total, setTotal] = useState(null);
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
@@ -106,14 +107,8 @@ const CategoryManagement = () => {
         },
         {
             title: 'Loại sản phẩm',
-            dataIndex: 'productType',
-            key: 'productType',
-            render: (productType) => {
-                const name = productTypeList.find(
-                    (type) => type.code === productType
-                )?.name || 'N/A';
-                return name;
-            },
+            dataIndex: 'productName',
+            key: 'productName',
         },
         {
             title: 'Danh mục con',
@@ -198,6 +193,7 @@ const CategoryManagement = () => {
                 productType: item.productType,
                 status: item.status,
             }));
+            setTotal(getProductCategoryList?.totalRecords)
             setDataProductCategory(formattedData);
             setPagination((prev) => ({
                 ...prev,
@@ -336,7 +332,8 @@ const CategoryManagement = () => {
                 <Pagination
                     current={pagination.current}
                     pageSize={pagination.pageSize}
-                    total={pagination.total}
+                    total={total}
+                    showTotal={(total) => `Tổng ${total} danh mục sản phẩm`}
                     onChange={handleTableChange}
                     showSizeChanger
                     onShowSizeChange={handleTableChange}

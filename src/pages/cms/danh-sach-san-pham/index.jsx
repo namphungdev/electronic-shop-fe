@@ -80,7 +80,7 @@ const ProductListCMS = () => {
   const [dropdownProductCategory, setDropdownProductCategory] = useState(null);
   const [dropdownSubProCate, setDropdownSubProCate] = useState(null);
   const [dropdownProCate, setDropdownProCate] = useState(null);
-
+  const [total, setTotal] = useState(null);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProductSlug, setSelectedProductSlug] = useState(null);
@@ -247,6 +247,7 @@ const ProductListCMS = () => {
         productCategoryName: item.productCategoryName,
         subProductCategoryName: item.subProductCategoryName
       }));
+      setTotal(getDataProductList?.totalRecords)
       setDataListProduct(formattedData);
       setPagination((prev) => ({
         ...prev,
@@ -444,7 +445,7 @@ const ProductListCMS = () => {
           <Pagination
             current={pagination.current}
             pageSize={pagination.pageSize}
-            total={pagination.total}
+            total={total}
             onChange={handleTableChange}
             showSizeChanger
             onShowSizeChange={handleTableChange}

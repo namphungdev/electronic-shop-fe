@@ -158,7 +158,7 @@ const AddProductListCMS = () => {
       price: price,
       discountedPrice: discountedPrice,
       percentDiscount: percentDiscount,
-      images: transformedDataImg 
+      images: transformedDataImg
     }
 
     try {
@@ -307,6 +307,22 @@ const AddProductListCMS = () => {
     base_url: url
   }));
 
+  console.log('dropdownProductCategory', dropdownProductCategory)
+
+  const [showSubCategory, setShowSubCategory] = useState(false);
+
+  useEffect(() => {
+    const selectedCategory = dropdownProductCategory?.find(
+      (item) => item.code === productCategory
+    );
+    if (selectedCategory && selectedCategory.isSub) {
+      setShowSubCategory(true);
+    } else {
+      setShowSubCategory(false);
+    }
+  }, [productCategory, dropdownProductCategory]);
+
+
   return (
     <>
       <GlobalStyle />
@@ -417,7 +433,7 @@ const AddProductListCMS = () => {
                   {productCategoryError && <p className="text-red-500 text-sm mt-1">{productCategoryError}</p>}
                 </div>
               </div>
-              {dropdownProductCategory && dropdownProductCategory?.find((item) => item.isSub == true) ?
+              {/* {dropdownProductCategory && dropdownProductCategory?.find((item) => item.isSub == true) ?
                 (
                   <div className="col-md-3">
                     <div className="form-group">
@@ -444,7 +460,35 @@ const AddProductListCMS = () => {
                     </div>
                   </div>
                 ) : null
-              }
+              } */}
+              {showSubCategory && (
+                <div className="col-md-3">
+                  <div className="form-group">
+                    <label htmlFor="subProductCategory" className="block text-sm font-medium leading-6 text-gray-900">
+                      Danh mục sản phẩm phụ
+                    </label>
+                    <select
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
+                      id="subProductCategory"
+                      value={subProductCategory}
+                      onChange={handleInputChange('subProductCategory')}
+                    >
+                      {dropdownSubProductCategory && dropdownSubProductCategory.length === 0 ? (
+                        <option value={null} disabled>Chưa có dữ liệu nào</option>
+                      ) : (
+                        <>
+                          <option value="">Danh mục sản phẩm phụ</option>
+                          {dropdownSubProductCategory && dropdownSubProductCategory.map((item) => (
+                            <option key={item.id} value={item.code}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </>
+                      )}
+                    </select>
+                  </div>
+                </div>
+              )}
               <div className="col-md-3">
                 <div className="form-group">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -545,7 +589,7 @@ const AddProductListCMS = () => {
         footer={null}
       >
         <ImageUploaderComponent
-          onUploadComplete={handleUploadComplete} 
+          onUploadComplete={handleUploadComplete}
           initialImage={editingUrl}
         />
       </Modal>

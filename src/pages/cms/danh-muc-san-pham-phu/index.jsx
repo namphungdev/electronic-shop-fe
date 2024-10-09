@@ -82,6 +82,7 @@ const SubProductCategoryList = () => {
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
+    const [total, setTotal] = useState(null);
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
@@ -180,6 +181,7 @@ const SubProductCategoryList = () => {
                 productCategoryName: item.productCategoryName,
                 status: item.status,
             }));
+            setTotal(getSubProductCategory?.totalRecords)
             setDataListProductCategory(formattedData);
             setPagination((prev) => ({
                 ...prev,
@@ -324,7 +326,8 @@ const SubProductCategoryList = () => {
                     <Pagination
                         current={pagination.current}
                         pageSize={pagination.pageSize}
-                        total={pagination.total}
+                        total={total}
+                        showTotal={(total) => `Tổng ${total} danh mục sản phẩm phụ`}
                         onChange={handleTableChange}
                         showSizeChanger
                         onShowSizeChange={handleTableChange}

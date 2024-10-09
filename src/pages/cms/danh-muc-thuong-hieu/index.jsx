@@ -77,6 +77,7 @@ const BrandCategoryManagement = () => {
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
+    const [total, setTotal] = useState(null);
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
@@ -194,6 +195,7 @@ const BrandCategoryManagement = () => {
                 productCategoryName: item.productCategoryName,
                 status: item.status,
             }));
+            setTotal(getBrandCategoryList?.totalRecords)
             setDataBrandCategory(formattedData);
             setPagination((prev) => ({
                 ...prev,
@@ -352,7 +354,8 @@ const BrandCategoryManagement = () => {
                 <Pagination
                     current={pagination.current}
                     pageSize={pagination.pageSize}
-                    total={pagination.total}
+                    total={total}
+                    showTotal={(total) => `Tổng ${total} danh mục thương hiệu`}
                     onChange={handleTableChange}
                     showSizeChanger
                     onShowSizeChange={handleTableChange}

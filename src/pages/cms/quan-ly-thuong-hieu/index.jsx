@@ -79,6 +79,7 @@ const BranchManagement = () => {
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBranchSlug, setSelectedBranchSlug] = useState(null);
+    const [total, setTotal] = useState(null);
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
@@ -158,6 +159,7 @@ const BranchManagement = () => {
                 name: branch.name,
                 status: branch.status,
             }));
+            setTotal(getBranchList?.totalRecords)
             setDataListBranch(formattedData);
             setPagination((prev) => ({
                 ...prev,
@@ -278,7 +280,8 @@ const BranchManagement = () => {
                     <Pagination
                         current={pagination.current}
                         pageSize={pagination.pageSize}
-                        total={pagination.total}
+                        total={total}
+                        showTotal={(total) => `Tổng ${total} thương hiệu`}
                         onChange={handleTableChange}
                         showSizeChanger
                         onShowSizeChange={handleTableChange}
