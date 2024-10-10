@@ -11,6 +11,28 @@ import { toast } from 'react-toastify';
 const { Search } = Input;
 const { Option } = Select;
 
+const SelectWrapper = ({ label, children }) => (
+  <div style={{ position: 'relative' }}>
+    <label
+      style={{
+        position: 'absolute',
+        left: '10px',
+        top: '-8px',
+        fontSize: '12px',
+        color: '#aaa',
+        pointerEvents: 'none',
+        transition: 'all 0.2s ease',
+        backgroundColor: 'white',
+        padding: '0 5px',
+        zIndex: 1,
+      }}
+    >
+      {label}
+    </label>
+    <div style={{ width: '100%' }}>{children}</div>
+  </div>
+);
+
 const ContentContainer = styled.div`
 height: calc(100vh - 64px);
 overflow: hidden; 
@@ -82,11 +104,10 @@ const TypeProductManagement = () => {
   const [selectedProductSlug, setSelectedProductSlug] = useState(null);
   const [total, setTotal] = useState(null);
   const [pagination, setPagination] = useState({
-      current: 1,
-      pageSize: 10,
-      total: 0,
+    current: 1,
+    pageSize: 10,
+    total: 0,
   });
-
 
   const columns = [
     {
@@ -110,17 +131,23 @@ const TypeProductManagement = () => {
     {
       title: 'Hành động',
       key: 'action',
-      render: (_, record) => 
+      render: (_, record) =>
       (
         <>
           <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
             localStorage.setItem('product-type-slug', record.id)
             navigate(`${PATH.typeProductsCMSDetail}`)
-           }} />
+          }} />
           <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
         </>
       ),
     },
+  ];
+
+  const optionStatus = [
+    { value: null, label: 'Tất cả' },
+    { value: 'ACTIVE', label: 'Hoạt động' },
+    { value: 'INACTIVE', label: 'Không hoạt động' },
   ];
 
   const initialParams = {
@@ -247,17 +274,18 @@ const TypeProductManagement = () => {
                 style={{ maxWidth: '500px', flex: '1' }}
                 onSearch={handleSearch}
               />
-              <CustomSelect
-                placeholder="Trạng thái"
-                style={{ width: 200 }}
-                onChange={handleFilterStatus}
-                allowClear
-                defaultValue={null}
-              >
-                <Option value={null}>Tất cả</Option>
-                <Option value="ACTIVE">Hoạt động</Option>
-                <Option value="INACTIVE">Không hoạt động</Option>
-              </CustomSelect>
+              
+              <Space wrap>
+                <SelectWrapper label="Trạng thái">
+                  <Select
+                    value={filterStatus}
+                    style={{ width: 200 }}
+                    options={optionStatus}
+                    onChange={handleFilterStatus}
+                  />
+                </SelectWrapper>
+              </Space>
+              
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.typeProductsAddCMS)} type="primary">
               <span style={{

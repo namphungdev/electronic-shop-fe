@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
 import { toast } from 'react-toastify';
 const { Search } = Input;
-const { Option } = Select;
 
 const ContentContainer = styled.div`
 height: calc(100vh - 64px);
@@ -35,12 +34,6 @@ const CustomSearch = styled(Search)`
   }
 `;
 
-const CustomSelect = styled(Select)`
-  .ant-select-clear {
-    display: none
-  }
-`;
-
 const CustomButton = styled(Button)`
   display: flex;
   align-items: center;
@@ -57,6 +50,28 @@ const StyledTable = styled(Table)`
         background: #fff;
     }
 `;
+
+const SelectWrapper = ({ label, children }) => (
+  <div style={{ position: 'relative' }}>
+    <label
+      style={{
+        position: 'absolute',
+        left: '10px',
+        top: '-8px',
+        fontSize: '12px',
+        color: '#aaa',
+        pointerEvents: 'none',
+        transition: 'all 0.2s ease',
+        backgroundColor: 'white',
+        padding: '0 5px',
+        zIndex: 1,
+      }}
+    >
+      {label}
+    </label>
+    <div style={{ width: '100%' }}>{children}</div>
+  </div>
+);
 
 const locale = {
   items_per_page: '/ Trang',
@@ -109,8 +124,19 @@ const ProductListCMS = () => {
       });
     } else {
       setDropdownProductCategory([]);
+      setDropdownSubProCate([]);
     }
   }, [selectedProductType]);
+
+  useEffect(() => {
+    if (dropdownProCate) {
+      cmsTitles.getDropdownSubProductCategory(dropdownProCate).then((response) => {
+        setDropdownSubProCate(response?.data || []);
+      }).catch((error) => {
+        console.error("Failed to fetch product categories:", error);
+      });
+    }
+  }, [dropdownProCate]);
 
   const columns = [
     {
@@ -197,6 +223,25 @@ const ProductListCMS = () => {
     },
   ];
 
+  const optionStatus = [
+    { value: null, label: 'Tất cả' },
+    { value: 'ACTIVE', label: 'Hoạt động' },
+    { value: 'INACTIVE', label: 'Không hoạt động' },
+  ];
+
+  const optionProductTypes = [
+    ...productTypeList.map(productType => ({ value: productType.code, label: productType.name }))
+  ];
+
+  const optionProductCategory = dropdownProductCategory
+    ? dropdownProductCategory.map(item => ({ value: item.code, label: item.name }))
+    : [];
+
+  const optionSubProductCategory =
+    dropdownSubProCate
+      ? dropdownSubProCate.map(item => ({ value: item.code, label: item.name }))
+      : [];
+
   const initialParams = {
     keyword: "",
     pageIndex: 1,
@@ -215,7 +260,7 @@ const ProductListCMS = () => {
       status: filterStatus,
       productType: selectedProductType,
       productCategoryCode: dropdownProCate,
-      subProductCategoryCode: dropdownSubProCate
+      subProductCategoryCode: dropdownSubProCate?.length > 0 ? dropdownSubProCate.code : null,
     }),
     [searchKeyword, filterStatus, pagination.current, pagination.pageSize, selectedProductType, dropdownProCate, dropdownSubProCate]
   );
@@ -282,8 +327,13 @@ const ProductListCMS = () => {
     }));
   };
 
+  console.log('dropdownSubProCate ----', dropdownSubProCate)
+  console.log('dropdownProductCategory ----', dropdownProductCategory)
+  console.log('dropdownProCate ----', dropdownProCate)
+
   const handleProductTypeChange = (value) => {
     setSelectedProductType(value);
+    setDropdownProCate(null)
     setPagination((prev) => ({
       ...prev,
       current: 1,
@@ -360,66 +410,57 @@ const ProductListCMS = () => {
                 onSearch={handleSearch}
               />
 
-              <CustomSelect
-                placeholder="Trạng thái"
-                style={{ width: 200 }}
-                onChange={handleFilterStatus}
-                allowClear
-                defaultValue={null}
-              >
-                <Option value={null}>Tất cả</Option>
-                <Option value="ACTIVE">Hoạt động</Option>
-                <Option value="INACTIVE">Không hoạt động</Option>
-              </CustomSelect>
-
-              <CustomSelect
-                placeholder="Loại sản phẩm"
-                style={{ width: 200 }}
-                onChange={handleProductTypeChange}
-              >
-                {productTypeList.map((productType) => (
-                  <Option key={productType.id} value={productType.code}>
-                    {productType.name}
-                  </Option>
-                ))}
-              </CustomSelect>
-
-              <CustomSelect
-                placeholder="Danh mục sản phẩm"
-                style={{ width: 200 }}
-                onChange={handleProCateChange}
-                allowClear
-              >
-                {dropdownProductCategory && dropdownProductCategory.length === 0 ? (
-                  <Option value={null} disabled>Chưa có dữ liệu nào</Option>
-                ) : (
-                  <>
-                    {dropdownProductCategory && dropdownProductCategory.map((item) => (
-                      <Option key={item.id} value={item.code}>
-                        {item.name}
-                      </Option>
-                    ))}
-                  </>
-                )}
-              </CustomSelect>
-
-              {dropdownProductCategory && dropdownProductCategory.find((item) => item.isSub == true) ?
-                (
-                  <CustomSelect
-                    placeholder="Danh mục sản phẩm phụ"
+              <Space wrap>
+                <SelectWrapper label="Trạng thái">
+                  <Select
+                    value={filterStatus}
                     style={{ width: 200 }}
-                    onChange={handleSubProCate}
-                    allowClear
-                  >
-                    <Option value={null}>Tất cả</Option>
-                    {productTypeList.map((productType) => (
-                      <Option key={productType.id} value={productType.code}>
-                        {productType.name}
-                      </Option>
-                    ))}
-                  </CustomSelect>
+                    options={optionStatus}
+                    onChange={handleFilterStatus}
+                  />
+                </SelectWrapper>
+              </Space>
+
+              <Space wrap>
+                <SelectWrapper label="Loại sản phẩm">
+                  <Select
+                    value={selectedProductType}
+                    style={{ width: 200 }}
+                    options={optionProductTypes}
+                    onChange={handleProductTypeChange}
+                  />
+                </SelectWrapper>
+              </Space>
+
+
+
+              <Space wrap>
+                <SelectWrapper label="Danh mục sản phẩm">
+                  <Select
+                    value={dropdownProCate}
+                    style={{ width: 200 }}
+                    options={optionProductCategory}
+                    onChange={handleProCateChange}
+                  />
+                </SelectWrapper>
+              </Space>
+
+
+              {/* {dropdownSubProCate  &&  dropdownSubProCate?.length > 0 ?
+                (
+                  <Space wrap>
+                    <SelectWrapper label="Danh mục sản phẩm phụ">
+                      <Select
+                        value={dropdownSubProCate}
+                        style={{ width: 200 }}
+                        options={optionSubProductCategory}
+                        onChange={handleSubProCate}
+                      />
+                    </SelectWrapper>
+                  </Space>
+
                 ) : null
-              }
+              } */}
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.productListAddCMS)} type="primary">
               <span style={{
@@ -479,3 +520,36 @@ const ProductListCMS = () => {
 }
 
 export default ProductListCMS
+
+{/* <CustomSelect
+                placeholder="Danh mục sản phẩm"
+                style={{ width: 200 }}
+                onChange={handleProCateChange}
+                allowClear
+              >
+                {dropdownProductCategory && dropdownProductCategory.length === 0 ? (
+                  <Option value={null} disabled>Chưa có dữ liệu nào</Option>
+                ) : (
+                  <>
+                    {dropdownProductCategory && dropdownProductCategory.map((item) => (
+                      <Option key={item.id} value={item.code}>
+                        {item.name}
+                      </Option>
+                    ))}
+                  </>
+                )}
+              </CustomSelect> */}
+
+// <CustomSelect
+//   placeholder="Danh mục sản phẩm phụ"
+//   style={{ width: 200 }}
+//   onChange={handleSubProCate}
+//   allowClear
+// >
+//   <Option value={null}>Tất cả</Option>
+//   {productTypeList.map((productType) => (
+//     <Option key={productType.id} value={productType.code}>
+//       {productType.name}
+//     </Option>
+//   ))}
+// </CustomSelect>

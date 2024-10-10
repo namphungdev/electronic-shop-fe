@@ -7,9 +7,29 @@ import { cmsTitles } from '@/services/product.service';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
 import { toast } from 'react-toastify';
-
 const { Search } = Input;
-const { Option } = Select;
+
+const SelectWrapper = ({ label, children }) => (
+    <div style={{ position: 'relative' }}>
+        <label
+            style={{
+                position: 'absolute',
+                left: '10px',
+                top: '-8px',
+                fontSize: '12px',
+                color: '#aaa',
+                pointerEvents: 'none',
+                transition: 'all 0.2s ease',
+                backgroundColor: 'white',
+                padding: '0 5px',
+                zIndex: 1,
+            }}
+        >
+            {label}
+        </label>
+        <div style={{ width: '100%' }}>{children}</div>
+    </div>
+);
 
 const ContentContainer = styled.div`
 height: calc(100vh - 64px);
@@ -33,12 +53,6 @@ const CustomSearch = styled(Search)`
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-`;
-
-const CustomSelect = styled(Select)`
-  .ant-select-clear {
-    display: none
   }
 `;
 
@@ -138,6 +152,18 @@ const SubProductCategoryList = () => {
             ),
         },
     ];
+
+    const optionStatus = [
+        { value: null, label: 'Tất cả' },
+        { value: 'ACTIVE', label: 'Hoạt động' },
+        { value: 'INACTIVE', label: 'Không hoạt động' },
+    ];
+
+    const optionProductTypes = [
+        { value: null, label: 'Tất cả' },
+        ...dropdownProductCategory.map(productType => ({ value: productType.code, label: productType.name }))
+    ];
+
 
     const initialParams = {
         keyword: "",
@@ -277,31 +303,28 @@ const SubProductCategoryList = () => {
                                 onSearch={handleSearch}
                             />
 
-                            <CustomSelect
-                                placeholder="Trạng thái"
-                                style={{ width: 200 }}
-                                onChange={handleFilterStatus}
-                                allowClear
-                                defaultValue={null}
-                            >
-                                <Option value={null}>Tất cả</Option>
-                                <Option value="ACTIVE">Hoạt động</Option>
-                                <Option value="INACTIVE">Không hoạt động</Option>
-                            </CustomSelect>
+                            <Space wrap>
+                                <SelectWrapper label="Trạng thái">
+                                    <Select
+                                        value={filterStatus}
+                                        style={{ width: 200 }}
+                                        options={optionStatus}
+                                        onChange={handleFilterStatus}
+                                    />
+                                </SelectWrapper>
+                            </Space>
 
-                            <CustomSelect
-                                placeholder="Danh mục sản phẩm"
-                                style={{ width: 200 }}
-                                onChange={handleProductCategoryTypeChange}
-                                allowClear
-                            >
-                                <Option value={null}>Tất cả</Option>
-                                {dropdownProductCategory.map((item) => (
-                                    <Option key={item.id} value={item.code}>
-                                        {item.name}
-                                    </Option>
-                                ))}
-                            </CustomSelect>
+                            <Space wrap>
+                                <SelectWrapper label="Danh mục sản phẩm">
+                                    <Select
+                                        value={selectedProductCategoryType}
+                                        style={{ width: 200 }}
+                                        options={optionProductTypes}
+                                        onChange={handleProductCategoryTypeChange}
+                                    />
+                                </SelectWrapper>
+                            </Space>
+
                         </FilterContainer>
                         <CustomButton onClick={() => navigate(PATH.subProductCategoryAddCMS)} type="primary">
                             <span style={{

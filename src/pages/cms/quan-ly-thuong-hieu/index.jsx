@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '@/config';
 import { toast } from 'react-toastify';
 const { Search } = Input;
-const { Option } = Select;
 
 const ContentContainer = styled.div`
 height: calc(100vh - 64px);
@@ -71,6 +70,28 @@ const locale = {
     next_3: '3 trang sau',
 };
 
+const SelectWrapper = ({ label, children }) => (
+    <div style={{ position: 'relative' }}>
+        <label
+            style={{
+                position: 'absolute',
+                left: '10px',
+                top: '-8px',
+                fontSize: '12px',
+                color: '#aaa',
+                pointerEvents: 'none',
+                transition: 'all 0.2s ease',
+                backgroundColor: 'white',
+                padding: '0 5px',
+                zIndex: 1,
+            }}
+        >
+            {label}
+        </label>
+        <div style={{ width: '100%' }}>{children}</div>
+    </div>
+);
+
 const BranchManagement = () => {
     const navigate = useNavigate()
     const [dataListBranch, setDataListBranch] = useState([]);
@@ -119,6 +140,12 @@ const BranchManagement = () => {
                 </>
             ),
         },
+    ];
+
+    const optionStatus = [
+        { value: null, label: 'Tất cả' },
+        { value: 'ACTIVE', label: 'Hoạt động' },
+        { value: 'INACTIVE', label: 'Không hoạt động' },
     ];
 
     const initialParams = {
@@ -245,17 +272,18 @@ const BranchManagement = () => {
                                 style={{ maxWidth: '500px', flex: '1' }}
                                 onSearch={handleSearch}
                             />
-                            <CustomSelect
-                                placeholder="Trạng thái"
-                                style={{ width: 200 }}
-                                onChange={handleFilterStatus}
-                                allowClear
-                                defaultValue={null}
-                            >
-                                <Option value={null}>Tất cả</Option>
-                                <Option value="ACTIVE">Hoạt động</Option>
-                                <Option value="INACTIVE">Không hoạt động</Option>
-                            </CustomSelect>
+
+                            <Space wrap>
+                                <SelectWrapper label="Trạng thái">
+                                    <Select
+                                        value={filterStatus}
+                                        style={{ width: 200 }}
+                                        options={optionStatus}
+                                        onChange={handleFilterStatus}
+                                    />
+                                </SelectWrapper>
+                            </Space>
+
                         </FilterContainer>
                         <CustomButton onClick={() => navigate(PATH.brandAddCMS)} type="primary">
                             <span style={{
