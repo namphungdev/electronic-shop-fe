@@ -534,6 +534,28 @@
 
 /* product - slug */
 
+.product-image {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh giữ đúng tỷ lệ trong vùng chứa */
+  }
+  
+  .image-cover {
+    cursor: zoom-in;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+  
+
 .product-detail-content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

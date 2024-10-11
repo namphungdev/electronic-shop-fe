@@ -79,7 +79,7 @@ const ProductDetailPage = () => {
                   <div className='product-detail-content'>
                     <div className="product-image">
                       <div className="card">
-                        <ZoomImage timesIncrease={2}>
+                        {/* <ZoomImage timesIncrease={2}>
                           {({
                             handleMouseLeave,
                             handleZoomImage,
@@ -106,7 +106,45 @@ const ProductDetailPage = () => {
                               />
                             </div>
                           )}
-                        </ZoomImage>
+                        </ZoomImage> */}
+                        <ZoomImage timesIncrease={2}>
+  {({
+    handleMouseLeave,
+    handleZoomImage,
+    imageRef,
+    imageWrapperRef,
+    styleImage,
+  }) => (
+    <div
+      className={`mb-4 relative overflow-hidden h-[450px] cursor-zoom-in`}
+      ref={imageWrapperRef}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        height: '450px', // Cố định chiều cao của vùng chứa
+      }}
+    >
+      <img
+        ref={imageRef}
+        src={srcImg}
+        alt="..."
+        className="card-img-top relative top-0 left-0 w-full h-full object-cover"
+        style={{
+          ...styleImage,
+          //maxWidth: '100%',  // Đảm bảo ảnh không vượt quá kích thước vùng chứa
+          maxHeight: '100%',
+          //objectFit: 'cover',  // Giữ kích thước ảnh phù hợp trong vùng chứa
+        }}
+      />
+      <div
+        className="image-cover absolute inset-0 z-10"
+        onMouseMove={handleZoomImage}
+        onMouseLeave={handleMouseLeave}
+      />
+    </div>
+  )}
+</ZoomImage>
+
                       </div>
                       <div className='flickity-nav mx-n2 mb-10 mb-md-0 flex mt-5'>
                         {listDetail?.images?.slice(0, 4).map((e) => (
