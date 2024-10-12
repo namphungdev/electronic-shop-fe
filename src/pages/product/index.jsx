@@ -244,7 +244,7 @@ const ProductPage = () => {
                   </div>
                 </div>
 
-                <div className="product-row">
+                <div className="product-row product-content">
                   {productList && productList.length > 0 ? (
                     productList.map((product) => (
                       <div key={product.id} className="product-card">

@@ -62,7 +62,7 @@ const ProductDetailPage = () => {
               ) : (
                 <Skeleton width={577} height={18} borderRadius={4} />
               )
-            }
+              }
             </div>
           </div>
         </div>
@@ -108,42 +108,42 @@ const ProductDetailPage = () => {
                           )}
                         </ZoomImage> */}
                         <ZoomImage timesIncrease={2}>
-  {({
-    handleMouseLeave,
-    handleZoomImage,
-    imageRef,
-    imageWrapperRef,
-    styleImage,
-  }) => (
-    <div
-      className={`mb-4 relative overflow-hidden h-[450px] cursor-zoom-in`}
-      ref={imageWrapperRef}
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-        height: '450px', // Cố định chiều cao của vùng chứa
-      }}
-    >
-      <img
-        ref={imageRef}
-        src={srcImg}
-        alt="..."
-        className="card-img-top relative top-0 left-0 w-full h-full object-cover"
-        style={{
-          ...styleImage,
-          //maxWidth: '100%',  // Đảm bảo ảnh không vượt quá kích thước vùng chứa
-          maxHeight: '100%',
-          //objectFit: 'cover',  // Giữ kích thước ảnh phù hợp trong vùng chứa
-        }}
-      />
-      <div
-        className="image-cover absolute inset-0 z-10"
-        onMouseMove={handleZoomImage}
-        onMouseLeave={handleMouseLeave}
-      />
-    </div>
-  )}
-</ZoomImage>
+                          {({
+                            handleMouseLeave,
+                            handleZoomImage,
+                            imageRef,
+                            imageWrapperRef,
+                            styleImage,
+                          }) => (
+                            <div
+                              className={`mb-4 relative overflow-hidden h-[450px] cursor-zoom-in`}
+                              ref={imageWrapperRef}
+                              style={{
+                                position: 'relative',
+                                overflow: 'hidden',
+                                height: '450px', // Cố định chiều cao của vùng chứa
+                              }}
+                            >
+                              <img
+                                ref={imageRef}
+                                src={srcImg}
+                                alt="..."
+                                className="card-img-top relative top-0 left-0 w-full h-full object-cover"
+                                style={{
+                                  ...styleImage,
+                                  //maxWidth: '100%',  // Đảm bảo ảnh không vượt quá kích thước vùng chứa
+                                  maxHeight: '100%',
+                                  //objectFit: 'cover',  // Giữ kích thước ảnh phù hợp trong vùng chứa
+                                }}
+                              />
+                              <div
+                                className="image-cover absolute inset-0 z-10"
+                                onMouseMove={handleZoomImage}
+                                onMouseLeave={handleMouseLeave}
+                              />
+                            </div>
+                          )}
+                        </ZoomImage>
 
                       </div>
                       <div className='flickity-nav mx-n2 mb-10 mb-md-0 flex mt-5'>
@@ -214,13 +214,22 @@ const ProductDetailPage = () => {
                         </span>
                       </div>
                       <div className="product-price">
-                        <div className='special-price'>
-                          <span>{listDetail.discountedPrice}đ</span>
-                        </div>
 
-                        <div className='basic-price'>
-                          <span>{listDetail.price}đ</span>
-                        </div>
+                        {listDetail && listDetail.discountedPrice == null && listDetail.percentDiscount == null
+                          ?
+                          <span className="special-price">
+                            {Number(listDetail.price).toLocaleString('vi-VN')}đ
+                          </span>
+                          :
+                          <>
+                            <span className="special-price">
+                              {Number(listDetail.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="basic-price">
+                              {Number(listDetail.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </>
+                        }
                       </div>
                       <div className='product-btn'>
                         <Link type="button" className="btn_base" id="button-cart" to="/lien-he">
