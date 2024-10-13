@@ -104,6 +104,10 @@ export const productTiles = {
 }
 
 export const cmsTitles = {
+  // email 
+
+  sendEmail: (param) => http.post(`https://nhumaidao.somee.com/api/upload/send-mail-contact`, param),
+
   // dropdown
   getDropdownBrand: () =>
     http.get(`${CMS_API_HHB}/get-dropdown-brand`),

@@ -7,23 +7,40 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import useScrollTop from '@/hooks/useScrollTop';
 import './style.css';
+import { cmsTitles } from '@/services/product.service';
+import { PATH } from '@/config';
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const ContactPage = () => {
   useScrollTop();
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Tên của bạn là bắt buộc'),
-    email: Yup.string().required('Địa chỉ Email là bắt buộc').email('Địa chỉ Email không hợp lệ'),
+    // email: Yup.string().required('Địa chỉ Email là bắt buộc').email('Địa chỉ Email không hợp lệ'),
     phone: Yup.string().required('Điện thoại là bắt buộc').matches(/^[0-9]+$/, 'Điện thoại chỉ chứa số').min(10, 'Điện thoại phải có ít nhất 10 chữ số'),
-    enquiry: Yup.string().required('Nội dung là bắt buộc')
+    // enquiry: Yup.string().required('Nội dung là bắt buộc')
   });
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema)
   });
 
-  const onSubmit = data => {
-    console.log('Submitted Data:', data);
+  const onSubmit = async (data) => {
+    try {
+      const res = await cmsTitles.sendEmail(data);
+
+      if (res.result && res.code === 200) {
+        navigate(PATH.contact);
+        toast.success('Cảm ơn Quý Khách đã điền thông tin. Chúng tôi sẽ liên hệ đến Quý khách sớm nhất!');
+      } else {
+        throw new Error(res.message);
+      }
+    } catch (error) {
+      toast.error('Hệ thống gửi email đang bảo trì. Liên hệ số điện thoại 0911 315 315 để được liên lạc sớm nhất!');
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -81,7 +98,7 @@ const ContactPage = () => {
                       <div className="col-lg-6 col-md-6 col-sm-12 col-12">
                         <input
                           type="email"
-                          placeholder="Địa chỉ Email*"
+                          placeholder="Địa chỉ Email"
                           {...register('email')}
                           className={`form-control form-control-lg ${errors.email ? 'is-invalid' : ''}`}
                         />
@@ -99,7 +116,7 @@ const ContactPage = () => {
                       <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                         <textarea
                           name="enquiry"
-                          placeholder="Nội dung*"
+                          placeholder="Nội dung"
                           {...register('enquiry')}
                           className={`form-control form-control-lg ${errors.enquiry ? 'is-invalid' : ''}`}
                           rows="6"
