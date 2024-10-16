@@ -58,7 +58,7 @@ const AddProductListCMS = () => {
   const [productCategory, setProductCategory] = useState('');
   const [subProductCategory, setSubProductCategory] = useState(null);
   const [isPublished, setIsPublished] = useState(true);
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(null);
   const [description, setDescription] = useState('');
   const [percentDiscount, setPercentDiscount] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
@@ -73,7 +73,7 @@ const AddProductListCMS = () => {
   const [nameError, setNameError] = useState('');
   const [productTypeError, setProductTypeError] = useState('');
   const [productCategoryError, setProductCategoryError] = useState('');
-  const [priceError, setPriceError] = useState('');
+  // const [priceError, setPriceError] = useState('');
   const [imageError, setImageError] = useState('');
 
   const {
@@ -129,17 +129,17 @@ const AddProductListCMS = () => {
     }
 
     // Kiểm tra giá niêm yết
-    if (!price) {
-      setPriceError('Giá niêm yết không được để trống');
-      return;
-    }
+    // if (!price) {
+    //   setPriceError('Giá niêm yết không được để trống');
+    //   return;
+    // }
 
-    // Kiểm tra giá trị của `price` chỉ là số
-    const regex = /^\d*\.?\d*$/;
-    if (!regex.test(price)) {
-      setPriceError('Giá niêm yết phải là một số hợp lệ');
-      return;
-    }
+    // // Kiểm tra giá trị của `price` chỉ là số
+    // const regex = /^\d*\.?\d*$/;
+    // if (!regex.test(price)) {
+    //   setPriceError('Giá niêm yết phải là một số hợp lệ');
+    //   return;
+    // }
 
     // Kiểm tra hình ảnh
     if (dataImg.length === 0) {
@@ -160,6 +160,8 @@ const AddProductListCMS = () => {
       percentDiscount: percentDiscount,
       images: transformedDataImg
     }
+
+    console.log('params', params)
 
     try {
       const res = await cmsTitles.insertAddProduct(params);
@@ -187,22 +189,22 @@ const AddProductListCMS = () => {
         const codeConvert = convertVietnameseToNonAccented(value);
         setProductCode(codeConvert);
         break;
-      case 'price':
-        if (priceError) {
-          setPriceError('');
-        }
+      // case 'price':
+      //   if (priceError) {
+      //     setPriceError('');
+      //   }
 
-        const priceRegex = /^\d*\.?\d*$/;
-        if (priceRegex.test(value)) {
-          setPrice(value);
+      //   const priceRegex = /^\d*\.?\d*$/;
+      //   if (priceRegex.test(value)) {
+      //     setPrice(value);
 
-          // Cập nhật giá trị discountedPrice khi giá thay đổi
-          if (percentDiscount) {
-            const discountedPriceValue = value - (value * (percentDiscount / 100));
-            setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
-          }
-        }
-        break;
+      //     // Cập nhật giá trị discountedPrice khi giá thay đổi
+      //     if (percentDiscount) {
+      //       const discountedPriceValue = value - (value * (percentDiscount / 100));
+      //       setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
+      //     }
+      //   }
+      //   break;
       case 'percentDiscount':
         const percentValue = parseInt(value, 10);
         if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
@@ -502,7 +504,7 @@ const AddProductListCMS = () => {
                       onChange={handleInputChange('price')}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                     />
-                    {priceError && <p className="text-red-500 text-sm mt-1">{priceError}</p>}
+                    {/* {priceError && <p className="text-red-500 text-sm mt-1">{priceError}</p>} */}
                   </div>
                 </div>
               </div>

@@ -12,6 +12,12 @@ import {
   setUserAction,
 } from "./authReducer";
 
+function* handleUnauthorized() {
+  yield put(onLogout()); 
+  clearUser(); 
+  clearToken();
+}
+
 export function* loginWorker({ payload: { onSuccess, ...form } } = {}) {
   try {
     yield put(onSetLoadingAuth({ kind: "login", loading: true }));
@@ -46,7 +52,11 @@ export function* getUserWorker() {
       setUser(user?.data);
       yield put(onSetUser(user?.data));
     } catch (error) {
-      handleError(error);
+      if (error?.response?.status === 401) {
+        yield handleUnauthorized();
+      } else {
+        handleError(error);
+      }
     }
   }
 }

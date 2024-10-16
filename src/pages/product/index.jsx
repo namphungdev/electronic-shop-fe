@@ -275,7 +275,7 @@ const ProductPage = () => {
                             {product && product.discountedPrice == null && product.percentDiscount == null
                               ?
                               <span className="price">
-                                {Number(product.price).toLocaleString('vi-VN')}đ
+                                {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
                               </span>
                               :
                               <>
