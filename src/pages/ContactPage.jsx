@@ -20,7 +20,7 @@ const ContactPage = () => {
     name: Yup.string().required('Tên của bạn là bắt buộc'),
     // email: Yup.string().required('Địa chỉ Email là bắt buộc').email('Địa chỉ Email không hợp lệ'),
     phone: Yup.string().required('Điện thoại là bắt buộc').matches(/^[0-9]+$/, 'Điện thoại chỉ chứa số').min(10, 'Điện thoại phải có ít nhất 10 chữ số'),
-    // enquiry: Yup.string().required('Nội dung là bắt buộc')
+    // note: Yup.string().required('Nội dung là bắt buộc')
   });
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -32,7 +32,7 @@ const ContactPage = () => {
       const res = await cmsTitles.sendEmail(data);
 
       if (res.result && res.code === 200) {
-        navigate(PATH.contact);
+        navigate(PATH.home);
         toast.success('Cảm ơn Quý Khách đã điền thông tin. Chúng tôi sẽ liên hệ đến Quý khách sớm nhất!');
       } else {
         throw new Error(res.message);
@@ -115,13 +115,13 @@ const ContactPage = () => {
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                         <textarea
-                          name="enquiry"
+                          name="note"
                           placeholder="Nội dung"
-                          {...register('enquiry')}
-                          className={`form-control form-control-lg ${errors.enquiry ? 'is-invalid' : ''}`}
+                          {...register('note')}
+                          className={`form-control form-control-lg ${errors.note ? 'is-invalid' : ''}`}
                           rows="6"
                         />
-                        {errors.enquiry && <div className="invalid-feedback">{errors.enquiry.message}</div>}
+                        {errors.note && <div className="invalid-feedback">{errors.note.message}</div>}
                       </div>
                     </div>
                     <button className='btn-contact' type="submit">

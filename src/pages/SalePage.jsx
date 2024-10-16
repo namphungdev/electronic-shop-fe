@@ -55,7 +55,7 @@ const SalePage = () => {
             <div className="col-12">
               {!loadingDataPrice ? (
                 <Breadcrumb>
-                  <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+                  <Breadcrumb.Item to={PATH.home}>Trang chủ</Breadcrumb.Item>
                   <Breadcrumb.Item>Sản phẩm giảm giá</Breadcrumb.Item>
                 </Breadcrumb>
               ) : (

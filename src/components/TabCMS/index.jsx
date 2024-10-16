@@ -117,8 +117,6 @@ const TabCMS = () => {
     },
   ];
 
-  console.log('user', user)
-
   return (
     <>
       <GlobalStyle />

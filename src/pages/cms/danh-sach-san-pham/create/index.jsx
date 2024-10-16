@@ -307,8 +307,6 @@ const AddProductListCMS = () => {
     base_url: url
   }));
 
-  console.log('dropdownProductCategory', dropdownProductCategory)
-
   const [showSubCategory, setShowSubCategory] = useState(false);
 
   useEffect(() => {

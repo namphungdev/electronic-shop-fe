@@ -327,10 +327,6 @@ const ProductListCMS = () => {
     }));
   };
 
-  console.log('dropdownSubProCate ----', dropdownSubProCate)
-  console.log('dropdownProductCategory ----', dropdownProductCategory)
-  console.log('dropdownProCate ----', dropdownProCate)
-
   const handleProductTypeChange = (value) => {
     setSelectedProductType(value);
     setDropdownProCate(null)
@@ -445,22 +441,6 @@ const ProductListCMS = () => {
                 </SelectWrapper>
               </Space>
 
-
-              {/* {dropdownSubProCate  &&  dropdownSubProCate?.length > 0 ?
-                (
-                  <Space wrap>
-                    <SelectWrapper label="Danh mục sản phẩm phụ">
-                      <Select
-                        value={dropdownSubProCate}
-                        style={{ width: 200 }}
-                        options={optionSubProductCategory}
-                        onChange={handleSubProCate}
-                      />
-                    </SelectWrapper>
-                  </Space>
-
-                ) : null
-              } */}
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.productListAddCMS)} type="primary">
               <span style={{

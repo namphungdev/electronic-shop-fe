@@ -185,9 +185,16 @@ const ProductPage = () => {
             <div className="col-12">
               {!loading ? (
                 <Breadcrumb>
-                  <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+                  <Breadcrumb.Item to={PATH.home}>Trang chủ</Breadcrumb.Item>
                   {breadcrumb && breadcrumb.map((item, id) => (
-                    <Breadcrumb.Item key={id}>{toTitleCase(item.name)}</Breadcrumb.Item>
+                    <Breadcrumb.Item
+                      key={id}
+                      to={item.type === 1
+                        ? `${PATH.products}/${item.code}` // Nếu type là 1
+                        : `${PATH.products}/${item.type}-${item.code}`} // Nếu type là 2 hoặc 3
+                    >
+                      {toTitleCase(item.name)}
+                    </Breadcrumb.Item>
                   ))}
                 </Breadcrumb>
               ) : (

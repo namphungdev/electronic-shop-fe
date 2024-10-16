@@ -1,3 +1,7 @@
+:where(.css-diro6f).ant-btn-primary {
+    color: transparent;
+}
+
 .mid-bar {
     display: flex;
     align-items: center;

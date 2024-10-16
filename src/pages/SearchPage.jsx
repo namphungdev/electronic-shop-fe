@@ -57,7 +57,7 @@ const SearchPage = () => {
           <div className="row">
             <div className="col-12">
               <Breadcrumb>
-                <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+                <Breadcrumb.Item to={PATH.home}>Trang chủ</Breadcrumb.Item>
                 <Breadcrumb.Item>Tìm kiếm</Breadcrumb.Item>
               </Breadcrumb>
             </div>
