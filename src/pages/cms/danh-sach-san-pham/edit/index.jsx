@@ -42,7 +42,7 @@ const EditProductListCMS = () => {
   const [nameError, setNameError] = useState('');
   const [productTypeError, setProductTypeError] = useState('');
   const [productCategoryError, setProductCategoryError] = useState('');
-  const [priceError, setPriceError] = useState('');
+  // const [priceError, setPriceError] = useState('');
   const [imageError, setImageError] = useState('');
 
   useEffect(() => {
@@ -129,10 +129,10 @@ const EditProductListCMS = () => {
         const codeConvert = convertVietnameseToNonAccented(value);
         setProductCode(codeConvert);
         break;
-      case 'price':
-        if (priceError) {
-          setPriceError('');
-        }
+      // case 'price':
+      //   if (priceError) {
+      //     setPriceError('');
+      //   }
 
         const priceRegex = /^\d*\.?\d*$/;
         if (priceRegex.test(value)) {
@@ -207,18 +207,18 @@ const EditProductListCMS = () => {
       return;
     }
 
-    // Kiểm tra giá niêm yết
-    if (!price) {
-      setPriceError('Giá niêm yết không được để trống');
-      return;
-    }
+    // // Kiểm tra giá niêm yết
+    // if (!price) {
+    //   setPriceError('Giá niêm yết không được để trống');
+    //   return;
+    // }
 
-    // Kiểm tra giá trị của `price` chỉ là số
-    const regex = /^\d*\.?\d*$/;
-    if (!regex.test(price)) {
-      setPriceError('Giá niêm yết phải là một số hợp lệ');
-      return;
-    }
+    // // Kiểm tra giá trị của `price` chỉ là số
+    // const regex = /^\d*\.?\d*$/;
+    // if (!regex.test(price)) {
+    //   setPriceError('Giá niêm yết phải là một số hợp lệ');
+    //   return;
+    // }
 
     // Kiểm tra hình ảnh
     if (dataImg.length === 0) {
@@ -461,7 +461,7 @@ const EditProductListCMS = () => {
                         onChange={handleInputChange('price')}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                       />
-                      {priceError && <p className="text-red-500 text-sm mt-1">{priceError}</p>}
+                      {/* {priceError && <p className="text-red-500 text-sm mt-1">{priceError}</p>} */}
                     </div>
                   </div>
                 </div>

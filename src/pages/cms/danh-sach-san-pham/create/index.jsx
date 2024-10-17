@@ -134,7 +134,7 @@ const AddProductListCMS = () => {
     //   return;
     // }
 
-    // // Kiểm tra giá trị của `price` chỉ là số
+    // Kiểm tra giá trị của `price` chỉ là số
     // const regex = /^\d*\.?\d*$/;
     // if (!regex.test(price)) {
     //   setPriceError('Giá niêm yết phải là một số hợp lệ');
@@ -160,8 +160,6 @@ const AddProductListCMS = () => {
       percentDiscount: percentDiscount,
       images: transformedDataImg
     }
-
-    console.log('params', params)
 
     try {
       const res = await cmsTitles.insertAddProduct(params);
@@ -189,22 +187,22 @@ const AddProductListCMS = () => {
         const codeConvert = convertVietnameseToNonAccented(value);
         setProductCode(codeConvert);
         break;
-      // case 'price':
-      //   if (priceError) {
-      //     setPriceError('');
-      //   }
+      case 'price':
+        // if (priceError) {
+        //   setPriceError('');
+        // }
 
-      //   const priceRegex = /^\d*\.?\d*$/;
-      //   if (priceRegex.test(value)) {
-      //     setPrice(value);
+        const priceRegex = /^\d*\.?\d*$/;
+        if (priceRegex.test(value)) {
+          setPrice(value);
 
-      //     // Cập nhật giá trị discountedPrice khi giá thay đổi
-      //     if (percentDiscount) {
-      //       const discountedPriceValue = value - (value * (percentDiscount / 100));
-      //       setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
-      //     }
-      //   }
-      //   break;
+          // Cập nhật giá trị discountedPrice khi giá thay đổi
+          if (percentDiscount) {
+            const discountedPriceValue = value - (value * (percentDiscount / 100));
+            setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
+          }
+        }
+        break;
       case 'percentDiscount':
         const percentValue = parseInt(value, 10);
         if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
@@ -433,34 +431,7 @@ const AddProductListCMS = () => {
                   {productCategoryError && <p className="text-red-500 text-sm mt-1">{productCategoryError}</p>}
                 </div>
               </div>
-              {/* {dropdownProductCategory && dropdownProductCategory?.find((item) => item.isSub == true) ?
-                (
-                  <div className="col-md-3">
-                    <div className="form-group">
-                      <label htmlFor="subProductCategory" className="block text-sm font-medium leading-6 text-gray-900">Danh mục sản phẩm phụ</label>
-                      <select
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
-                        id="subProductCategory"
-                        value={subProductCategory}
-                        onChange={handleInputChange('subProductCategory')}
-                      >
-                        {dropdownSubProductCategory && dropdownSubProductCategory.length === 0 ? (
-                          <option value={null} disabled>Chưa có dữ liệu nào</option>
-                        ) : (
-                          <>
-                            <option value="">Danh mục sản phẩm phụ</option>
-                            {dropdownSubProductCategory && dropdownSubProductCategory.map((item) => (
-                              <option key={item.id} value={item.code}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </>
-                        )}
-                      </select>
-                    </div>
-                  </div>
-                ) : null
-              } */}
+              
               {showSubCategory && (
                 <div className="col-md-3">
                   <div className="form-group">

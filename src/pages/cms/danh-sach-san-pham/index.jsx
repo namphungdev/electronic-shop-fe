@@ -286,6 +286,7 @@ const ProductListCMS = () => {
         code: item.code,
         name: item.name,
         status: item.status,
+        isPublished: item.isPublished,
         price: item.price,
         percentDiscount: item.percentDiscount,
         discountedPrice: item.discountedPrice,
@@ -428,8 +429,6 @@ const ProductListCMS = () => {
                 </SelectWrapper>
               </Space>
 
-
-
               <Space wrap>
                 <SelectWrapper label="Danh mục sản phẩm">
                   <Select
@@ -500,36 +499,3 @@ const ProductListCMS = () => {
 }
 
 export default ProductListCMS
-
-{/* <CustomSelect
-                placeholder="Danh mục sản phẩm"
-                style={{ width: 200 }}
-                onChange={handleProCateChange}
-                allowClear
-              >
-                {dropdownProductCategory && dropdownProductCategory.length === 0 ? (
-                  <Option value={null} disabled>Chưa có dữ liệu nào</Option>
-                ) : (
-                  <>
-                    {dropdownProductCategory && dropdownProductCategory.map((item) => (
-                      <Option key={item.id} value={item.code}>
-                        {item.name}
-                      </Option>
-                    ))}
-                  </>
-                )}
-              </CustomSelect> */}
-
-// <CustomSelect
-//   placeholder="Danh mục sản phẩm phụ"
-//   style={{ width: 200 }}
-//   onChange={handleSubProCate}
-//   allowClear
-// >
-//   <Option value={null}>Tất cả</Option>
-//   {productTypeList.map((productType) => (
-//     <Option key={productType.id} value={productType.code}>
-//       {productType.name}
-//     </Option>
-//   ))}
-// </CustomSelect>
