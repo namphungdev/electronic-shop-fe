@@ -190,7 +190,7 @@ const ProductListCMS = () => {
       key: 'isPublished',
       render: (isPublished) => (
         <span>
-          {isPublished ? 'Không' : 'Có'}
+          {isPublished ? 'Có' : 'Không'}
         </span>
       ),
     },

@@ -134,13 +134,6 @@ const SalePage = () => {
                     <p>Không có sản phẩm nào.</p>
                   )}
                 </div>
-                {dataPrice && dataPrice.length > 5 ? (
-                  <div className="see-more-sale">
-                    <Link className="btn-see-more" to={PATH.sale}>
-                      Xem thêm
-                    </Link>
-                  </div>
-                ) : null}
               </>
             )}
           </div>
@@ -149,63 +142,5 @@ const SalePage = () => {
     </>
   )
 }
-
-const LoadingDetail = () => {
-  return (
-    <div className="layout-collection">
-      <div className="container">
-        <div className="row">
-          {/* Title Skeleton */}
-          <div className="col-12 col-title">
-            <Skeleton width={200} height={30} className="mb-3" />
-          </div>
-
-          {/* Categories Skeleton */}
-          <div className="block-collection col-sm-12 col-12 col-md-12">
-            <div className="col-list-cate">
-              <div className="tab-ul">
-                <div className="menu-list">
-                  {createArray(4).map((_, id) => (
-                    <Skeleton key={id} width={100} height={30} className="cate-item mb-3" />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Sort Select Skeleton */}
-            <div className="ml-3">
-              <div className="select-container">
-                <Skeleton width={150} height={40} />
-              </div>
-            </div>
-          </div>
-
-          {/* Product List Skeleton */}
-          <div className="products-view my-5 col-sm-12 col-12 col-md-12">
-            <div className="container row">
-              <div className="product-detail">
-                {createArray(6).map((_, id) => (
-                  <div key={id} className="products-view-card mb-5">
-                    <Skeleton width={200} height={250} className="mb-3" />
-
-                    {/* Product Info Skeleton */}
-                    <div className="product-card-content">
-                      <Skeleton width={150} height={30} className="mb-2" />
-                      <div className="product-box mb-2">
-                        <Skeleton width={80} height={20} />
-                        <Skeleton width={80} height={20} className="ml-3" />
-                      </div>
-                      <Skeleton width={100} height={30} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default SalePage
