@@ -83,7 +83,7 @@ const ImageUploaderComponent = ({ images, setImages, maxNumber, onUploadComplete
                 onChange={onChange}
                 maxNumber={maxNumber}
                 dataURLKey="data_url"
-                acceptType={["jpg", "png", "webp"]}
+                acceptType={["jpg", "png", "webp", "jpeg"]}
             >
                 {({
                     imageList,

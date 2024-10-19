@@ -93,8 +93,9 @@ const ProductListCMS = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedProductType, setSelectedProductType] = useState(null);
   const [dropdownProductCategory, setDropdownProductCategory] = useState(null);
-  const [dropdownSubProCate, setDropdownSubProCate] = useState(null);
   const [dropdownProCate, setDropdownProCate] = useState(null);
+  const [dropdownSubProCate, setDropdownSubProCate] = useState(null);
+  const [selectedSubProCate, setSelectedSubProCate] = useState(null);
   const [total, setTotal] = useState(null);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -237,10 +238,9 @@ const ProductListCMS = () => {
     ? dropdownProductCategory.map(item => ({ value: item.code, label: item.name }))
     : [];
 
-  const optionSubProductCategory =
-    dropdownSubProCate
-      ? dropdownSubProCate.map(item => ({ value: item.code, label: item.name }))
-      : [];
+  const optionSubProductCategory = dropdownSubProCate || []
+    ? dropdownSubProCate?.map(item => ({ value: item.code, label: item.name }))
+    : [];
 
   const initialParams = {
     keyword: "",
@@ -260,9 +260,9 @@ const ProductListCMS = () => {
       status: filterStatus,
       productType: selectedProductType,
       productCategoryCode: dropdownProCate,
-      subProductCategoryCode: dropdownSubProCate?.length > 0 ? dropdownSubProCate.code : null,
+      subProductCategoryCode: selectedSubProCate,
     }),
-    [searchKeyword, filterStatus, pagination.current, pagination.pageSize, selectedProductType, dropdownProCate, dropdownSubProCate]
+    [searchKeyword, filterStatus, pagination.current, pagination.pageSize, selectedProductType, dropdownProCate, selectedSubProCate]
   );
 
   const params = isFirstLoad ? initialParams : productListParam;
@@ -331,6 +331,7 @@ const ProductListCMS = () => {
   const handleProductTypeChange = (value) => {
     setSelectedProductType(value);
     setDropdownProCate(null)
+    setSelectedSubProCate(null)
     setPagination((prev) => ({
       ...prev,
       current: 1,
@@ -339,6 +340,7 @@ const ProductListCMS = () => {
 
   const handleProCateChange = (value) => {
     setDropdownProCate(value)
+    setSelectedSubProCate(null)
     setPagination((prev) => ({
       ...prev,
       current: 1,
@@ -346,7 +348,7 @@ const ProductListCMS = () => {
   }
 
   const handleSubProCate = (value) => {
-    setDropdownSubProCate(value)
+    setSelectedSubProCate(value)
     setPagination((prev) => ({
       ...prev,
       current: 1,
@@ -365,7 +367,6 @@ const ProductListCMS = () => {
     setSelectedProductSlug(slug);
     setIsModalOpen(true);
   };
-
 
   const handleDeleteProduct = async () => {
     setIsModalOpen(false);
@@ -439,6 +440,19 @@ const ProductListCMS = () => {
                   />
                 </SelectWrapper>
               </Space>
+
+              {dropdownSubProCate && dropdownSubProCate?.length > 0 ?
+                <Space wrap>
+                  <SelectWrapper label="Danh mục sản phẩm phụ">
+                    <Select
+                      value={selectedSubProCate}
+                      style={{ width: 200 }}
+                      options={optionSubProductCategory}
+                      onChange={handleSubProCate}
+                    />
+                  </SelectWrapper>
+                </Space> : null
+              }
 
             </FilterContainer>
             <CustomButton onClick={() => navigate(PATH.productListAddCMS)} type="primary">

@@ -88,6 +88,9 @@ export const Home = () => {
     keepStorage: false,
     queryFn: ({ signal }) => productTiles.webGetProductList(paramGachOpLat, signal),
     enabled: !!productCode,
+    staleTime: 1000 * 60 * 5, // Cache dữ liệu trong 5 phút để tránh gọi lại API
+    refetchOnWindowFocus: false, // Không refetch lại khi người dùng focus lại vào cửa sổ
+    cacheTime: 1000 * 60 * 30,
   });
 
   const paramTBVS = {
@@ -108,6 +111,9 @@ export const Home = () => {
     keepStorage: false,
     queryFn: ({ signal }) => productTiles.webGetProductList(paramTBVS, signal),
     enabled: !!productCode,
+    staleTime: 1000 * 60 * 5, // Cache dữ liệu trong 5 phút để tránh gọi lại API
+    refetchOnWindowFocus: false, // Không refetch lại khi người dùng focus lại vào cửa sổ
+    cacheTime: 1000 * 60 * 30,
   });
 
   const paramTON = {
@@ -128,6 +134,9 @@ export const Home = () => {
     keepStorage: false,
     queryFn: ({ signal }) => productTiles.webGetProductList(paramTON, signal),
     enabled: !!productCode,
+    staleTime: 1000 * 60 * 5, // Cache dữ liệu trong 5 phút để tránh gọi lại API
+    refetchOnWindowFocus: false, // Không refetch lại khi người dùng focus lại vào cửa sổ
+    cacheTime: 1000 * 60 * 30,
   });
 
   return (
