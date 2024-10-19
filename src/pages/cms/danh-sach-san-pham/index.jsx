@@ -41,13 +41,16 @@ const CustomButton = styled(Button)`
 `;
 
 const StyledTable = styled(Table)`
-    height: 400px;
-    overflow: auto;
+    height: 60vh;
+    .ant-table-body {
+      overflow-y: auto !important;
+      max-height: 52vh !important;
+    }
     .ant-table-header {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fff;
     }
 `;
 
@@ -141,6 +144,21 @@ const ProductListCMS = () => {
 
   const columns = [
     {
+      title: 'Hành động',
+      key: 'action',
+      width: 120,
+      render: (_, record) =>
+      (
+        <>
+          <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
+            localStorage.setItem('product-edit-slug', record.id)
+            navigate(`${PATH.productListDetail}`)
+          }} />
+          <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
+        </>
+      ),
+    },
+    {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
@@ -186,6 +204,20 @@ const ProductListCMS = () => {
       ),
     },
     {
+      title: 'Hình ảnh',
+      dataIndex: 'image',
+      key: 'image',
+      render: (image) => (
+        image ? (
+          <img
+            src={image ? image : null}
+            alt={image ? 'Published' : 'Not Published'}
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : <span>Không có ảnh</span>
+      ),
+    },
+    {
       title: 'Phát hành',
       dataIndex: 'isPublished',
       key: 'isPublished',
@@ -206,20 +238,6 @@ const ProductListCMS = () => {
         >
           {status === 'ACTIVE' ? 'Hoạt động' : 'Không hoạt động'}
         </Tag>
-      ),
-    },
-    {
-      title: 'Hành động',
-      key: 'action',
-      render: (_, record) =>
-      (
-        <>
-          <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-            localStorage.setItem('product-edit-slug', record.id)
-            navigate(`${PATH.productListDetail}`)
-          }} />
-          <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
-        </>
       ),
     },
   ];
@@ -287,6 +305,7 @@ const ProductListCMS = () => {
         name: item.name,
         status: item.status,
         isPublished: item.isPublished,
+        image: item?.images?.length > 0 ? item?.images[0].base_url : null,
         price: item.price,
         percentDiscount: item.percentDiscount,
         discountedPrice: item.discountedPrice,

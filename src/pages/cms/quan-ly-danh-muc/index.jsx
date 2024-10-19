@@ -64,13 +64,16 @@ const CustomButton = styled(Button)`
 `;
 
 const StyledTable = styled(Table)`
-    height: 55vh;
-    overflow: auto;
-        .ant-table-header {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        background: #fff;
+    height: 60vh;
+    .ant-table-body {
+      overflow-y: auto !important;
+      max-height: 52vh !important;
+    }
+    .ant-table-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fff;
     }
 `;
 
@@ -115,6 +118,22 @@ const CategoryManagement = () => {
 
     const columns = [
         {
+            title: 'Hành động',
+            key: 'action',
+            width: 120,
+            render: (_, record) => (
+                <>
+                    <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
+                        localStorage.setItem('product-category-id', record.id)
+                        navigate(`${PATH.categoriesCMSDetail}`)
+                    }
+                    }
+                    />
+                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
+                </>
+            ),
+        },
+        {
             title: 'Tên',
             dataIndex: 'name',
             key: 'name',
@@ -148,21 +167,7 @@ const CategoryManagement = () => {
                 </Tag>
             ),
         },
-        {
-            title: 'Hành động',
-            key: 'action',
-            render: (_, record) => (
-                <>
-                    <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-                        localStorage.setItem('product-category-id', record.id)
-                        navigate(`${PATH.categoriesCMSDetail}`)
-                    }
-                    }
-                    />
-                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
-                </>
-            ),
-        },
+
     ];
 
     const optionStatus = [

@@ -81,35 +81,30 @@ const TabCMS = () => {
 
   const menuItems = [
     {
+      key: '/admin/type-product-cms-management',
+      icon: <ShoppingCartOutlined />,
+      label: 'Quản lý loại sản phẩm',
+    },
+    {
       key: '/admin/branch-cms-management',
       icon: <TeamOutlined />,
       label: 'Quản lý thương hiệu',
-    },
-
-    {
-      key: '/admin/category-cms-management',
-      icon: <FileTextOutlined />,
-      label: 'Danh mục sản phẩm',
-    },
-
-    {
-      key: '/admin/sub-product-category-cms-management',
-      icon: <FileTextOutlined />,
-      label: 'Danh mục sản phẩm phụ',
-    },
-
+    },    
     {
       key: '/admin/branch-category-cms-management',
       icon: <UserSwitchOutlined />,
       label: 'Danh mục thương hiệu',
     },
-
     {
-      key: '/admin/type-product-cms-management',
-      icon: <ShoppingCartOutlined />,
-      label: 'Quản lý loại sản phẩm',
+      key: '/admin/category-cms-management',
+      icon: <FileTextOutlined />,
+      label: 'Danh mục sản phẩm',
     },
-
+    {
+      key: '/admin/sub-product-category-cms-management',
+      icon: <FileTextOutlined />,
+      label: 'Danh mục sản phẩm phụ',
+    },
     {
       key: '/admin/product-list-cms-management',
       icon: <ShoppingCartOutlined />,

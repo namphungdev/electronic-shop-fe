@@ -47,13 +47,16 @@ const CustomButton = styled(Button)`
 `;
 
 const StyledTable = styled(Table)`
-    height: 400px;
-    overflow: auto;
-        .ant-table-header {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        background: #fff;
+    height: 60vh;
+    .ant-table-body {
+      overflow-y: auto !important;
+      max-height: 52vh !important;
+    }
+    .ant-table-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fff;
     }
 `;
 
@@ -109,6 +112,21 @@ const BranchManagement = () => {
 
     const columns = [
         {
+            title: 'Hành động',
+            key: 'action',
+            width: 120,
+            render: (_, record) =>
+            (
+                <>
+                    <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
+                        localStorage.setItem('brand-slug', record.id)
+                        navigate(`${PATH.brandCMSDetail}`)
+                    }} />
+                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
+                </>
+            ),
+        },
+        {
             title: 'Tên thương hiệu',
             dataIndex: 'name',
             key: 'name',
@@ -126,20 +144,7 @@ const BranchManagement = () => {
                 </Tag>
             ),
         },
-        {
-            title: 'Hành động',
-            key: 'action',
-            render: (_, record) =>
-            (
-                <>
-                    <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-                        localStorage.setItem('brand-slug', record.id)
-                        navigate(`${PATH.brandCMSDetail}`)
-                    }} />
-                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
-                </>
-            ),
-        },
+        
     ];
 
     const optionStatus = [

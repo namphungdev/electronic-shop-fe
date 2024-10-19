@@ -63,13 +63,16 @@ const CustomButton = styled(Button)`
 `;
 
 const StyledTable = styled(Table)`
-    height: 400px;
-    overflow: auto;
-        .ant-table-header {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        background: #fff;
+    height: 60vh;
+    .ant-table-body {
+      overflow-y: auto !important;
+      max-height: 52vh !important;
+    }
+    .ant-table-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fff;
     }
 `;
 
@@ -115,6 +118,21 @@ const SubProductCategoryList = () => {
 
     const columns = [
         {
+            title: 'Hành động',
+            key: 'action',
+            width: 120,
+            render: (_, record) =>
+            (
+                <>
+                    <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
+                        localStorage.setItem('sub-product-category-slug', record.id)
+                        navigate(`${PATH.subProductCategoryDetail}`)
+                    }} />
+                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
+                </>
+            ),
+        },
+        {
             title: 'Tên danh mục sản phẩm phụ',
             dataIndex: 'name',
             key: 'name',
@@ -137,20 +155,7 @@ const SubProductCategoryList = () => {
                 </Tag>
             ),
         },
-        {
-            title: 'Hành động',
-            key: 'action',
-            render: (_, record) =>
-            (
-                <>
-                    <EditOutlined style={{ marginRight: 15, cursor: 'pointer', fontSize: '25px' }} onClick={() => {
-                        localStorage.setItem('sub-product-category-slug', record.id)
-                        navigate(`${PATH.subProductCategoryDetail}`)
-                    }} />
-                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: '25px' }} onClick={() => showDeleteConfirm(record.id)} />
-                </>
-            ),
-        },
+
     ];
 
     const optionStatus = [
