@@ -300,8 +300,9 @@ const CategoryManagement = () => {
         <ContentContainer>
             <Space className='my-3'>
                 <h3 style={{
-                    "color": '#696CFF',
-                    "font-weight": "700"
+                    color: '#696CFF', 
+                    fontWeight: '700', 
+                    marginBottom: '0' 
                 }}>Quản lý danh mục sản phẩm</h3>
             </Space>
             <div className="py-5 px-5 mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">

@@ -206,10 +206,10 @@ const ProductDetailPage = () => {
                             Tình trạng: {listDetail.quanlity >= 1 ? 'Còn hàng' : 'Hết hàng'}
                           </div>
                         </span>
-                        <span className="line-product">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        {/* <span className="line-product">&nbsp;&nbsp;|&nbsp;&nbsp;</span> */}
                         <span className='mb-break'>
                           <div className='stock-brand-title'>
-                            Số lượng: {listDetail.quanlity}
+                            {/* Số lượng: {listDetail.quanlity} */}
                           </div>
                         </span>
                       </div>
@@ -218,7 +218,7 @@ const ProductDetailPage = () => {
                         {listDetail && listDetail.discountedPrice == null && listDetail.percentDiscount == null
                           ?
                           <span className="special-price">
-                            {Number(listDetail.price).toLocaleString('vi-VN')}đ
+                            {listDetail.price ? Number(listDetail.price).toLocaleString('vi-VN') + 'đ' : null}
                           </span>
                           :
                           <>

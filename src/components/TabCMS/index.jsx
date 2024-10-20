@@ -119,7 +119,6 @@ const TabCMS = () => {
         <Layout
           style={{
             flex: 1,
-            padding: '24px 0',
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}

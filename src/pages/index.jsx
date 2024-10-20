@@ -223,7 +223,7 @@ export const Home = () => {
                     <p>Không có sản phẩm nào.</p>
                   )}
                 </div>
-                {dataPrice && dataPrice.length > 5 ? (
+                {dataPrice && dataPrice.length > 8 ? (
                   <div className="see-more-sale">
                     <Link className="btn-see-more" to={PATH.sale}>
                       Xem thêm

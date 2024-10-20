@@ -11,7 +11,7 @@ const { Search } = Input;
 
 const ContentContainer = styled.div`
 height: calc(100vh - 64px);
-overflow: hidden; 
+overflow: hidden;
 `;
 
 const Toolbar = styled.div`
@@ -162,21 +162,25 @@ const ProductListCMS = () => {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
+      width: 150,
     },
     {
       title: 'Tên danh mục sản phẩm',
       dataIndex: 'productCategoryName',
       key: 'productCategoryName',
+      width: 150,
     },
     {
       title: 'Tên danh mục sản phẩm phụ',
       dataIndex: 'subProductCategoryName',
       key: 'subProductCategoryName',
+      width: 150,
     },
     {
       title: 'Giá niêm yết',
       dataIndex: 'price',
       key: 'price',
+      width: 100,
       render: (price) => (
         <span>
           {price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', '') : ''}
@@ -187,6 +191,7 @@ const ProductListCMS = () => {
       title: 'Phần trăm giảm giá',
       dataIndex: 'percentDiscount',
       key: 'percentDiscount',
+      width: 100,
       render: (percentDiscount) => (
         <span>
           {percentDiscount !== null ? `${percentDiscount}%` : ''}
@@ -197,6 +202,7 @@ const ProductListCMS = () => {
       title: 'Giá được giảm',
       dataIndex: 'discountedPrice',
       key: 'discountedPrice',
+      width: 100,
       render: (discountedPrice) => (
         <span>
           {discountedPrice ? discountedPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', '') : ''}
@@ -413,8 +419,9 @@ const ProductListCMS = () => {
       <ContentContainer>
         <Space className='my-3'>
           <h3 style={{
-            "color": '#696CFF',
-            "font-weight": "700"
+            color: '#696CFF',
+            fontWeight: '700',
+            marginBottom: '0'
           }}>Quản lý danh sách sản phẩm</h3>
         </Space>
         <div className="py-5 px-5 mx-auto bg-white rounded-lg overflow-hidden shadow-xl ring-1 ring-gray-300 ring-opacity-50">
@@ -491,7 +498,6 @@ const ProductListCMS = () => {
             loading={loadingProductList}
             locale={{ emptyText: 'Không có kết quả hiển thị' }}
             pagination={false}
-            scroll={{ y: 300 }}
             sticky
           />
 

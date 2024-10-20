@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownAZ, faBan, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { CATEGORY_API_HHB, PATH, PRODUCT_API_HHB } from '@/config';
 import { Pagination, Spin } from 'antd';
 import axios from 'axios';
 import useScrollTop from '@/hooks/useScrollTop';
 import Skeleton from '@/components/Skeleton';
-import createArray from '@/utils/createArray';
-import { productTiles } from '@/services/product.service';
-import useQuery from '@/hooks/useQuery';
 import './style.css';
 
 const optionSort = [
@@ -42,7 +39,6 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [showNoProductsMessage, setShowNoProductsMessage] = useState(false);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -73,7 +69,7 @@ const ProductPage = () => {
   const param = {
     keyword: '',
     pageIndex: currentPage,
-    pageSize: 6,
+    pageSize: 10,
     code: codeParam,
     type: typeParam,
     order: order,
@@ -84,12 +80,12 @@ const ProductPage = () => {
     if (codeParam && typeParam) {
       setLoading(true);
       setProductList([]);
-      setShowNoProductsMessage(false);
       try {
         const response = await axios.post(`${PRODUCT_API_HHB}/web-get-product-list`, param);
-        const products = response.data.data.data || [];
-        setProductList(products);
+        setProductList(response.data.data.data || []);
         setTotalPages(response.data.data.totalPages || 1);
+        setTotalRecords(response.data.data.totalRecords
+        );
       } catch (error) {
         console.error('There has been a problem with your axios request:', error);
       } finally {
@@ -102,11 +98,6 @@ const ProductPage = () => {
     code: codeParam,
     type: typeParam
   }
-
-  // const { data: { data: products = [] } = {} } = useQuery({
-  //   enabled: false,
-  //   queryFn: ({ param2 }) => productTiles.getBreakcumb(...param2),
-  // });
 
   async function fetchBreadcrumb() {
     if (codeParam && typeParam) {
@@ -134,21 +125,6 @@ const ProductPage = () => {
     fetchBreadcrumb();
     setCurrentPage(1)
   }, [codeParam, typeParam]);
-
-  useEffect(() => {
-    let timeoutId;
-    if (!loading && productList.length === 0) {
-      timeoutId = setTimeout(() => {
-        setShowNoProductsMessage(true);
-      }, 2000);
-    } else {
-      setShowNoProductsMessage(false);
-    }
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [loading, productList]);
 
   const handleSortChange = (e) => {
     const selectedValue = Number(e.target.value);
@@ -305,6 +281,19 @@ const ProductPage = () => {
           </div>
         </div>
       </section>
+
+      {productList && productList.length > 0 ?
+        <section className='container flex justify-center mb-3'>
+          <Pagination
+            current={currentPage}  // Trang hiện tại
+            pageSize={10}     // Kích thước trang (10 sản phẩm mỗi trang)
+            total={totalPages}    // Tổng số sản phẩm
+            onChange={handlePageChange}  // Hàm xử lý khi đổi trang
+            showSizeChanger={false} // Ẩn tùy chọn thay đổi số sản phẩm/trang
+          />
+        </section>
+        : null
+      }
     </>
   );
 };

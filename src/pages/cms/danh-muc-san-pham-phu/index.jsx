@@ -71,7 +71,7 @@ const StyledTable = styled(Table)`
     .ant-table-header {
       position: sticky;
       top: 0;
-      z-index: 1;
+      zindex: 1;
       background: #fff;
     }
 `;
@@ -293,8 +293,9 @@ const SubProductCategoryList = () => {
             <ContentContainer>
                 <Space className='my-3'>
                     <h3 style={{
-                        "color": '#696CFF',
-                        "font-weight": "700"
+                        color: '#696CFF', 
+                        fontWeight: '700', 
+                        marginBottom: '0' 
                     }}>Quản lý danh mục sản phẩm phụ</h3>
                 </Space>
 
