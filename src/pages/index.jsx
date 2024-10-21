@@ -183,7 +183,7 @@ export const Home = () => {
               </div>
             ) : (
               <>
-                <div className="product-row product-sale">
+                <div className={dataPrice && dataPrice.length > 0 ? "product-row product-sale" : "product-sale"}>
                   {dataPrice && dataPrice.length > 0 ? (
                     dataPrice.map((product) => (
                       <div key={product.id} className="product-card">
@@ -252,7 +252,7 @@ export const Home = () => {
               </div>
             ) : (
               <>
-                <div className="product-row row">
+                <div className={dataGachOpLat && dataGachOpLat?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataGachOpLat && dataGachOpLat?.data?.length > 0 ? (
                     dataGachOpLat?.data.map((product) => (
                       <div key={product.id} className="product-card">
@@ -301,7 +301,7 @@ export const Home = () => {
                     <p>Không có sản phẩm nào.</p>
                   )}
                 </div>
-                {dataGachOpLat && dataPrice.length > 10 ? (
+                {dataGachOpLat && dataGachOpLat.length > 10 ? (
                   <div className="see-more-container">
                     <Link className="btn-see-more" to={`${PATH.products}/gach-op-lat`}>
                       Xem thêm
@@ -329,7 +329,7 @@ export const Home = () => {
               </div>
             ) : (
               <>
-                <div className="product-row row">
+                <div className={dataTBVS && dataTBVS?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataTBVS && dataTBVS?.data?.length > 0 ? (
                     dataTBVS?.data.map((product) => (
                       <div key={product.id} className="product-card">
@@ -406,7 +406,7 @@ export const Home = () => {
               </div>
             ) : (
               <>
-                <div className="product-row row">
+                <div className={dataTON && dataTON?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataTON && dataTON?.data?.length > 0 ? (
                     dataTON?.data.map((product) => (
                       <div key={product.id} className="product-card">

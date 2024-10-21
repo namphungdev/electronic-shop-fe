@@ -158,8 +158,8 @@
 
 .product-card img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 100% !important;
+    object-fit: contain;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     transition: transform 0.3s ease-in-out;
@@ -209,17 +209,17 @@
     font-weight: 800;
     display: block;
     width: auto;
-    font-size: 0.9rem;
     line-height: initial;
+    font-size: 0.9rem;
 }
 
 .compare-price {
     display: block;
     width: auto;
     color: #7b7b7b;
-    font-size: 0.9rem;
     text-decoration: line-through;
     line-height: initial;
+    font-size: 0.9rem;
 }
 
 .btn-sell-contact {
@@ -241,6 +241,7 @@
 .btn-sell-contact:hover {
     color: white;
 }
+
 
 /* CSS cho page Home -- Sản phẩm giá sale */
 
@@ -442,12 +443,31 @@
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 450px) {
     .text-nav-sale {
         font-size: 0.8rem;
     }
 
     .product-row {
-        grid-template-columns: repeat(1, 1fr);
+        gap: 5px;
+    }
+
+    .product-card-content {
+        padding: 5px;
+    }
+
+    .product-card-title {
+        font-size: 0.8rem;
+    }
+    .price-box {
+        padding: 10px 0px;
+    }
+
+    .price, .compare-price {
+        font-size: 0.7rem;
+    }
+
+    .btn-sell-contact {
+        font-size: 0.9rem;
     }
 }

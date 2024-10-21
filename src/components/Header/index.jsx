@@ -152,20 +152,6 @@ const Header = () => {
     fetchCategoryList(productCodes.tamOpNhuaCode, 'TẤM ỐP NHỰA');
   }, [productCodes]);
 
-  // const handleMenuClick = (item) => {
-  //   setActiveNav(item.to);
-
-  //   const matchingProduct = productTypeList.find(
-  //     (product) => product.productTypeName === item.nav
-  //   );
-
-  //   if (matchingProduct) {
-  //     navigate(`${PATH.products}/${matchingProduct.productTypeCode}`);
-  //   } else {
-  //     navigate(item.to);
-  //   }
-  // };
-
   const handleMenuClick = (item) => {
     const screenWidth = window.innerWidth;
     const isMobile = screenWidth < 768; // Kiểm tra màn hình nhỏ hơn 768px
@@ -186,6 +172,11 @@ const Header = () => {
       navigate(`${PATH.products}/${matchingProduct.productTypeCode}`);
     } else {
       navigate(item.to);
+    }
+
+    // Đóng Drawer trên mobile khi click vào một mục menu
+    if (isMobile) {
+      onClose(); // Ẩn menu Drawer
     }
   };
 
@@ -309,7 +300,6 @@ const Header = () => {
                 {renderMenuItems(headerNavs)}
               </Menu>
               <Button className="menu-bars" type="primary" onClick={showDrawer}>
-                <span style={{ paddingRight: '10px' }}>MENU</span>
                 <FontAwesomeIcon style={{ color: '#fff' }} icon={faBars} />
               </Button>
             </div>

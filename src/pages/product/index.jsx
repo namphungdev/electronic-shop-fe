@@ -155,7 +155,7 @@ const ProductPage = () => {
 
   return (
     <>
-      <nav className="py-3 bg-[#f5f5f5] mb-5">
+      <nav className="py-3 bg-[#f5f5f5]">
         <div className="container">
           <div className="row">
             <div className="col-12">

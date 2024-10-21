@@ -6,7 +6,8 @@ import useScrollTop from '@/hooks/useScrollTop';
 import { productTiles } from '@/services/product.service';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import './sale.css'
+// import './sale.css'
+import './style.css'
 
 const SalePage = () => {
   useScrollTop()
@@ -96,6 +97,57 @@ const SalePage = () => {
               </div>
             ) : (
               <>
+                <div className={dataPrice && dataPrice.length > 0 ? "product-row product-sale" : "product-sale"}>
+                  {dataPrice && dataPrice.length > 0 ? (
+                    dataPrice.map((product) => (
+                      <div key={product.id} className="product-card">
+                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
+                          {product.discountedPrice == null ? null : (
+                            product.percentDiscount ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : (
+                              <div className="sale-badge">SALE</div>
+                            )
+                          )}
+                          <img
+                            style={{ height: 'auto' }}
+                            src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+                            alt={product.name}
+                          />
+                        </Link>
+                        <div className="product-card-content">
+                          <h3 className="product-card-title">{product.name}</h3>
+                          <div className="price-box">
+                            <span className="price">
+                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                            </span>
+                            <span className="compare-price">
+                              {Number(product.price).toLocaleString('vi-VN')}đ
+                            </span>
+                          </div>
+                          <div className="product-button">
+                            <Link to={PATH.contact} className="btn-sell-contact">
+                              Liên hệ
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p>Không có sản phẩm nào.</p>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+          
+          {/* <div className="block-product-sell sell-content">
+            {loadingDataPrice ? (
+              <div className="loading-container">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <>
                 <div className="product-row product-sale">
                   {dataPrice && dataPrice.length > 0 ? (
                     dataPrice.map((product) => (
@@ -136,7 +188,7 @@ const SalePage = () => {
                 </div>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       </section>
     </>
