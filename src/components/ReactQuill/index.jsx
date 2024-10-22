@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react'; // Import ImageResize module
 import 'react-quill/dist/quill.snow.css';
+
+// Register ImageResize module
+Quill.register('modules/imageResize', ImageResize);
 
 const CustomQuillEditor = ({ value, onChange }) => {
   const toolbarOptions = [
@@ -17,11 +21,15 @@ const CustomQuillEditor = ({ value, onChange }) => {
     [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
     [{ 'font': [] }],
     [{ 'align': [] }],
-    ['clean'] // remove formatting button
+    ['clean'], // remove formatting button
   ];
 
   const modules = {
     toolbar: toolbarOptions,
+
+    imageResize: {
+      modules: ['Resize', 'DisplaySize'], 
+    },
   };
 
   useEffect(() => {
@@ -33,7 +41,7 @@ const CustomQuillEditor = ({ value, onChange }) => {
       value={value}
       onChange={onChange}
       modules={modules}
-      placeholder=""
+      placeholder="Start typing here..."
     />
   );
 };

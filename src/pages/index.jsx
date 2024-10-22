@@ -73,7 +73,7 @@ export const Home = () => {
   const paramGachOpLat = {
     keyword: "",
     pageIndex: 1,
-    pageSize: 8,
+    pageSize: 12,
     code: "gach-op-lat",
     type: 1,
     order: "id",
@@ -96,7 +96,7 @@ export const Home = () => {
   const paramTBVS = {
     keyword: "",
     pageIndex: 1,
-    pageSize: 8,
+    pageSize: 12,
     code: "thiet-bi-ve-sinh",
     type: 1,
     order: "id",
@@ -119,7 +119,7 @@ export const Home = () => {
   const paramTON = {
     keyword: "",
     pageIndex: 1,
-    pageSize: 8,
+    pageSize: 12,
     code: "tam-op-nhua",
     type: 1,
     order: "id",
@@ -254,7 +254,7 @@ export const Home = () => {
               <>
                 <div className={dataGachOpLat && dataGachOpLat?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataGachOpLat && dataGachOpLat?.data?.length > 0 ? (
-                    dataGachOpLat?.data.map((product) => (
+                    dataGachOpLat?.data?.slice(0, 10).map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
                           {product.discountedPrice == null ? null : (
@@ -301,7 +301,7 @@ export const Home = () => {
                     <p>Không có sản phẩm nào.</p>
                   )}
                 </div>
-                {dataGachOpLat && dataGachOpLat.length > 10 ? (
+                {dataGachOpLat && dataGachOpLat?.data?.length > 10 ? (
                   <div className="see-more-container">
                     <Link className="btn-see-more" to={`${PATH.products}/gach-op-lat`}>
                       Xem thêm
@@ -331,7 +331,7 @@ export const Home = () => {
               <>
                 <div className={dataTBVS && dataTBVS?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataTBVS && dataTBVS?.data?.length > 0 ? (
-                    dataTBVS?.data.map((product) => (
+                    dataTBVS?.data.slice(0, 10).map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
                           {product.discountedPrice == null ? null : (
@@ -408,7 +408,7 @@ export const Home = () => {
               <>
                 <div className={dataTON && dataTON?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataTON && dataTON?.data?.length > 0 ? (
-                    dataTON?.data.map((product) => (
+                    dataTON?.data?.slice(0, 10).map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
                           {product.discountedPrice == null ? null : (

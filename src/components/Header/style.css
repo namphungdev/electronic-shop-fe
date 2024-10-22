@@ -268,12 +268,12 @@
 
 @media (max-width: 768px) { 
     .search-modal-content input {
-        width: 280px;
+        width: 220px;
     }
 }
 
 @media (max-width: 400px) { 
     .search-modal-content input {
-        width: 230px;
+        width: 190px;
     }
 }
