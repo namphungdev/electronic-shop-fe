@@ -6,9 +6,9 @@
 .layout-collection .col-list-cate .tab-ul .menu-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; 
-    justify-content: flex-start; 
-    max-width: 100%; 
+    gap: 10px;
+    justify-content: flex-start;
+    max-width: 100%;
 }
 
 .layout-collection .col-list-cate .tab-ul .menu-list .cate-item {
@@ -347,7 +347,7 @@
 
     .ml-3 {
         margin-top: -10px;
-    } 
+    }
 }
 
 @media (max-width: 500px) {
@@ -366,11 +366,13 @@
     .product-card-title {
         font-size: 0.8rem;
     }
+
     .price-box {
         padding: 10px 0px;
     }
 
-    .price, .compare-price {
+    .price,
+    .compare-price {
         font-size: 0.7rem;
     }
 
@@ -387,15 +389,15 @@
 .product-image {
     position: relative;
     overflow: hidden;
-  }
-  
-  .product-image img {
+}
+
+.product-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain; 
-  }
-  
-  .image-cover {
+    object-fit: contain;
+}
+
+.image-cover {
     cursor: zoom-in;
     position: absolute;
     top: 0;
@@ -403,8 +405,8 @@
     width: 100%;
     height: 100%;
     z-index: 10;
-  }
-  
+}
+
 
 .product-detail-content {
     display: grid;
@@ -479,27 +481,11 @@
     color: #ba9344;
 }
 
-@media (max-width: 1200px) {
-    .title-product {
-        font-size: 1.7rem;
-    }
-
-    .product-price {
-        font-size: 1.4rem;
-    }
-
-    .product-btn .btn_base {
-        font-size: 1.4rem;
-    }
-}
-
-@media (max-width: 991px) {
-    .product-detail-content {
-        grid-template-columns: repeat(1, 1fr);
-    }
-}
-
 /* policy */
+
+.product-commit {
+    display: none;
+}
 
 .policy-item {
     padding: 10px 10px 10px 28px;
@@ -530,7 +516,7 @@
 }
 
 .policy-item .icon-policy {
-    width: 40px;
+    width: auto;
     height: 40px;
     position: relative;
     aspect-ratio: 1
@@ -572,4 +558,41 @@
     background-color: #f5f5f5;
     border: 1px solid #ddd;
     padding: 20px;
+}
+
+@media (max-width: 1200px) {
+    .title-product {
+        font-size: 1.7rem;
+    }
+
+    .product-price {
+        font-size: 1.4rem;
+    }
+
+    .product-btn .btn_base {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 991px) {
+    .product-detail-content {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .product-commit-mobile {
+        display: block;
+    }
+
+    .policy-item .icon-policy {
+        height: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .description-slug img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
 }

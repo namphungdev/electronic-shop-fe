@@ -250,6 +250,22 @@ svg.svg-inline--fa.fa-house-chimney {
   }
 }
 
+@media (max-width: 768px) {
+  .out-circle {
+    width: 45px;
+    height: 45px;
+  }
+
+  .out-circle .main-icon .icon-svg, .out-circle .close-icon .icon-svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .out-circle .main-icon .text-sp {
+    font-size: 0.5rem;
+  }
+}  
+
 @media (max-width: 578px) {
   .col-6 {
     width: 100%;

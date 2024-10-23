@@ -12,20 +12,26 @@
 .mid-bar-content {
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
     justify-content: space-around;
     width: 100%;
 }
 
 .mid-bar-content .logo-wrapper {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+
 #logo img {
-    /* width: 70px; */
     width: 60px;
     height: auto;
     object-fit: cover;
+}
+
+.header-title {
+    display: none
 }
 
 .flex-class {
@@ -36,7 +42,6 @@
 
 .search-modal-content input {
     width: 450px;
-    /* height: 45px; */
     height: 35px;
     border-radius: 25px;
     padding-left: 20px;
@@ -68,13 +73,18 @@
     border-radius: 4px;
 }
 
+.search-input:focus {
+    border-color: #ccc;
+    outline: none;
+}
+
 .search-icon {
     position: absolute;
     right: 10%;
     top: 50%;
     transform: translateY(-50%);
-    color: red;
-    pointer-events: none;
+    color: #ba9344;
+    /* pointer-events: none; */
 }
 
 .sticky-bottom-bar {
@@ -89,7 +99,6 @@
 
 .bottom-bar {
     background-color: #ba9344;
-    /* padding: 10px 20px; */
     padding: 0px;
 }
 
@@ -226,6 +235,101 @@
 }
 
 @media (max-width: 768px) {
+    .header-title {
+        display: inline;
+        margin-left: 10px;
+        color: #ba9344;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 36px;
+    }
+
+    .mid-bar-content {
+        justify-content: space-between;
+    }
+
+    .search-modal-content input {
+        width: 120px;
+    }
+
+    .search-icon svg {
+        font-size: larger;
+    }
+
+    .contact-phone,
+    .contact-address {
+        display: none
+    }
+
+    .search-bars {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: #ba9344;
+    }
+
+    button.ant-btn.css-dev-only-do-not-override-diro6f.ant-btn-primary.search-bars {
+        background-color: #fff;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-input {
+        display: none;
+        transition: all 0.3s ease;
+    }
+
+    .search-input.show {
+        display: block;
+    }
+
+    .menu-bar {
+        display: none;
+    }
+
+    .menu-bars {
+        display: inline-block;
+        margin-left: 20px;
+    }
+
+    .menu-bars svg {
+        color: #ba9344;
+        font-size: larger;
+    }
+
+    button.ant-btn.css-dev-only-do-not-override-diro6f.ant-btn-primary.menu-bars {
+        background-color: #ba9344;
+        display: flex;
+        align-items: center;
+    }
+
+    :where(.css-dev-only-do-not-override-diro6f).ant-drawer .ant-drawer-body {
+        padding: 0;
+    }
+
+    svg.svg-inline--fa.fa-chevron-down.fa-xs {
+        display: none
+    }
+
+    :where(.css-dev-only-do-not-override-diro6f).ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover {
+        background-color: #ba9344;
+    }
+
+    :where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item-selected {
+        background-color: #ba9344;
+    }
+
+    :where(.css-diro6f).ant-btn-primary:not(:disabled):hover {
+        background-color: #ba9344 !important;
+    }
+}
+
+/* @media (max-width: 768px) {
     .mid-bar-content {
         justify-content: space-between;
     }
@@ -287,6 +391,11 @@
         display: inline-block;
     }
 
+    .menu-bars svg {
+        color: #ba9344;
+        font-size: x-large;
+    }
+
     button.ant-btn.css-dev-only-do-not-override-diro6f.ant-btn-primary.menu-bars {
         background-color: #ba9344;
         display: flex;
@@ -312,4 +421,4 @@
     :where(.css-diro6f).ant-btn-primary:not(:disabled):hover {
         background-color: #ba9344 !important;
     }
-}
+} */

@@ -79,34 +79,6 @@ const ProductDetailPage = () => {
                   <div className='product-detail-content'>
                     <div className="product-image">
                       <div className="card">
-                        {/* <ZoomImage timesIncrease={2}>
-                          {({
-                            handleMouseLeave,
-                            handleZoomImage,
-                            imageRef,
-                            imageWrapperRef,
-                            styleImage,
-                          }) => (
-                            <div
-                              className={`mb-4 overflow-hidden relative h-[450px] cursor-zoom-in`}
-                              id="productSlider"
-                              ref={imageWrapperRef}
-                            >
-                              <img
-                                ref={imageRef}
-                                src={srcImg}
-                                alt="..."
-                                className="card-img-top relative top-0 left-0 h-full object-cover"
-                                style={styleImage}
-                              />
-                              <div
-                                className="image-cover absolute inset-0 z-10"
-                                onMouseMove={handleZoomImage}
-                                onMouseLeave={handleMouseLeave}
-                              />
-                            </div>
-                          )}
-                        </ZoomImage> */}
                         <ZoomImage timesIncrease={2}>
                           {({
                             handleMouseLeave,
@@ -144,9 +116,8 @@ const ProductDetailPage = () => {
                             </div>
                           )}
                         </ZoomImage>
-
                       </div>
-                      <div className='flickity-nav mx-n2 mb-10 mb-md-0 flex mt-5'>
+                      <div className='flickity-nav mx-n2 mb-md-0 flex mt-5'>
                         {listDetail?.images?.slice(0, 4).map((e) => (
                           <div
                             className="col-12 cursor-pointer px-2"
@@ -286,8 +257,8 @@ const ProductDetailPage = () => {
       </section >
       {/* Description */}
       <section>
-        <div className='container'>
-          <Tabs className='my-10' defaultActiveKey="1">
+        <div className='description-slug container'>
+          <Tabs className='my-3' defaultActiveKey="1">
             <TabPane tab="Thông tin" key="1">
               {listDetail?.description !== null || listDetail?.description !== '' ?
                 <div style={{
@@ -302,7 +273,49 @@ const ProductDetailPage = () => {
             </TabPane>
           </Tabs>
         </div>
+      </section>
 
+      <section>
+        <div className='product-commit-mobile container mb-7'>
+          <div className="block-policy">
+            <div className='policy-item'>
+              <span className='marker-policy'>1</span>
+              <div className='icon-policy'>
+                <img src="/img/product_policy_1.svg" alt="Cam kết chính hãng 100%" />
+              </div>
+              <div className='info-policy'>
+                Cam kết chính hãng 100%
+              </div>
+            </div>
+            <div className='policy-item'>
+              <span className='marker-policy'>2</span>
+              <div className='icon-policy'>
+                <img src="/img/product_policy_2.svg" alt="Bảo hành chính hãng" />
+              </div>
+              <div className='info-policy'>
+                Bảo hành chính hãng
+              </div>
+            </div>
+            <div className='policy-item'>
+              <span className='marker-policy'>3</span>
+              <div className='icon-policy'>
+                <img src="/img/product_policy_3.svg" alt="Đổi trả hàng trong 7 ngày" />
+              </div>
+              <div className='info-policy'>
+                Đổi trả hàng trong 7 ngày
+              </div>
+            </div>
+            <div className='policy-item'>
+              <span className='marker-policy'>4</span>
+              <div className='icon-policy'>
+                <img style={{ marginTop: '-7px' }} src="/img/free-ship.png" alt="Miễn phí vận chuyển TPHCM" />
+              </div>
+              <div className='info-policy'>
+                Miễn phí vận chuyển TPHCM
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );

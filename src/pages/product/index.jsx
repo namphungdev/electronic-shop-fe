@@ -288,6 +288,7 @@ const ProductPage = () => {
             pageSize={10}          // Kích thước trang cố định là 10 sản phẩm mỗi trang
             total={totalRecords}   // Tổng số bản ghi từ API
             onChange={handlePageChange}  // Hàm xử lý khi đổi trang
+            showSizeChanger={false}
           />
         </section>
         : null

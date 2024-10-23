@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faLocationDot, faMagnifyingGlass, faPhoneVolume, faBars } from '@fortawesome/free-solid-svg-icons';
 import { productTiles } from '@/services/product.service';
 import axios from 'axios';
+import { MenuOutlined, SearchOutlined } from '@ant-design/icons';
 import "./style.css"
 
 const HeaderNavs = [
@@ -56,16 +57,18 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState('');
   const [visible, setVisible] = useState(false);
   const [searchVisible, setSearchVisible] = useState(false);
+  console.log('searchVisible', searchVisible)
   const searchRef = useRef(null);
 
   const toggleSearch = () => {
-    setSearchVisible((prevState) => !prevState); // Toggle visibility
+    console.log('toggleSearch clicked');
+    setSearchVisible(prevState => !prevState);
   };
 
   // Hàm xử lý khi click bên ngoài
   const handleClickOutside = (event) => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
-      setSearchVisible(false); // Ẩn modal nếu cần
+      setSearchVisible(false);
     }
   };
 
@@ -268,9 +271,6 @@ const Header = () => {
         <div className='header header-mege header-lg'>
           <div className="mid-bar navbar-nav">
             <div className="container mid-bar-content">
-              <Button className="menu-bars" type="primary" onClick={showDrawer}>
-                <FontAwesomeIcon style={{ color: '#fff' }} icon={faBars} />
-              </Button>
               <div class="desktop logo-wrapper">
                 <div id="logo">
                   <a href="/">
@@ -280,44 +280,43 @@ const Header = () => {
                     />
                   </a>
                 </div>
+                <div className='header-title'>
+                  GẠCH 315
+                </div>
               </div>
+
               <div className="header-right flex-class">
                 <div className="header-search">
                   <div className="search-modal-overlay">
-                    <div className="container search-modal-container">
-                      <div
-                        className="search-modal-content"
-                      >
-                        <input
-                          type="text"
-                          className={`search-input ${searchVisible ? 'show' : ''}`}
-                          ref={searchRef}
-                          placeholder="Tìm kiếm"
-                          value={searchValue}
-                          onChange={(e) => setSearchValue(e.target.value)}
-                          onKeyDown={handleKeyDown}
-                        />
-                        <Button
-                          className='search-bars'
-                          onClick={toggleSearch}
-                          style={{
-                            backgroundColor: searchVisible ? '#fff' : '#ba9344',
-                          }}
+                    <div className="search-modal-container">
+                      {searchVisible && (
+                        <div
+                          className="search-modal-content"
                         >
-                          <FontAwesomeIcon
-                            style={{ color: searchVisible ? '#ba9344' : 'white' }}
-                            icon={faMagnifyingGlass}
+                          <input
+                            type="text"
+                            className={`search-input ${searchVisible ? 'show' : ''}`}
+                            ref={searchRef}
+                            placeholder="Tìm kiếm"
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            onKeyDown={handleKeyDown}
                           />
-                        </Button>
-                        <FontAwesomeIcon
-                          className='search-icon'
-                          style={{ color: '#ba9344' }}
-                          icon={faMagnifyingGlass}
-                        />
-                      </div>
+                          <SearchOutlined className='search-icon' color='#ba9344' />
+                        </div>
+                      )
+                      }
+                      
+                      <SearchOutlined
+                        className='search-icon'
+                        color='#ba9344'
+                        onClick={toggleSearch} 
+                      />
                     </div>
                   </div>
                 </div>
+
+                <MenuOutlined className="menu-bars" color='#ba9344' onClick={showDrawer} />
 
                 <div className='contact-phone' style={{ marginRight: '15px' }}>
                   <FontAwesomeIcon style={{ color: '#ba9344', marginRight: '8px' }} icon={faPhoneVolume} />
@@ -333,7 +332,7 @@ const Header = () => {
 
           <div className='bottom-bar navbar-nav'>
             <div className='container' style={{ padding: 0 }}>
-              <Menu mode="horizontal" className="menu-bar" style={{ backgroundColor: '#ba9344'}}>
+              <Menu mode="horizontal" className="menu-bar" style={{ backgroundColor: '#ba9344' }}>
                 {renderMenuItems(headerNavs)}
               </Menu>
             </div>
@@ -356,3 +355,8 @@ const Header = () => {
 };
 
 export default Header;
+
+
+{/* <Button className="menu-bars" type="primary" onClick={showDrawer}>
+                  <FontAwesomeIcon style={{ color: '#fff' }} icon={faBars} />
+                </Button> */}
