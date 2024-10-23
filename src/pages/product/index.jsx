@@ -38,7 +38,7 @@ const ProductPage = () => {
   const [sort, setSort] = useState('desc');
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -83,9 +83,8 @@ const ProductPage = () => {
       try {
         const response = await axios.post(`${PRODUCT_API_HHB}/web-get-product-list`, param);
         setProductList(response.data.data.data || []);
-        setTotalPages(response.data.data.totalPages || 1);
-        setTotalRecords(response.data.data.totalRecords
-        );
+        setTotalRecords(response.data.data.totalRecords || 0);
+        setCurrentPage(response.data.data.pageIndex || 0);
       } catch (error) {
         console.error('There has been a problem with your axios request:', error);
       } finally {
@@ -285,11 +284,10 @@ const ProductPage = () => {
       {productList && productList.length > 0 ?
         <section className='container flex justify-center mb-3'>
           <Pagination
-            current={currentPage}  // Trang hiện tại
-            pageSize={10}     // Kích thước trang (10 sản phẩm mỗi trang)
-            total={totalPages}    // Tổng số sản phẩm
+            current={currentPage}  // Trang hiện tại lấy từ state
+            pageSize={10}          // Kích thước trang cố định là 10 sản phẩm mỗi trang
+            total={totalRecords}   // Tổng số bản ghi từ API
             onChange={handlePageChange}  // Hàm xử lý khi đổi trang
-            showSizeChanger={false} // Ẩn tùy chọn thay đổi số sản phẩm/trang
           />
         </section>
         : null

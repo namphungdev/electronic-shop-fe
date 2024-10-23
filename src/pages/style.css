@@ -362,7 +362,7 @@
 
 .slider-img {
     width: 150px;
-    height: 150px;
+    height: auto;
     object-fit: contain;
 }
 
@@ -441,6 +441,14 @@
     .product-row {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .slider-item {
+        height: 120px;
+    }
+
+    .slider-img {
+        width: 100px;
+    }
 }
 
 @media (max-width: 450px) {
@@ -469,5 +477,13 @@
 
     .btn-sell-contact {
         font-size: 0.9rem;
+    }
+
+    .slider-item {
+        height: 100px;
+    }
+
+    .slider-img {
+        width: 75px;
     }
 }

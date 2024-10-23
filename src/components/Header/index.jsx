@@ -1,7 +1,7 @@
 import { CATEGORY_API_HHB, PATH } from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, Drawer, Button } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 const { SubMenu } = Menu;
 import 'antd/dist/reset.css';
@@ -55,6 +55,29 @@ const Header = () => {
 
   const [searchValue, setSearchValue] = useState('');
   const [visible, setVisible] = useState(false);
+  const [searchVisible, setSearchVisible] = useState(false);
+  const searchRef = useRef(null);
+
+  const toggleSearch = () => {
+    setSearchVisible((prevState) => !prevState); // Toggle visibility
+  };
+
+  // Hàm xử lý khi click bên ngoài
+  const handleClickOutside = (event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setSearchVisible(false); // Ẩn modal nếu cần
+    }
+  };
+
+  useEffect(() => {
+    // Thêm sự kiện click vào document
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      // Cleanup sự kiện khi component bị hủy
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const showDrawer = () => {
     setVisible(true);
@@ -180,7 +203,6 @@ const Header = () => {
     }
   };
 
-
   const renderMenuItems = (items) => {
     return items.map((item) => {
       const isActive = activeNav === item.to;
@@ -244,12 +266,11 @@ const Header = () => {
     <>
       <header className='header-mega'>
         <div className='header header-mege header-lg'>
-          <Link to={PATH.sale} className="top-bar navbar-nav">
-            <img src="/img/image-top.png" alt="" />
-          </Link>
-
           <div className="mid-bar navbar-nav">
             <div className="container mid-bar-content">
+              <Button className="menu-bars" type="primary" onClick={showDrawer}>
+                <FontAwesomeIcon style={{ color: '#fff' }} icon={faBars} />
+              </Button>
               <div class="desktop logo-wrapper">
                 <div id="logo">
                   <a href="/">
@@ -269,13 +290,30 @@ const Header = () => {
                       >
                         <input
                           type="text"
-                          className={`search-input`}
+                          className={`search-input ${searchVisible ? 'show' : ''}`}
+                          ref={searchRef}
                           placeholder="Tìm kiếm"
                           value={searchValue}
                           onChange={(e) => setSearchValue(e.target.value)}
                           onKeyDown={handleKeyDown}
                         />
-                        <FontAwesomeIcon style={{ color: '#ba9344' }} className='search-icon' icon={faMagnifyingGlass} />
+                        <Button
+                          className='search-bars'
+                          onClick={toggleSearch}
+                          style={{
+                            backgroundColor: searchVisible ? '#fff' : '#ba9344',
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            style={{ color: searchVisible ? '#ba9344' : 'white' }}
+                            icon={faMagnifyingGlass}
+                          />
+                        </Button>
+                        <FontAwesomeIcon
+                          className='search-icon'
+                          style={{ color: '#ba9344' }}
+                          icon={faMagnifyingGlass}
+                        />
                       </div>
                     </div>
                   </div>
@@ -285,7 +323,6 @@ const Header = () => {
                   <FontAwesomeIcon style={{ color: '#ba9344', marginRight: '8px' }} icon={faPhoneVolume} />
                   <span>0911 315 315</span>
                 </div>
-
                 <div className='contact-address'>
                   <FontAwesomeIcon style={{ color: '#ba9344', marginRight: '8px' }} icon={faLocationDot} />
                   <span>1151 Lê Đức Thọ, P13, Quận Gò Vấp</span>
@@ -299,9 +336,6 @@ const Header = () => {
               <Menu mode="horizontal" className="menu-bar">
                 {renderMenuItems(headerNavs)}
               </Menu>
-              <Button className="menu-bars" type="primary" onClick={showDrawer}>
-                <FontAwesomeIcon style={{ color: '#fff' }} icon={faBars} />
-              </Button>
             </div>
           </div>
 
@@ -315,7 +349,6 @@ const Header = () => {
               {renderMenuItems(headerNavs)}
             </Menu>
           </Drawer>
-
         </div>
       </header>
     </>

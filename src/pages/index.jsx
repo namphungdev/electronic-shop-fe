@@ -56,7 +56,7 @@ export const Home = () => {
   const paramProductPrice = {
     keyword: '',
     pageIndex: 1,
-    pageSize: 8,
+    pageSize: 12,
     productType: productCode
   };
 
@@ -185,7 +185,7 @@ export const Home = () => {
               <>
                 <div className={dataPrice && dataPrice.length > 0 ? "product-row product-sale" : "product-sale"}>
                   {dataPrice && dataPrice.length > 0 ? (
-                    dataPrice.map((product) => (
+                    dataPrice.slice(0, 10).map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
                           {product.discountedPrice == null ? null : (
@@ -223,7 +223,7 @@ export const Home = () => {
                     <p>Không có sản phẩm nào.</p>
                   )}
                 </div>
-                {dataPrice && dataPrice.length > 8 ? (
+                {dataPrice && dataPrice.length > 10 ? (
                   <div className="see-more-sale">
                     <Link className="btn-see-more" to={PATH.sale}>
                       Xem thêm
@@ -491,7 +491,6 @@ export const Home = () => {
                 speed={600}
                 autoplay={{ delay: 3000 }}
                 breakpoints={{
-                  320: { slidesPerView: 2 },
                   768: { slidesPerView: 4 },
                   1024: { slidesPerView: 6 },
                 }}
