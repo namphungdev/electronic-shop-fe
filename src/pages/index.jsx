@@ -491,6 +491,7 @@ export const Home = () => {
                 speed={600}
                 autoplay={{ delay: 3000 }}
                 breakpoints={{
+                  320: { slidesPerView: 4 },
                   768: { slidesPerView: 4 },
                   1024: { slidesPerView: 6 },
                 }}

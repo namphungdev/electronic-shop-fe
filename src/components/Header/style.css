@@ -1,5 +1,5 @@
 :where(.css-diro6f).ant-btn-primary {
-    color: transparent;
+    color: #ba9344;
 }
 
 .mid-bar {
@@ -307,5 +307,9 @@
 
     :where(.css-dev-only-do-not-override-diro6f).ant-menu-light .ant-menu-item-selected {
         background-color: #ba9344;
+    }
+
+    :where(.css-diro6f).ant-btn-primary:not(:disabled):hover {
+        background-color: #ba9344 !important;
     }
 }
