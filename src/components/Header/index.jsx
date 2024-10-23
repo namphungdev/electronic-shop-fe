@@ -333,7 +333,7 @@ const Header = () => {
 
           <div className='bottom-bar navbar-nav'>
             <div className='container' style={{ padding: 0 }}>
-              <Menu mode="horizontal" className="menu-bar">
+              <Menu mode="horizontal" className="menu-bar" style={{ backgroundColor: '#ba9344'}}>
                 {renderMenuItems(headerNavs)}
               </Menu>
             </div>
