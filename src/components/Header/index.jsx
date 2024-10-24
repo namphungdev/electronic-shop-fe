@@ -12,6 +12,7 @@ import { productTiles } from '@/services/product.service';
 import axios from 'axios';
 import { MenuOutlined, SearchOutlined } from '@ant-design/icons';
 import "./style.css"
+import { Helmet } from 'react-helmet';
 
 const HeaderNavs = [
   {
@@ -267,6 +268,14 @@ const Header = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Gạch 315 - Trang chủ</title>
+        <meta name="description" content="Trang chủ của Gạch 315, cung cấp gạch men giá rẻ chất lượng cao" />
+        <meta name="keywords" content="Gạch 315, gạch men, gạch giá rẻ, gạch ốp lát" />
+        {/* Thêm thẻ meta xác minh tại đây */}
+        <meta name="google-site-verification" content="jMDd5qnlQ_YTI7XF9Pht8-YVgDns5TAVCFydC8V48T8" />
+      </Helmet>
+
       <header className='header-mega'>
         <div className='header header-mege header-lg'>
           <div className="mid-bar navbar-nav">
@@ -280,9 +289,9 @@ const Header = () => {
                     />
                   </a>
                 </div>
-                <div className='header-title'>
+                <h1 className='header-title'>
                   GẠCH 315
-                </div>
+                </h1>
               </div>
 
               <div className="header-right flex-class">
