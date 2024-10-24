@@ -8,6 +8,7 @@ import { productTiles } from '@/services/product.service';
 import useQuery from '@/hooks/useQuery';
 import { Spin } from 'antd';
 import './style.css'
+import { Helmet } from 'react-helmet';
 
 export const Home = () => {
   useScrollTop();
@@ -141,12 +142,18 @@ export const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Gạch 315 - Trang chủ</title>
+        <meta name="description" content="Trang chủ của Gạch 315, cung cấp gạch men giá rẻ chất lượng cao" />
+        <meta name="keywords" content="Gạch 315, gạch men, gạch giá rẻ, gạch ốp lát" />
+      </Helmet>
+
       {/* SLIDERS */}
       <section>
         <div className='container'>
           <Carousel autoSlide={true} >
             {sliders.map((s, index) => (
-              <img key={index} src={s} alt={s} className="w-full" />
+              <img key={index} src={s} alt={`slider ${index + 1}`} className="w-full" />
             ))}
           </Carousel>
         </div>
@@ -155,12 +162,12 @@ export const Home = () => {
       <section className="py-5">
         <div className="container">
           <div className="header-sell">
-            <div className="text-white relative items-center font-bold text-3xl uppercase font-oswald sale-header">
+            <h1 className="text-white relative items-center font-bold text-3xl uppercase font-oswald sale-header">
               <img className='img-hot-sale' src="/img/hot-sale.png" alt="" />
               Sản phẩm giảm giá
-            </div>
+            </h1>
 
-            <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
+            <nav className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
               <div className="relative max-w-full text-white text-nav-sale">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
                   {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
@@ -174,9 +181,9 @@ export const Home = () => {
                   ))}
                 </ul>
               </div>
-            </div>
+            </nav>
           </div>
-          <div className="block-product-sell sell-content">
+          <nav className="block-product-sell sell-content">
             {loadingDataPrice ? (
               <div className="loading-container">
                 <Spin size="large" />
@@ -186,14 +193,12 @@ export const Home = () => {
                 <div className={dataPrice && dataPrice.length > 0 ? "product-row product-sale" : "product-sale"}>
                   {dataPrice && dataPrice.length > 0 ? (
                     dataPrice.slice(0, 10).map((product) => (
-                      <div key={product.id} className="product-card">
+                      <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice == null ? null : (
-                            product.percentDiscount ? (
-                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
-                            ) : (
-                              <div className="sale-badge">SALE</div>
-                            )
+                          {product.discountedPrice != null && (
+                            <div className="sale-badge">
+                              {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
+                            </div>
                           )}
                           <img
                             style={{ height: 'auto' }}
@@ -217,7 +222,7 @@ export const Home = () => {
                             </Link>
                           </div>
                         </div>
-                      </div>
+                      </article >
                     ))
                   ) : (
                     <p>Không có sản phẩm nào.</p>
@@ -232,7 +237,7 @@ export const Home = () => {
                 ) : null}
               </>
             )}
-          </div>
+          </nav>
         </div>
       </section>
       {/* PRODUCT */}
@@ -255,14 +260,12 @@ export const Home = () => {
                 <div className={dataGachOpLat && dataGachOpLat?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataGachOpLat && dataGachOpLat?.data?.length > 0 ? (
                     dataGachOpLat?.data?.slice(0, 10).map((product) => (
-                      <div key={product.id} className="product-card">
+                      <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice == null ? null : (
-                            product.percentDiscount ? (
-                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
-                            ) : (
-                              <div className="sale-badge">SALE</div>
-                            )
+                          {product.discountedPrice != null && (
+                            <div className="sale-badge">
+                              {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
+                            </div>
                           )}
                           <img
                             style={{ height: 'auto' }}
@@ -295,7 +298,7 @@ export const Home = () => {
                             </Link>
                           </div>
                         </div>
-                      </div>
+                      </article>
                     ))
                   ) : (
                     <p>Không có sản phẩm nào.</p>
@@ -332,14 +335,12 @@ export const Home = () => {
                 <div className={dataTBVS && dataTBVS?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataTBVS && dataTBVS?.data?.length > 0 ? (
                     dataTBVS?.data.slice(0, 10).map((product) => (
-                      <div key={product.id} className="product-card">
+                      <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice == null ? null : (
-                            product.percentDiscount ? (
-                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
-                            ) : (
-                              <div className="sale-badge">SALE</div>
-                            )
+                          {product.discountedPrice != null && (
+                            <div className="sale-badge">
+                              {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
+                            </div>
                           )}
                           <img
                             style={{ height: 'auto' }}
@@ -372,7 +373,7 @@ export const Home = () => {
                             </Link>
                           </div>
                         </div>
-                      </div>
+                      </article>
                     ))
                   ) : (
                     <p>Không có sản phẩm nào.</p>
@@ -409,14 +410,12 @@ export const Home = () => {
                 <div className={dataTON && dataTON?.data?.length > 0 ? "product-row row" : " row "}>
                   {dataTON && dataTON?.data?.length > 0 ? (
                     dataTON?.data?.slice(0, 10).map((product) => (
-                      <div key={product.id} className="product-card">
+                      <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice == null ? null : (
-                            product.percentDiscount ? (
-                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
-                            ) : (
-                              <div className="sale-badge">SALE</div>
-                            )
+                          {product.discountedPrice != null && (
+                            <div className="sale-badge">
+                              {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
+                            </div>
                           )}
                           <img
                             style={{ height: 'auto' }}
@@ -449,7 +448,7 @@ export const Home = () => {
                             </Link>
                           </div>
                         </div>
-                      </div>
+                      </article>
                     ))
                   ) : (
                     <p>Không có sản phẩm nào.</p>
@@ -475,9 +474,9 @@ export const Home = () => {
               {/* Heading */}
               <h2 className="mb-5">Các đối tác của chúng tôi</h2>
               {/* Preheading */}
-              <h6 className="heading-xxs mb-3 text-gray-400">
+              <h3 className="heading-xxs mb-3 text-gray-400">
                 Chúng tôi luôn chọn những đối tác tin cậy và uy tín để đảm bảo những sản phẩm có chất lượng tốt nhất để gửi tới bạn.
-              </h6>
+              </h3>
             </div>
           </div>
           <div className="row">
@@ -510,6 +509,7 @@ export const Home = () => {
           </div>
         </div>
       </section>
+
     </>
   );
 };

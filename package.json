@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "generate-sitemap": "node generate-sitemap.js" 
+    "generate-sitemap": "node generate-sitemap.js"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
