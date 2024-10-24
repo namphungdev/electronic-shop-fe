@@ -2,6 +2,10 @@
     background: #ba9344 !important;
 }
 
+.content-mobile {
+    display: none
+}
+
 .mid-bar {
     display: flex;
     align-items: center;
@@ -80,11 +84,11 @@
 
 .search-icon {
     position: absolute;
-    right: 10%;
+    right: 5%;
     top: 50%;
     transform: translateY(-50%);
     color: #ba9344;
-    /* pointer-events: none; */
+    pointer-events: none;
 }
 
 .sticky-bottom-bar {
@@ -251,6 +255,20 @@
     .search-modal-content input {
         width: 120px;
     }
+
+    .content-desktop {
+        display: none;
+    }
+
+    .content-mobile {
+        display: block;
+    }
+
+    .search-icon {
+        pointer-events: all;
+        right: 10%;
+    }
+
 
     .search-icon svg {
         font-size: larger;

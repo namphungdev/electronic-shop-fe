@@ -289,9 +289,23 @@ const Header = () => {
                 <div className="header-search">
                   <div className="search-modal-overlay">
                     <div className="search-modal-container">
+                      <div
+                        className="search-modal-content content-desktop"
+                      >
+                        <input
+                          type="text"
+                          className={`search-input ${searchVisible ? 'show' : ''}`}
+                          ref={searchRef}
+                          placeholder="Tìm kiếm"
+                          value={searchValue}
+                          onChange={(e) => setSearchValue(e.target.value)}
+                          onKeyDown={handleKeyDown}
+                        />
+                        <SearchOutlined className='search-icon' color='#ba9344' />
+                      </div>
                       {searchVisible && (
                         <div
-                          className="search-modal-content"
+                          className="search-modal-content content-mobile"
                         >
                           <input
                             type="text"
@@ -306,11 +320,11 @@ const Header = () => {
                         </div>
                       )
                       }
-                      
+
                       <SearchOutlined
                         className='search-icon'
                         color='#ba9344'
-                        onClick={toggleSearch} 
+                        onClick={toggleSearch}
                       />
                     </div>
                   </div>
