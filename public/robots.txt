@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /public/
+Sitemap: https://www.gach315.com/sitemap.xml
+
