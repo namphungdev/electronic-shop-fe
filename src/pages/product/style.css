@@ -483,7 +483,7 @@
 
 /* policy */
 
-.product-commit {
+.product-commit-mobile {
     display: none;
 }
 
@@ -577,6 +577,10 @@
 @media (max-width: 991px) {
     .product-detail-content {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .product-commit {
+        display: none;
     }
 
     .product-commit-mobile {

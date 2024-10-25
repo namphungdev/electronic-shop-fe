@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -49,20 +49,12 @@ const ProductPage = () => {
   }, []);
 
   useEffect(() => {
-    if (location.pathname) {
-      const pathParts = location.pathname.split('/');
-      if (pathParts.length > 2) {
-        const typeValue = pathParts[2].split('-')[0];
-        const isValidNumber = !isNaN(Number(typeValue));
-
-        setTypeParam(isValidNumber ? typeValue : '1');
-
-        if (isValidNumber) {
-          setCodeParam(location.pathname.slice(12));
-        } else {
-          setCodeParam(location.pathname.slice(10));
-        }
-      }
+    const pathParts = location.pathname.split('/');
+    if (pathParts.length > 2) {
+      const typeValue = pathParts[2].split('-')[0];
+      const isValidNumber = !isNaN(Number(typeValue));
+      setTypeParam(isValidNumber ? typeValue : '1');
+      setCodeParam(isValidNumber ? location.pathname.slice(12) : location.pathname.slice(10));
     }
   }, [location.pathname]);
 
@@ -76,43 +68,52 @@ const ProductPage = () => {
     sort: sort,
   };
 
-  async function fetchCategoryList() {
+  const fetchCategoryList = useCallback(async () => {
     if (codeParam && typeParam) {
       setLoading(true);
-      setProductList([]);
       try {
-        const response = await axios.post(`${PRODUCT_API_HHB}/web-get-product-list`, param);
+        const response = await axios.post(`${PRODUCT_API_HHB}/web-get-product-list`, {
+          keyword: '',
+          pageIndex: currentPage,
+          pageSize: 10,
+          code: codeParam,
+          type: typeParam,
+          order: order,
+          sort: sort,
+        });
         setProductList(response.data.data.data || []);
         setTotalRecords(response.data.data.totalRecords || 0);
-        setCurrentPage(response.data.data.pageIndex || 0);
+        setCurrentPage(response.data.data.pageIndex || 1);
       } catch (error) {
         console.error('There has been a problem with your axios request:', error);
       } finally {
         setLoading(false);
       }
     }
-  }
+  }, [codeParam, typeParam, order, sort, currentPage]);
 
   const param2 = {
     code: codeParam,
     type: typeParam
   }
 
-  async function fetchBreadcrumb() {
+  const fetchBreadcrumb = useCallback(async () => {
     if (codeParam && typeParam) {
       setLoading(true);
       try {
-        const response = await axios.post(`${CATEGORY_API_HHB}/get-web-breakcumb-list`, param2);
+        const response = await axios.post(`${CATEGORY_API_HHB}/get-web-breakcumb-list`, {
+          code: codeParam,
+          type: typeParam,
+        });
         setBreadcrumb(response.data.data.breakCumb || []);
         setItemPro(response.data.data.productCategory || []);
       } catch (error) {
-        setLoading(false);
         console.error('There has been a problem with your axios request:', error);
       } finally {
         setLoading(false);
       }
     }
-  }
+  }, [codeParam, typeParam]);
 
   useEffect(() => {
     if (codeParam && typeParam) {
@@ -120,10 +121,25 @@ const ProductPage = () => {
     }
   }, [codeParam, typeParam, order, sort, currentPage]);
 
+  // useEffect(() => {
+  //   fetchBreadcrumb();
+  //   setCurrentPage(1)
+  // }, [codeParam, typeParam]);
+
   useEffect(() => {
+    fetchCategoryList();
     fetchBreadcrumb();
-    setCurrentPage(1)
-  }, [codeParam, typeParam]);
+  }, [fetchCategoryList, fetchBreadcrumb]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const page = parseInt(params.get('page'), 10);
+    if (!isNaN(page) && page > 0) {
+      setCurrentPage(page);
+    } else {
+      setCurrentPage(1);
+    }
+  }, [location.search]);
 
   const handleSortChange = (e) => {
     const selectedValue = Number(e.target.value);
@@ -141,7 +157,20 @@ const ProductPage = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    const params = new URLSearchParams(location.search);
+    params.set('page', page);
+    window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const page = parseInt(params.get('page'), 10);
+    if (!isNaN(page)) {
+      setCurrentPage(page);
+    } else {
+      setCurrentPage(1);
+    }
+  }, [location.search]);
 
   const toTitleCase = (str) => {
     if (!str) return '';

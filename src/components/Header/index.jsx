@@ -58,11 +58,9 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState('');
   const [visible, setVisible] = useState(false);
   const [searchVisible, setSearchVisible] = useState(false);
-  console.log('searchVisible', searchVisible)
   const searchRef = useRef(null);
 
   const toggleSearch = () => {
-    console.log('toggleSearch clicked');
     setSearchVisible(prevState => !prevState);
   };
 

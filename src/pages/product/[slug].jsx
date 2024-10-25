@@ -98,7 +98,8 @@ const ProductDetailPage = () => {
                             >
                               <img
                                 ref={imageRef}
-                                src={srcImg}
+                                // src={srcImg}
+                                src={srcImg?.length > 0 ? srcImg : '/img/logo.jpg'}
                                 alt="..."
                                 className="card-img-top relative top-0 left-0 w-full h-full object-cover"
                                 style={{
