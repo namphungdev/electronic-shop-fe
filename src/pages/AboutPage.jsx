@@ -1,19 +1,12 @@
 import Breadcrumb from '@/components/Breadcrumb'
 import useScrollTop from '@/hooks/useScrollTop';
 import React from 'react'
-import { Helmet } from 'react-helmet';
 
 const AboutPage = () => {
   useScrollTop();
 
   return (
     <>
-      <Helmet>
-        <title>Gạch 315 - Giới thiệu</title>
-        <meta name="description" content="Trang chủ của Gạch 315, cung cấp gạch men giá rẻ chất lượng cao" />
-        <meta name="keywords" content="Gạch 315, gạch men, gạch giá rẻ, gạch ốp lát" />
-      </Helmet>
-
       {/* Breadcrumb */}
       <nav aria-label="breadcrumb" className="py-3 bg-[#f5f5f5] mb-5">
         <div className="container">
