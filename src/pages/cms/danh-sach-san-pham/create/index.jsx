@@ -128,18 +128,6 @@ const AddProductListCMS = () => {
       return;
     }
 
-    // Kiểm tra giá niêm yết
-    // if (!price) {
-    //   setPriceError('Giá niêm yết không được để trống');
-    //   return;
-    // }
-
-    // Kiểm tra giá trị của `price` chỉ là số
-    // const regex = /^\d*\.?\d*$/;
-    // if (!regex.test(price)) {
-    //   setPriceError('Giá niêm yết phải là một số hợp lệ');
-    //   return;
-    // }
 
     // Kiểm tra hình ảnh
     if (dataImg.length === 0) {
@@ -156,7 +144,7 @@ const AddProductListCMS = () => {
       isPublished: isPublished,
       description: description,
       price: price,
-      discountedPrice: discountedPrice,
+      discountedPrice: Math.round(discountedPrice),
       percentDiscount: percentDiscount,
       images: transformedDataImg
     }
@@ -188,26 +176,26 @@ const AddProductListCMS = () => {
         setProductCode(codeConvert);
         break;
       case 'price':
-        // if (priceError) {
-        //   setPriceError('');
-        // }
+        const priceValue = value === "" ? null : parseFloat(value); // Set null if empty
+        setPrice(priceValue);
 
-        const priceRegex = /^\d*\.?\d*$/;
-        if (priceRegex.test(value)) {
-          setPrice(value);
-
-          // Cập nhật giá trị discountedPrice khi giá thay đổi
-          if (percentDiscount) {
-            const discountedPriceValue = value - (value * (percentDiscount / 100));
-            setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
-          }
+        // Update discountedPrice when price changes
+        if (percentDiscount && priceValue !== null) {
+          const discountedPriceValue = priceValue - (priceValue * (percentDiscount / 100));
+          setDiscountedPrice(discountedPriceValue);
+        } else {
+          setDiscountedPrice(null); // Reset discountedPrice if price is null
         }
         break;
-      case 'percentDiscount':
-        const percentValue = parseInt(value, 10);
-        if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
-          setPercentDiscount(percentValue);
 
+      case 'percentDiscount':
+        const percentValue = value === "" ? null : parseInt(value, 10);
+        setPercentDiscount(percentValue);
+
+        // Đặt discountedPrice là null nếu percentDiscount là rỗng hoặc null
+        if (percentValue === null) {
+          setDiscountedPrice(null); // Xóa giá sau khi giảm
+        } else if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
           // Tính toán giá trị discountedPrice dựa trên percentDiscount và giá hiện tại
           if (price) {
             const discountedPriceValue = price - (price * (percentValue / 100));
@@ -431,7 +419,7 @@ const AddProductListCMS = () => {
                   {productCategoryError && <p className="text-red-500 text-sm mt-1">{productCategoryError}</p>}
                 </div>
               </div>
-              
+
               {showSubCategory && (
                 <div className="col-md-3">
                   <div className="form-group">
@@ -509,7 +497,8 @@ const AddProductListCMS = () => {
                       disabled
                       name="discountedPrice"
                       id="discountedPrice"
-                      value={discountedPrice}
+                      // value={discountedPrice}
+                      value={discountedPrice !== null ? discountedPrice : ''}
                       onChange={handleInputChange('discountedPrice')}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                     />

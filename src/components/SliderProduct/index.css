@@ -1,0 +1,47 @@
+/* Slider.css */
+
+.slider-wrapper {
+    position: relative;
+    display: inline-block;
+    /* Giữ kích thước slider gọn trong wrapper */
+}
+
+.custom-next-button,
+.custom-prev-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.custom-next-button {
+    right: -50px;
+    /* Nằm ngoài slider, cách slider 10px */
+}
+
+.custom-prev-button {
+    left: -50px;
+    /* Nằm ngoài slider, cách slider 10px */
+}
+
+.custom-next-button::after,
+.custom-prev-button::after {
+    font-size: 18px;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .custom-next-button,
+    .custom-prev-button {
+        display: none
+    }
+}

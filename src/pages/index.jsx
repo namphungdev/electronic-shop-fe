@@ -419,7 +419,7 @@ export const Home = () => {
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
                           <div className="price-box">
-                            {product && product.discountedPrice == null && product.percentDiscount == null
+                            {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
                               <span className="price">
                                 {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}

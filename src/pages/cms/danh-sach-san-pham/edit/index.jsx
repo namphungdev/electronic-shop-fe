@@ -42,7 +42,6 @@ const EditProductListCMS = () => {
   const [nameError, setNameError] = useState('');
   const [productTypeError, setProductTypeError] = useState('');
   const [productCategoryError, setProductCategoryError] = useState('');
-  // const [priceError, setPriceError] = useState('');
   const [imageError, setImageError] = useState('');
 
   useEffect(() => {
@@ -66,7 +65,7 @@ const EditProductListCMS = () => {
   useEffect(() => {
     if (getProductDetail?.name || getProductDetail?.code) {
       setProductCode(getProductDetail.code);
-      setIsPublished(getProductDetail.isPublished || true);
+      setIsPublished(getProductDetail.isPublished);
       setProductType(getProductDetail.productType);
       setProductName(getProductDetail.name);
       setProductCategory(getProductDetail.productCategoryCode)
@@ -129,27 +128,46 @@ const EditProductListCMS = () => {
         const codeConvert = convertVietnameseToNonAccented(value);
         setProductCode(codeConvert);
         break;
-      // case 'price':
-      //   if (priceError) {
-      //     setPriceError('');
-      //   }
-
+      case 'price':
         const priceRegex = /^\d*\.?\d*$/;
         if (priceRegex.test(value)) {
-          setPrice(value);
+          setPrice(value === "" ? null : value); // Chuyển "" thành null
 
-          // Cập nhật giá trị discountedPrice khi giá thay đổi
-          if (percentDiscount) {
+          if (percentDiscount && value) {
             const discountedPriceValue = value - (value * (percentDiscount / 100));
-            setDiscountedPrice(discountedPriceValue); // Lưu ý đến việc làm tròn
+            setDiscountedPrice(discountedPriceValue);
+          } else {
+            setDiscountedPrice(null);
           }
+        } else {
+          toast.error('Giá niêm yết phải là một số hợp lệ');
         }
         break;
-      case 'percentDiscount':
-        const percentValue = parseInt(value, 10);
-        if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
-          setPercentDiscount(percentValue);
 
+      // case 'percentDiscount':
+      //   // const percentValue = parseInt(value, 10);
+      //   const percentValue = value === "" ? null : parseInt(value, 10);
+      //   if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
+      //     setPercentDiscount(percentValue);
+
+      //     // Tính toán giá trị discountedPrice dựa trên percentDiscount và giá hiện tại
+      //     if (price) {
+      //       const discountedPriceValue = price - (price * (percentValue / 100));
+      //       setDiscountedPrice(discountedPriceValue);
+      //     }
+      //   } else {
+      //     setPercentDiscount('');
+      //     toast.error('Giảm giá phải là số nguyên từ 0 đến 100');
+      //   }
+      //   break;
+      case 'percentDiscount':
+        const percentValue = value === "" ? null : parseInt(value, 10);
+        setPercentDiscount(percentValue);
+
+        // Đặt discountedPrice là null nếu percentDiscount là rỗng hoặc null
+        if (percentValue === null) {
+          setDiscountedPrice(null); // Xóa giá sau khi giảm
+        } else if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
           // Tính toán giá trị discountedPrice dựa trên percentDiscount và giá hiện tại
           if (price) {
             const discountedPriceValue = price - (price * (percentValue / 100));
@@ -236,7 +254,7 @@ const EditProductListCMS = () => {
       isPublished: isPublished,
       description: description,
       price: price,
-      discountedPrice: discountedPrice,
+      discountedPrice: Math.round(discountedPrice),
       percentDiscount: percentDiscount,
       images: transformedDataImg
     }
@@ -495,7 +513,7 @@ const EditProductListCMS = () => {
                         disabled
                         name="discountedPrice"
                         id="discountedPrice"
-                        value={discountedPrice}
+                        value={discountedPrice !== null ? discountedPrice : ''}
                         onChange={handleInputChange('discountedPrice')}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md focus:ring-2 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6 h-12 px-4"
                       />

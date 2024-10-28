@@ -293,7 +293,7 @@ const ProductPage = () => {
                             }
                           </div>
                           <div className="product-button">
-                            <Link to={PATH.contact} className="btn-sell-contact">
+                            <Link to="/lien-he" className="btn-sell-contact">
                               Liên hệ
                             </Link>
                           </div>
