@@ -363,7 +363,7 @@ const ProductDetailPage = () => {
             <div className="col-12">
               <SliderProduct
                 className="select-none-slider"
-                slidesPerView={1}
+                slidesPerView={2}
                 spaceBetween={16}
                 loop
                 grabCursor
