@@ -255,10 +255,15 @@ export const Home = () => {
                     dataGachOpLat?.data?.slice(0, 10).map((product) => (
                       <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice != null && (
+                          {/* {product.discountedPrice != null && (
                             <div className="sale-badge">
                               {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
                             </div>
+                          )} */}
+                          {product.discountedPrice == 0 || null ? null : (
+                            product.percentDiscount == 0 || null ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : null
                           )}
                           <img
                             style={{ height: 'auto' }}

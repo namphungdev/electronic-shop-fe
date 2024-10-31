@@ -386,7 +386,7 @@
 
 /* product - slug */
 
-.product-image {
+/* .product-image {
     position: relative;
     overflow: hidden;
 }
@@ -479,7 +479,7 @@
 
 :where(.css-diro6f).ant-tabs .ant-tabs-ink-bar {
     color: #ba9344;
-}
+} */
 
 /* policy */
 
@@ -602,7 +602,7 @@
 }
 
 /* Product Bonus */
-
+/* 
 .select-none-slider {
     background-color: #f5f5f5 !important;
 }
@@ -736,4 +736,4 @@
     color: white;
 } 
 
-
+ */

@@ -12,7 +12,8 @@ import { faBan } from '@fortawesome/free-solid-svg-icons';
 import Skeleton from '@/components/Skeleton';
 import createArray from '@/utils/createArray';
 import SliderProduct from '@/components/SliderProduct';
-import './style.css'
+// import './style.css'
+import './slug.css'
 
 const ProductDetailPage = () => {
 
@@ -79,6 +80,8 @@ const ProductDetailPage = () => {
   useEffect(() => {
     setSrcImg(listDetail?.images?.[0]?.base_url);
   }, [listDetail]);
+
+  console.log('listDetail', listDetail)
 
   return (
     <>
@@ -220,7 +223,7 @@ const ProductDetailPage = () => {
                       </div>
                       <div className="product-price">
 
-                        {listDetail && listDetail.discountedPrice == null && listDetail.percentDiscount == null
+                        {listDetail && listDetail.discountedPrice == null || listDetail.percentDiscount == null
                           ?
                           <span className="special-price">
                             {listDetail.price ? Number(listDetail.price).toLocaleString('vi-VN') + 'đ' : null}
@@ -382,10 +385,10 @@ const ProductDetailPage = () => {
                         className="navbar-brand"
                         to={`${PATH.productDetail.replace(":slug", product.code)}`}
                       >
-                        {product.discountedPrice != null && (
-                          <div className="sale-badge">
-                            {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : "SALE"}
-                          </div>
+                        {product.discountedPrice == 0 || null ? null : (
+                          product.percentDiscount == 0 || null ? (
+                            <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                          ) : null
                         )}
                         <img
                           style={{ height: "auto" }}
@@ -396,20 +399,21 @@ const ProductDetailPage = () => {
                       <div className="product-card-content">
                         <h3 className="product-card-title">{product.name}</h3>
                         <div className="price-box">
-                          {product.discountedPrice == null ? (
+                          {product && product.discountedPrice == null || product.percentDiscount == null
+                            ?
                             <span className="price">
-                              {product.price ? Number(product.price).toLocaleString("vi-VN") + "đ" : null}
+                              {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
                             </span>
-                          ) : (
+                            :
                             <>
                               <span className="price">
-                                {Number(product.discountedPrice).toLocaleString("vi-VN")}đ
+                                {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
                               </span>
                               <span className="compare-price">
-                                {Number(product.price).toLocaleString("vi-VN")}đ
+                                {Number(product.price).toLocaleString('vi-VN')}đ
                               </span>
                             </>
-                          )}
+                          }
                         </div>
                         <div className="product-button">
                           <Link to="/lien-he" className="btn-sell-contact">

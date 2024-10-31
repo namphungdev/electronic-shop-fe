@@ -181,6 +181,8 @@ const ProductPage = () => {
       .join(' ');
   };
 
+  console.log('product', productList)
+
   return (
     <>
       <nav className="py-3 bg-[#f5f5f5]">
@@ -260,12 +262,10 @@ const ProductPage = () => {
                     productList.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice == null ? null : (
-                            product.percentDiscount ? (
+                          {product.discountedPrice == 0 || null ? null : (
+                            product.percentDiscount == 0 || null ? (
                               <div className="sale-badge">Giảm {product.percentDiscount}%</div>
-                            ) : (
-                              <div className="sale-badge">SALE</div>
-                            )
+                            ) : null
                           )}
                           <img
                             style={{ height: 'auto' }}
