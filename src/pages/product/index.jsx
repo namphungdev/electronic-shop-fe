@@ -28,14 +28,24 @@ const optionSort = [
 const ProductPage = () => {
   useScrollTop()
 
+  // const formatPrice = (price) => {
+  //   if (!price) return null;
+  
+  //   const roundedPrice = Math.round(price / 1000) * 1000; // Làm tròn đến hàng nghìn
+  //   const priceInThousand = roundedPrice / 1000; // Chia cho 1000 để chuyển đổi thành đơn vị nghìn
+  
+  //   // Kiểm tra xem có làm tròn thành số nguyên không, nếu có thì thêm '000'
+  //   return Number.isInteger(priceInThousand) ? `${priceInThousand}.000` : `${roundedPrice.toLocaleString('vi-VN')}đ`;
+  // };
+
   const formatPrice = (price) => {
-    if (!price) return null;
-  
-    const roundedPrice = Math.round(price / 1000) * 1000; // Làm tròn đến hàng nghìn
-    const priceInThousand = roundedPrice / 1000; // Chia cho 1000 để chuyển đổi thành đơn vị nghìn
-  
-    // Kiểm tra xem có làm tròn thành số nguyên không, nếu có thì thêm '000'
-    return Number.isInteger(priceInThousand) ? `${priceInThousand}.000` : `${roundedPrice.toLocaleString('vi-VN')}đ`;
+    if (price) {
+      const numberPrice = Number(price);
+      // Làm tròn đến ngàn
+      const roundedPrice = Math.round(numberPrice / 1000) * 1000; 
+      return roundedPrice.toLocaleString('vi-VN') ;
+    }
+    return null;
   };
 
   const location = useLocation();
