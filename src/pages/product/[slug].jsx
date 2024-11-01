@@ -18,22 +18,12 @@ const ProductDetailPage = () => {
 
   useScrollTop()
 
-  // const formatPrice = (price) => {
-  //   if (!price) return null;
-  
-  //   const roundedPrice = Math.round(price / 1000) * 1000; // Làm tròn đến hàng nghìn
-  //   const priceInThousand = roundedPrice / 1000; // Chia cho 1000 để chuyển đổi thành đơn vị nghìn
-  
-  //   // Kiểm tra xem có làm tròn thành số nguyên không, nếu có thì thêm '000'
-  //   return Number.isInteger(priceInThousand) ? `${priceInThousand}.000` : `${roundedPrice.toLocaleString('vi-VN')}đ`;
-  // };
-
   const formatPrice = (price) => {
     if (price) {
       const numberPrice = Number(price);
       // Làm tròn đến ngàn
-      const roundedPrice = Math.round(numberPrice / 1000) * 1000; 
-      return roundedPrice.toLocaleString('vi-VN') ;
+      const roundedPrice = Math.round(numberPrice / 1000) * 1000;
+      return roundedPrice.toLocaleString('vi-VN');
     }
     return null;
   };
@@ -177,21 +167,26 @@ const ProductDetailPage = () => {
                         </ZoomImage>
                       </div>
                       <div className='flickity-nav mx-n2 mb-md-0 flex mt-5'>
-                        {listDetail?.images?.slice(0, 4).map((e) => (
-                          <div
-                            className="col-12 cursor-pointer px-2"
-                            style={{ maxWidth: 113 }}
-                            onClick={() => setSrcImg(e?.base_url)}
-                            key={e?.base_url}
-                          >
+                        {listDetail?.images?.slice(0, 4).map((e) => {
+                          const encodedUrl = e?.base_url.replace(/ /g, "%20");
+                          return (
                             <div
-                              className="embed-responsive embed-responsive-1by1 bg-cover"
-                              style={{
-                                backgroundImage: `url(${e?.base_url})`,
-                              }}
-                            ></div>
-                          </div>
-                        ))}
+                              className="col-12 cursor-pointer px-2"
+                              style={{ maxWidth: 113 }}
+                              onClick={() => setSrcImg(e?.base_url)}
+                              key={e?.base_url}
+                            >
+                              <div
+                                className="embed-responsive embed-responsive-1by1 bg-cover"
+                                style={{
+                                  backgroundImage: `url(${ encodedUrl })`,
+                                }}
+                              ></div>
+                            </div>
+                          );
+                        })}
+
+
                         {listDetail?.images?.length === 5 && (
                           <div
                             className="col-12 cursor-pointer px-2"
@@ -236,10 +231,8 @@ const ProductDetailPage = () => {
                             Tình trạng: {listDetail.quanlity >= 1 ? 'Còn hàng' : 'Hết hàng'}
                           </div>
                         </span>
-                        {/* <span className="line-product">&nbsp;&nbsp;|&nbsp;&nbsp;</span> */}
                         <span className='mb-break'>
                           <div className='stock-brand-title'>
-                            {/* Số lượng: {listDetail.quanlity} */}
                           </div>
                         </span>
                       </div>
