@@ -83,11 +83,16 @@ const SearchPage = () => {
                     dataSearch.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice == 0 || null ? null : (
+                          {/* {product.discountedPrice == 0 || null ? null : (
                             product.percentDiscount == 0 || null ? (
                               <div className="sale-badge">Giảm {product.percentDiscount}%</div>
                             ) : null
-                          )}
+                          )} */}
+                          {product.discountedPrice !== null && product.percentDiscount ? (
+                            <div className="sale-badge">
+                              {`Giảm ${product.percentDiscount}%`}
+                            </div>
+                          ) : null}
                           <img
                             style={{ height: 'auto' }}
                             src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}

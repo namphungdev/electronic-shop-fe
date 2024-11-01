@@ -41,7 +41,7 @@ const CustomQuillEditor = ({ value, onChange }) => {
       value={value}
       onChange={onChange}
       modules={modules}
-      placeholder="Start typing here..."
+      placeholder=""
     />
   );
 };
