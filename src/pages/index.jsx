@@ -188,10 +188,16 @@ export const Home = () => {
                     dataPrice.slice(0, 10).map((product) => (
                       <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product.discountedPrice != null && (
+                          {/* {product.discountedPrice != null && (
                             <div className="sale-badge">
                               {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
                             </div>
+                          )} */}
+
+                          {product.discountedPrice == 0 || null ? null : (
+                            product.percentDiscount == 0 || null ? (
+                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
+                            ) : null
                           )}
                           <img
                             style={{ height: 'auto' }}
@@ -201,13 +207,30 @@ export const Home = () => {
                         </Link>
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
-                          <div className="price-box">
+                          {/* <div className="price-box">
                             <span className="price">
                               {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
                             </span>
                             <span className="compare-price">
                               {Number(product.price).toLocaleString('vi-VN')}đ
                             </span>
+                          </div> */}
+                          <div className="price-box">
+                            {product && product.discountedPrice == null || product.percentDiscount == null
+                              ?
+                              <span className="price">
+                                {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
+                              </span>
+                              :
+                              <>
+                                <span className="price">
+                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                </span>
+                                <span className="compare-price">
+                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                </span>
+                              </>
+                            }
                           </div>
                           <div className="product-button">
                             <Link to={PATH.contact} className="btn-sell-contact">
