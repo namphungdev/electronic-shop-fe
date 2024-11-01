@@ -12,6 +12,16 @@ import './style.css'
 export const Home = () => {
   useScrollTop();
 
+  const formatPrice = (price) => {
+    if (!price) return null;
+  
+    const roundedPrice = Math.round(price / 1000) * 1000; // Làm tròn đến hàng nghìn
+    const priceInThousand = roundedPrice / 1000; // Chia cho 1000 để chuyển đổi thành đơn vị nghìn
+  
+    // Kiểm tra xem có làm tròn thành số nguyên không, nếu có thì thêm '000'
+    return Number.isInteger(priceInThousand) ? `${priceInThousand}.000` : `${roundedPrice.toLocaleString('vi-VN')}đ`;
+  };
+
   const sliders = [
     '/img/image-one.png',
     '/img/image-two.png',
@@ -205,15 +215,15 @@ export const Home = () => {
                             {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
                               <span className="price">
-                                {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
+                                {formatPrice(product.price) ? formatPrice(product.price).toLocaleString('vi-VN') + 'đ' : null}
                               </span>
                               :
                               <>
                                 <span className="price">
-                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.discountedPrice).toLocaleString('vi-VN')}đ
                                 </span>
                                 <span className="compare-price">
-                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.price).toLocaleString('vi-VN')}đ
                                 </span>
                               </>
                             }
@@ -276,7 +286,7 @@ export const Home = () => {
                           ) : null}
                           <img
                             style={{ height: 'auto' }}
-                            srcSet={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
+                            src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
                             alt={product.name}
                           />
                         </Link>
@@ -286,15 +296,15 @@ export const Home = () => {
                             {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
                               <span className="price">
-                                {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
+                                {formatPrice(product.price) ? formatPrice(product.price).toLocaleString('vi-VN') + 'đ' : null}
                               </span>
                               :
                               <>
                                 <span className="price">
-                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.discountedPrice).toLocaleString('vi-VN')}đ
                                 </span>
                                 <span className="compare-price">
-                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.price).toLocaleString('vi-VN')}đ
                                 </span>
                               </>
                             }
@@ -366,15 +376,15 @@ export const Home = () => {
                             {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
                               <span className="price">
-                                {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
+                                {formatPrice(product.price) ? formatPrice(product.price).toLocaleString('vi-VN') + 'đ' : null}
                               </span>
                               :
                               <>
                                 <span className="price">
-                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.discountedPrice).toLocaleString('vi-VN')}đ
                                 </span>
                                 <span className="compare-price">
-                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.price).toLocaleString('vi-VN')}đ
                                 </span>
                               </>
                             }
@@ -459,15 +469,15 @@ export const Home = () => {
                             {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
                               <span className="price">
-                                {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
+                                {formatPrice(product.price) ? formatPrice(product.price).toLocaleString('vi-VN') + 'đ' : null}
                               </span>
                               :
                               <>
                                 <span className="price">
-                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.discountedPrice).toLocaleString('vi-VN')}đ
                                 </span>
                                 <span className="compare-price">
-                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.price).toLocaleString('vi-VN')}đ
                                 </span>
                               </>
                             }

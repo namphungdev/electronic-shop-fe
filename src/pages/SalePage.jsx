@@ -12,6 +12,16 @@ import './style.css'
 const SalePage = () => {
   useScrollTop()
 
+  const formatPrice = (price) => {
+    if (!price) return null;
+  
+    const roundedPrice = Math.round(price / 1000) * 1000; // Làm tròn đến hàng nghìn
+    const priceInThousand = roundedPrice / 1000; // Chia cho 1000 để chuyển đổi thành đơn vị nghìn
+  
+    // Kiểm tra xem có làm tròn thành số nguyên không, nếu có thì thêm '000'
+    return Number.isInteger(priceInThousand) ? `${priceInThousand}.000` : `${roundedPrice.toLocaleString('vi-VN')}đ`;
+  };
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [productCode, setProductCode] = useState();
 
@@ -50,7 +60,7 @@ const SalePage = () => {
 
   return (
     <>
-      <nav className="py-3 bg-[#f5f5f5] mb-5">
+      <nav className="py-3 bg-[#f5f5f5]">
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -119,15 +129,15 @@ const SalePage = () => {
                             {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
                               <span className="price">
-                                {product.price ? Number(product.price).toLocaleString('vi-VN') + 'đ' : null}
+                                {formatPrice(product.price) ? formatPrice(product.price).toLocaleString('vi-VN') + 'đ' : null}
                               </span>
                               :
                               <>
                                 <span className="price">
-                                  {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.discountedPrice).toLocaleString('vi-VN')}đ
                                 </span>
                                 <span className="compare-price">
-                                  {Number(product.price).toLocaleString('vi-VN')}đ
+                                  {formatPrice(product.price).toLocaleString('vi-VN')}đ
                                 </span>
                               </>
                             }
