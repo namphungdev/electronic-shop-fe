@@ -41,9 +41,9 @@ export const Home = () => {
 
   useEffect(() => {
     if (idProduct == 1) {
-      setProductCode('thiet-bi-ve-sinh')
-    } else if (idProduct == 2) {
       setProductCode('gach-op-lat')
+    } else if (idProduct == 2) {
+      setProductCode('thiet-bi-ve-sinh')
     } else {
       setProductCode('tam-op-nhua')
     }
@@ -163,7 +163,7 @@ export const Home = () => {
             <nav className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
               <div className="relative max-w-full text-white text-nav-sale">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
-                  {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
+                  {['Gạch ốp lát', 'Thiết bị vệ sinh', 'Tấm ốp nhựa'].map((item, index) => (
                     <li
                       key={index}
                       className={`relative font-bold px-5 color[#e81f15] py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
@@ -188,12 +188,6 @@ export const Home = () => {
                     dataPrice.slice(0, 10).map((product) => (
                       <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {/* {product.discountedPrice != null && (
-                            <div className="sale-badge">
-                              {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
-                            </div>
-                          )} */}
-
                           {product.discountedPrice == 0 || null ? null : (
                             product.percentDiscount == 0 || null ? (
                               <div className="sale-badge">Giảm {product.percentDiscount}%</div>
@@ -207,14 +201,6 @@ export const Home = () => {
                         </Link>
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
-                          {/* <div className="price-box">
-                            <span className="price">
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className="compare-price">
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
-                          </div> */}
                           <div className="price-box">
                             {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
@@ -278,11 +264,6 @@ export const Home = () => {
                     dataGachOpLat?.data?.slice(0, 10).map((product) => (
                       <article key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {/* {product.discountedPrice != null && (
-                            <div className="sale-badge">
-                              {product.percentDiscount ? `Giảm ${product.percentDiscount}%` : 'SALE'}
-                            </div>
-                          )} */}
                           {product.discountedPrice == 0 || null ? null : (
                             product.percentDiscount == 0 || null ? (
                               <div className="sale-badge">Giảm {product.percentDiscount}%</div>
