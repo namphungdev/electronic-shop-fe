@@ -6,7 +6,7 @@ const useScrollTop = (dependencyList = [], top = 0) => {
       top: top,
       behavior: "smooth",
     });
-  }, [...dependencyList]);
+  }, [dependencyList]);
 };
 
 export default useScrollTop;

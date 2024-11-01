@@ -19,9 +19,9 @@ const SalePage = () => {
 
   useEffect(() => {
     if (idProduct == 1) {
-      setProductCode('thiet-bi-ve-sinh')
-    } else if (idProduct == 2) {
       setProductCode('gach-op-lat')
+    } else if (idProduct == 2) {
+      setProductCode('thiet-bi-ve-sinh')
     } else {
       setProductCode('tam-op-nhua')
     }
@@ -77,7 +77,7 @@ const SalePage = () => {
             <div className='h-auto flex align-center justify-end flex-1 overflow-hidden'>
               <div className="relative max-w-full text-white text-nav-sale">
                 <ul className='flex max-w-full whitespace-nowrap p-0 m-0 text-right overflow-x-auto overflow-y-hidden list-none'>
-                  {['Thiết bị vệ sinh', 'Gạch ốp lát', 'Tấm ốp nhựa'].map((item, index) => (
+                  {['Gạch ốp lát', 'Thiết bị vệ sinh', 'Tấm ốp nhựa'].map((item, index) => (
                     <li
                       key={index}
                       className={`relative font-bold px-5 color[#e81f15] py-1.5 transition-all duration-300 tab-cate ${activeIndex === index ? 'li-current' : ''}`}
@@ -102,13 +102,6 @@ const SalePage = () => {
                     dataPrice.map((product) => (
                       <div key={product.id} className="product-card">
                         <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {/* {product.discountedPrice == null ? null : (
-                            product.percentDiscount ? (
-                              <div className="sale-badge">Giảm {product.percentDiscount}%</div>
-                            ) : (
-                              <div className="sale-badge">SALE</div>
-                            )
-                          )} */}
                           {product.discountedPrice !== null && product.percentDiscount ? (
                             <div className="sale-badge">
                               {`Giảm ${product.percentDiscount}%`}
@@ -122,14 +115,6 @@ const SalePage = () => {
                         </Link>
                         <div className="product-card-content">
                           <h3 className="product-card-title">{product.name}</h3>
-                          {/* <div className="price-box">
-                            <span className="price">
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className="compare-price">
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
-                          </div> */}
                           <div className="price-box">
                             {product && product.discountedPrice == null || product.percentDiscount == null
                               ?
@@ -162,55 +147,6 @@ const SalePage = () => {
               </>
             )}
           </div>
-
-          {/* <div className="block-product-sell sell-content">
-            {loadingDataPrice ? (
-              <div className="loading-container">
-                <Spin size="large" />
-              </div>
-            ) : (
-              <>
-                <div className="product-row product-sale">
-                  {dataPrice && dataPrice.length > 0 ? (
-                    dataPrice.map((product) => (
-                      <div key={product.id} className="product-card">
-                        <Link className="navbar-brand" to={`${PATH.productDetail.replace(':slug', product.code)}`}>
-                          {product?.percentDiscount == null ?
-                            <div className="sale-badge">SALE</div>
-                            :
-                            <div className="sale-badge">Giảm {product?.percentDiscount}%</div>
-                          }
-                          <img
-                            style={{ height: 'auto' }}
-                            src={product.images.length > 0 ? product.images[0]?.base_url : '/img/logo.jpg'}
-                            alt={product.name}
-                          />
-                        </Link>
-                        <div className="product-card-content">
-                          <h3 className="product-card-title">{product.name}</h3>
-                          <div className="price-box">
-                            <span className="price">
-                              {Number(product.discountedPrice).toLocaleString('vi-VN')}đ
-                            </span>
-                            <span className="compare-price">
-                              {Number(product.price).toLocaleString('vi-VN')}đ
-                            </span>
-                          </div>
-                          <div className="product-button">
-                            <Link to={PATH.contact} className="btn-sell-contact">
-                              Liên hệ
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p>Không có sản phẩm nào.</p>
-                  )}
-                </div>
-              </>
-            )}
-          </div> */}
         </div>
       </section>
     </>

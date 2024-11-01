@@ -2,7 +2,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import ImagePreview from '@/components/ImagePreview';
 import ZoomImage from '@/components/ZoomImage';
 import { PATH, PRODUCT_API_HHB } from '@/config';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import useScrollTop from '@/hooks/useScrollTop';
 import axios from 'axios';
@@ -12,7 +12,6 @@ import { faBan } from '@fortawesome/free-solid-svg-icons';
 import Skeleton from '@/components/Skeleton';
 import createArray from '@/utils/createArray';
 import SliderProduct from '@/components/SliderProduct';
-// import './style.css'
 import './slug.css'
 
 const ProductDetailPage = () => {
@@ -20,6 +19,7 @@ const ProductDetailPage = () => {
   useScrollTop()
 
   const { TabPane } = Tabs;
+  const { slug } = useParams();
   const location = useLocation();
   const [listDetail, setListDetail] = useState([])
   const galleryRef = useRef(null);
@@ -33,6 +33,7 @@ const ProductDetailPage = () => {
       await setCodeSlug(response?.data?.data?.productCategoryCode)
       await setListDetail(response?.data?.data)
       await setLoading(false)
+      window.scrollTo(0, 0);
     } catch (error) {
       console.error('There has been a problem with your axios request:', error);
       await setLoading(false)
@@ -40,6 +41,10 @@ const ProductDetailPage = () => {
       await setLoading(false)
     }
   }
+
+  useEffect(() => {
+    fetchDetailList();
+  }, [slug]);
 
   const param = {
     keyword: '',
@@ -80,8 +85,6 @@ const ProductDetailPage = () => {
   useEffect(() => {
     setSrcImg(listDetail?.images?.[0]?.base_url);
   }, [listDetail]);
-
-  console.log('listDetail', listDetail)
 
   return (
     <>
@@ -129,7 +132,7 @@ const ProductDetailPage = () => {
                               style={{
                                 position: 'relative',
                                 overflow: 'hidden',
-                                height: '450px', // Cố định chiều cao của vùng chứa
+                                height: '450px',
                               }}
                             >
                               <img
@@ -140,9 +143,8 @@ const ProductDetailPage = () => {
                                 className="card-img-top relative top-0 left-0 w-full h-full object-cover"
                                 style={{
                                   ...styleImage,
-                                  //maxWidth: '100%',  // Đảm bảo ảnh không vượt quá kích thước vùng chứa
+                                  transformOrigin: "center",
                                   maxHeight: '100%',
-                                  //objectFit: 'cover',  // Giữ kích thước ảnh phù hợp trong vùng chứa
                                 }}
                               />
                               <div

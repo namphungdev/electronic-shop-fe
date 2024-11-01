@@ -414,11 +414,12 @@
 @media (max-width: 991px) {
     .header-sell {
         flex-direction: column;
+        padding: 0;
     }       
 
     .sale-header {
-        font-size: 1.2rem;
-        margin-bottom: -5px;
+        font-size: 1rem;
+        margin-bottom: -7px;
     }
 
     .text-nav-sale {
@@ -426,7 +427,14 @@
     }
 
     .img-hot-sale {
-        right: -25%;
+        /* right: -25%; */
+        right: -20%;
+        width: 35px;
+        bottom: 20%;
+    }
+
+    .sell-content {
+        padding: 0px 10px 10px 10px !important;
     }
 
     .product-row {
